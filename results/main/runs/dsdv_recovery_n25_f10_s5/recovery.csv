@@ -1,0 +1,3 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+dsdv_recovery_n25_f10_s5,120.0,fail,3,True,True,6.888981000000001,6.754159000000001,6.888981000000001,210.0,40,13
+dsdv_recovery_n25_f10_s5,120.0,fail,7,True,True,3.7146429999999953,3.5024099999999976,3.7146429999999953,210.0,40,26
