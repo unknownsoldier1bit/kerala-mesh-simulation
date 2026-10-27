@@ -1,5 +1,0 @@
-run_id,event_time_s,event,flow,route_available,recovered,recovery_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
-aodv_multi_fail_n50_f10_s4,120.0,fail,6,True,True,0.4370969999999943,0.4370969999999943,135.0,40,38
-aodv_multi_fail_n50_f10_s4,120.0,fail,9,True,True,0.37871199999999305,0.37871199999999305,135.0,40,38
-aodv_multi_fail_n50_f10_s4,135.0,fail,0,True,True,0.6506750000000068,0.6506750000000068,150.0,40,38
-aodv_multi_fail_n50_f10_s4,150.0,fail,8,True,True,0.41252399999999056,0.41252399999999056,290.0,40,39

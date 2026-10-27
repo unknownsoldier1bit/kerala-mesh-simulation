@@ -11,6 +11,7 @@
  "fail_time_s": 120.0,
  "restore_time_s": null,
  "deadline_s": 1.0,
+ "traffic_start_s": 60.0,
  "failure_severity": "3 nodes (12.0%) + 9 links (14.06%)",
  "packets_sent": 9200,
  "packets_received": 9055,
@@ -30,6 +31,7 @@
  "throughput_kbps": 161.25773913043477,
  "throughput_interval_s": "60-290",
  "suppressed_sends": 0,
+ "duplicate_receptions": 0,
  "lost_no_drop_event": 0,
  "lost_no_route_at_source": 0,
  "lost_ip_ttl_expired": 0,
@@ -81,6 +83,7 @@
  "recovery_mean_s": 4.73021,
  "recovery_median_s": 4.6141290000000055,
  "recovery_max_s": 5.394970000000001,
+ "recovery_from_next_send_mean_s": 4.610926857142855,
  "recovery_outage_mean_s": 4.73021,
  "recovery_window_delivered": 151,
  "recovery_window_pdr_pct": 53.92857142857143,
@@ -91,6 +94,7 @@
  "restore_recovery_mean_s": NaN,
  "restore_recovery_median_s": NaN,
  "restore_recovery_max_s": NaN,
+ "restore_recovery_from_next_send_mean_s": NaN,
  "restore_recovery_outage_mean_s": NaN,
  "restore_recovery_window_delivered": NaN,
  "restore_recovery_window_pdr_pct": NaN,
@@ -109,6 +113,6 @@
  "first_depletion_s": NaN,
  "depletion_10pct_s": NaN,
  "depletion_50pct_s": NaN,
- "wall_s": 9.69337,
- "run_seconds": 9.88
+ "wall_s": 9.10173,
+ "run_seconds": 9.25
 }

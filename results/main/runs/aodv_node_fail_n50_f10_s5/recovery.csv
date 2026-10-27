@@ -1,4 +1,0 @@
-run_id,event_time_s,event,flow,route_available,recovered,recovery_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
-aodv_node_fail_n50_f10_s5,120.0,fail,3,True,True,0.5216989999999981,0.5216989999999981,290.0,40,39
-aodv_node_fail_n50_f10_s5,120.0,fail,8,True,True,0.361850000000004,0.361850000000004,290.0,40,38
-aodv_node_fail_n50_f10_s5,120.0,fail,9,True,True,0.40595899999999574,0.40595899999999574,290.0,40,39

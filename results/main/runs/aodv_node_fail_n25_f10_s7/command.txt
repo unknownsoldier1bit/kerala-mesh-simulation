@@ -1,1 +1,0 @@
-ns3.47-manet --protocol=aodv --topo=results/main/inputs/n25_s7/topology.csv --flows=results/main/inputs/n25_s7/flows_f10.csv --outDir=results/main/runs/aodv_node_fail_n25_f10_s7 --run=7 --simTime=300.0 --range=150.0 --energyJ=0 --events=results/main/inputs/n25_s7/events_node_fail_f10.csv
