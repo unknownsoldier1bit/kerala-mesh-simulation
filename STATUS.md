@@ -6,7 +6,7 @@ Updated on every push. The full list of requested outputs is in `docs/deliverabl
 |---|---|
 | Save deliverables list | done |
 | Build simulator for all scenarios (`sim/manet`) | done |
-| Main grid: 3 protocols × 6 scenarios × 25/50/100 nodes × 10 seeds (540 runs) | running |
+| Main grid: 3 protocols × 6 scenarios × 25/50/100 nodes × 10 seeds (540 runs) | running. Baseline, link-failure and partition runs for 25 and 50 nodes are committed. Node-failure runs (node_fail, multi_fail, recovery) are being redone after an ns-3 crash fix: the copies committed in `fff1182` are superseded |
 | Failure-severity sweep (240 runs) | queued |
 | Traffic-load sweep (180 runs) | queued |
 | Energy and network lifetime (60 runs) | queued |
@@ -19,6 +19,8 @@ Updated on every push. The full list of requested outputs is in `docs/deliverabl
 
 - AODV's link-break detection was silently disabled by `NeighborCacheHelper` in both sims. Fixed; see `docs/ns3-defaults.md`. Re-run any diamond AODV results made before 27 Oct.
 - NS-3's `WifiRadioEnergyModel` stops counting a radio that is switched back on after being switched off. The experiments use their own state-based energy accounting, checked against NS-3's model.
+- ns-3.47 crashes if a radio is switched off in the middle of a broadcast. Failing radios now finish their current frame first (see `docs/ns3-defaults.md`).
+- NS-3's energy framework used gigabytes of memory per 100-node run; it now runs only at 25 and 50 nodes (as a cross-check).
 - DSDV needs more than the 60 s warm-up to build complete tables in some sparse 25-node topologies. Listed in `results/analysis/tables/check_initial_convergence.csv`.
 
 ## Where each deliverable is answered
