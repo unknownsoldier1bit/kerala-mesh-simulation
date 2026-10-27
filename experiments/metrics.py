@@ -157,6 +157,10 @@ def recovery_analysis(pk, cfg, events, traffic_stop, window_s=10.0):
             next_t = min((p[0] for p in pts if p[0] > t and p[1] == "restore"), default=traffic_stop)
             after = delivered[(delivered.tx_s >= t) & (delivered.rx_s < next_t)]
             rec = float(after.rx_s.min() - t) if (route and not after.empty) else math.nan
+            # Same, but counted from the flow's first send after the event: differs from
+            # recovery_s only for bursty traffic, where a flow may be silent after the event.
+            sends = grp[grp.tx_s >= t]
+            rec_send = float(after.rx_s.min() - sends.tx_s.min()) if not math.isnan(rec) else math.nan
             win = grp[(grp.tx_s >= t) & (grp.tx_s < t + window_s)]
             rows.append(
                 dict(
@@ -166,6 +170,7 @@ def recovery_analysis(pk, cfg, events, traffic_stop, window_s=10.0):
                     route_available=route,
                     recovered=not math.isnan(rec),
                     recovery_s=rec,
+                    recovery_from_next_send_s=rec_send,
                     # time without delivery after the event (censored at the next restore / end)
                     outage_s=rec if not math.isnan(rec) else next_t - t,
                     censored_at_s=next_t,
@@ -374,6 +379,7 @@ def compute(run_dir, cfg):
             s[f"{tag}_mean_s"] = float(ok.recovery_s.mean()) if len(ok) else np.nan
             s[f"{tag}_median_s"] = float(ok.recovery_s.median()) if len(ok) else np.nan
             s[f"{tag}_max_s"] = float(ok.recovery_s.max()) if len(ok) else np.nan
+            s[f"{tag}_from_next_send_mean_s"] = float(ok.recovery_from_next_send_s.mean()) if len(ok) else np.nan
             s[f"{tag}_outage_mean_s"] = float(r.outage_s.mean())
             s[f"{tag}_window_delivered"] = int(r.delivered_in_window.sum())
             s[f"{tag}_window_pdr_pct"] = (
@@ -381,7 +387,7 @@ def compute(run_dir, cfg):
             )
         else:
             for k in ("affected_no_route", "recovered_flows", "not_recovered_flows", "mean_s", "median_s",
-                      "max_s", "outage_mean_s", "window_delivered", "window_pdr_pct"):
+                      "max_s", "from_next_send_mean_s", "outage_mean_s", "window_delivered", "window_pdr_pct"):
                 s[f"{tag}_{k}"] = np.nan
     s["recovery_time_s"] = s["recovery_mean_s"]
 
