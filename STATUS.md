@@ -6,8 +6,8 @@ Updated on every push. The full list of requested outputs is in `docs/deliverabl
 |---|---|
 | Save deliverables list | done |
 | Build simulator for all scenarios (`sim/manet`) | done |
-| Main grid: 3 protocols × 6 scenarios × 25/50/100 nodes × 10 seeds (540 runs) | running. Baseline, link-failure and partition runs for 25 and 50 nodes are committed. Node-failure runs (node_fail, multi_fail, recovery) are being redone after an ns-3 crash fix: the copies committed in `fff1182` are superseded |
-| Failure-severity sweep (240 runs) | queued |
+| Main grid: 3 protocols × 6 scenarios × 25/50/100 nodes × 10 seeds (540 runs) | 25 and 50 nodes done and committed (360 runs). 100 nodes: a few done; the rest run after the 50-node experiments below (they are the slowest, 2–10 min each) |
+| Failure-severity sweep (240 runs) | running |
 | Traffic-load sweep (180 runs) | queued |
 | Energy and network lifetime (60 runs) | queued |
 | Kerala time-evolving failure model + baselines, 50 nodes (150 runs) | queued |
