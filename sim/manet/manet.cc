@@ -109,6 +109,7 @@ struct Flow
 std::vector<Flow> g_flows;
 uint64_t g_suppressed = 0;   // sends skipped because the source's radio was off
 uint64_t g_socketErrors = 0; // SendTo refused (no route known at the source)
+uint64_t g_duplicates = 0;   // copies of a packet that the destination had already received
 
 // ---- Routing control traffic, in 1 s bins ----
 // Type columns: AODV  0 RREQ originated, 1 RREQ forwarded, 2 RREP, 3 RERR, 4 HELLO, 5 RREP-ACK
@@ -159,7 +160,7 @@ double g_simTime = 300.0;
 // src/energy/model/basic-energy-source.cc). This gives the same numbers as the ns-3
 // energy framework at a fraction of the run time; --energyModel=ns3 runs the
 // framework as well so the two can be compared.
-const double STATE_CURRENT_A[7] = {0.273, 0.273, 0.380, 0.313, 0.273, 0.033, 0.0};
+double STATE_CURRENT_A[7] = {0.273, 0.273, 0.380, 0.313, 0.273, 0.033, 0.0};
 // IDLE, CCA_BUSY, TX, RX, SWITCHING, SLEEP, OFF
 const double SUPPLY_V = 3.0;
 const double LOW_BATTERY_FRACTION = 0.10; // BasicEnergySource turns the radio off here
@@ -360,6 +361,10 @@ ReceivePacket(uint32_t f, Ptr<Socket> socket)
         if (seq < g_flows[f].packets.size() && g_flows[f].packets[seq].rx < 0)
         {
             g_flows[f].packets[seq].rx = Simulator::Now().GetSeconds();
+        }
+        else
+        {
+            g_duplicates++;
         }
     }
 }
@@ -831,6 +836,7 @@ main(int argc, char* argv[])
     std::string rtDump;
     std::string energyFile;
     std::string energyModel = "states";
+    double idleCurrentA = STATE_CURRENT_A[0];
     double txPowerDbm = 16.0206; // ns-3 WifiPhy default
 
     CommandLine cmd(__FILE__);
@@ -845,6 +851,7 @@ main(int argc, char* argv[])
     cmd.AddValue("txPower", "Transmit power (dBm)", txPowerDbm);
     cmd.AddValue("energyJ", "Initial battery energy per node (J); 0 = unlimited (energy still measured)", energyJ);
     cmd.AddValue("energyModel", "states (fast, default) or ns3 (also run BasicEnergySource + WifiRadioEnergyModel)", energyModel);
+    cmd.AddValue("idleCurrentA", "Idle and CCA-busy current (A) for --energyModel=states (default 0.273)", idleCurrentA);
     cmd.AddValue("energyFile", "Per-node initial energy CSV: node,initial_J (overrides --energyJ)", energyFile);
     cmd.AddValue("sampleInterval", "Route-validity sampling interval (s); 0 = off", g_sampleInterval);
     cmd.AddValue("flowmon", "Also write FlowMonitor XML", flowmon);
@@ -854,6 +861,12 @@ main(int argc, char* argv[])
     if (g_protocol != "aodv" && g_protocol != "olsr" && g_protocol != "dsdv")
     {
         NS_FATAL_ERROR("--protocol must be aodv, olsr or dsdv");
+    }
+    STATE_CURRENT_A[0] = idleCurrentA;
+    STATE_CURRENT_A[1] = idleCurrentA;
+    if (energyModel == "ns3" && idleCurrentA != 0.273)
+    {
+        NS_FATAL_ERROR("--idleCurrentA only applies to --energyModel=states");
     }
     g_routingPort = g_protocol == "aodv" ? AODV_PORT : (g_protocol == "olsr" ? OLSR_PORT : DSDV_PORT);
 
@@ -1191,9 +1204,9 @@ main(int argc, char* argv[])
 
     double wall = std::chrono::duration<double>(std::chrono::steady_clock::now() - wallStart).count();
     std::ofstream stats(outDir + "/stats.csv");
-    stats << "protocol,nodes,flows,suppressed_sends,socket_errors,wall_s\n";
+    stats << "protocol,nodes,flows,suppressed_sends,socket_errors,duplicate_receptions,wall_s\n";
     stats << g_protocol << "," << g_n << "," << g_flows.size() << "," << g_suppressed << ","
-          << g_socketErrors << "," << wall << "\n";
+          << g_socketErrors << "," << g_duplicates << "," << wall << "\n";
     stats.close();
 
     std::cout << "done protocol=" << g_protocol << " nodes=" << g_n << " flows=" << g_flows.size()

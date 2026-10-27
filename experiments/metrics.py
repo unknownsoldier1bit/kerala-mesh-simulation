@@ -175,8 +175,67 @@ def recovery_analysis(pk, cfg, events, traffic_stop, window_s=10.0):
     return pd.DataFrame(rows)
 
 
+def connectivity(pk, cfg, events):
+    """For each packet: did a path exist between its source and destination when it was sent?"""
+    import networkx as nx
+
+    g = topology_graph(cfg)
+    pts = failure_points(events)
+    times = np.array([-1.0] + [p[0] for p in pts])
+    comps = []
+    for down_nodes, down_links in [(set(), set())] + [(p[4], p[5]) for p in pts]:
+        h = g.copy()
+        h.remove_nodes_from(down_nodes)
+        h.remove_edges_from(down_links)
+        cid = {}
+        for k, comp in enumerate(nx.connected_components(h)):
+            for v in comp:
+                cid[v] = k
+        comps.append(cid)
+    src = {f["flow"]: f["src"] for f in cfg["flows"]}
+    dst = {f["flow"]: f["dst"] for f in cfg["flows"]}
+    idx = np.searchsorted(times, pk.tx_s.values, side="right") - 1
+    out = np.zeros(len(pk), dtype=bool)
+    for i, (f, k) in enumerate(zip(pk.flow.values, idx)):
+        c = comps[k]
+        a, b = c.get(src[f]), c.get(dst[f])
+        out[i] = a is not None and a == b
+    return out
+
+
+def alive_over_time(cfg, events, times):
+    pts = failure_points(events)
+    ev_t = np.array([p[0] for p in pts])
+    down = [len(p[4]) for p in pts]
+    idx = np.searchsorted(ev_t, times, side="right") - 1
+    return np.array([cfg["nodes"] - (down[i] if i >= 0 else 0) for i in idx])
+
+
+def timeseries(pk, ctrl, cfg, events, bin_s=10.0):
+    t0, t1 = cfg["traffic_start_s"], cfg["traffic_stop_s"]
+    edges = np.arange(t0, t1 + bin_s, bin_s)
+    b = np.digitize(pk.tx_s.values, edges) - 1
+    rows = []
+    alive = alive_over_time(cfg, events, edges[:-1])
+    for k in range(len(edges) - 1):
+        sel = pk[b == k]
+        got = sel[sel.rx_s.notna()]
+        row = dict(run_id=cfg["run_id"], t_start_s=edges[k], t_end_s=edges[k + 1], alive_nodes=int(alive[k]),
+                   sent=len(sel), delivered=len(got),
+                   delivered_within_1s=int(((got.rx_s - got.tx_s) <= 1.0).sum()))
+        if "connected" in sel:
+            row["sent_while_connected"] = int(sel.connected.sum())
+            row["delivered_of_connected"] = int((sel.connected & sel.rx_s.notna()).sum())
+        c = ctrl[(ctrl.t_s >= edges[k]) & (ctrl.t_s < edges[k + 1])]
+        row["control_pkts"] = int(c.pkts.sum())
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
 def window_bounds(cfg):
     """Analysis windows: before failure, during failure, after restore (if any)."""
+    if cfg.get("windows"):
+        return {k: tuple(v) for k, v in cfg["windows"].items()}
     t0, t1 = cfg["traffic_start_s"], cfg["traffic_stop_s"]
     tf = cfg.get("fail_time_s") or t1
     tr = cfg.get("restore_time_s")
@@ -207,6 +266,9 @@ def compute(run_dir, cfg):
         s[k] = cfg.get(k)
     s["failure_severity"] = cfg.get("severity_label", "")
 
+    if cfg.get("connectivity"):
+        pk = pk.assign(connected=connectivity(pk, cfg, events))
+
     # ---- Delivery and delay ----
     sent = len(pk)
     got = pk[pk.rx_s.notna()]
@@ -222,9 +284,18 @@ def compute(run_dir, cfg):
     for T in DEADLINES_S:
         s[f"within_{T:g}s_pct"] = 100 * float((delay_ms <= 1000 * T).sum()) / sent if sent else np.nan
     s["mean_hops"] = float(got.path.fillna("").map(lambda p: len(_path_nodes(p)) + 1).mean()) if recv else np.nan
+    if "connected" in pk:
+        conn = pk[pk.connected]
+        s["sent_while_connected"] = len(conn)
+        s["connected_pdr_pct"] = 100 * conn.rx_s.notna().sum() / len(conn) if len(conn) else np.nan
+        cd = (conn.rx_s - conn.tx_s).values
+        s["connected_within_1s_pct"] = 100 * float((cd <= 1.0).sum()) / len(conn) if len(conn) else np.nan
     s["throughput_kbps"] = recv * payload_bits / period / 1000
     s["throughput_interval_s"] = f"{t0:g}-{t1:g}"
     s["suppressed_sends"] = int(stats.suppressed_sends.iloc[0]) if stats is not None else np.nan
+    s["duplicate_receptions"] = (
+        int(stats.duplicate_receptions.iloc[0]) if stats is not None and "duplicate_receptions" in stats else np.nan
+    )
 
     # ---- Loss reasons ----
     lost = pk[pk.rx_s.isna()]
@@ -278,6 +349,12 @@ def compute(run_dir, cfg):
         )
         s[f"{wname}_delay_mean_ms"] = float(((wg.rx_s - wg.tx_s) * 1000).mean()) if len(wg) else np.nan
         s[f"{wname}_throughput_kbps"] = len(wg) * payload_bits / (b - a) / 1000
+        if "connected" in wp:
+            wcn = wp[wp.connected]
+            s[f"{wname}_connected_pdr_pct"] = 100 * wcn.rx_s.notna().sum() / len(wcn) if len(wcn) else np.nan
+            s[f"{wname}_connected_within_1s_pct"] = (
+                100 * float(((wcn.rx_s - wcn.tx_s) <= 1.0).sum()) / len(wcn) if len(wcn) else np.nan
+            )
         wc = ctrl[(ctrl.t_s >= math.floor(a)) & (ctrl.t_s < math.floor(b))]
         s[f"{wname}_ctrl_pkts_per_node_s"] = wc.pkts.sum() / (n * max(1, len(wc)))
 
@@ -365,4 +442,5 @@ def compute(run_dir, cfg):
     per_flow = pd.DataFrame(fl_rows)
     if not rec.empty:
         rec.insert(0, "run_id", cfg["run_id"])
-    return s, per_flow, rec
+    ts = timeseries(pk, ctrl, cfg, events) if cfg.get("timeseries") else None
+    return s, per_flow, rec, ts

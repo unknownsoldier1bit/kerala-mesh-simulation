@@ -164,6 +164,8 @@ def command(cfg, out_dir):
         args.append(f"--events={cfg['events_file']}")
     if cfg.get("energy_model", "states") != "states":
         args.append(f"--energyModel={cfg['energy_model']}")
+    if cfg.get("idle_current_a") is not None:
+        args.append(f"--idleCurrentA={cfg['idle_current_a']}")
     if cfg.get("energy_file"):
         args.append(f"--energyFile={cfg['energy_file']}")
     if cfg.get("flowmon"):
@@ -200,13 +202,15 @@ def run_one(cfg):
             proc = subprocess.run([binary()] + args, cwd=REPO, stdout=so, stderr=se, timeout=3 * 3600)
         if proc.returncode != 0:
             return cfg["run_id"], "failed", None, f"exit code {proc.returncode} (see stderr.log)"
-        summary, per_flow, rec = metrics.compute(abs_out, cfg)
+        summary, per_flow, rec, ts = metrics.compute(abs_out, cfg)
     except subprocess.TimeoutExpired:
         return cfg["run_id"], "failed", None, "timed out after 3 h"
     except Exception as e:  # metrics errors are recorded, not fatal for the whole grid
         return cfg["run_id"], "failed", None, f"{type(e).__name__}: {e}"
     per_flow.to_csv(os.path.join(abs_out, "per_flow.csv"), index=False)
     rec.to_csv(os.path.join(abs_out, "recovery.csv"), index=False)
+    if ts is not None:
+        ts.to_csv(os.path.join(abs_out, "timeseries.csv"), index=False)
     for name in ("packets.csv", "control.csv", "routes.csv", "discoveries.csv", "flowmon.xml"):
         p = os.path.join(abs_out, name)
         if os.path.exists(p):
@@ -223,7 +227,7 @@ def run_one(cfg):
 def collect(exp, runs):
     """Rebuilds the experiment-level CSVs from every finished run."""
     base = os.path.join(REPO, "results", exp)
-    rows, flows, recs = [], [], []
+    rows, flows, recs, tss = [], [], [], []
     for cfg in runs:
         d = os.path.join(base, "runs", cfg["run_id"])
         sj = os.path.join(d, "summary.json")
@@ -231,7 +235,7 @@ def collect(exp, runs):
             continue
         with open(sj) as f:
             rows.append(json.load(f))
-        for name, acc in (("per_flow.csv", flows), ("recovery.csv", recs)):
+        for name, acc in (("per_flow.csv", flows), ("recovery.csv", recs), ("timeseries.csv", tss)):
             p = os.path.join(d, name)
             if os.path.exists(p) and os.path.getsize(p) > 1:
                 try:
@@ -244,6 +248,8 @@ def collect(exp, runs):
         pd.concat(flows).to_csv(os.path.join(base, "per_flow.csv"), index=False)
     if recs:
         pd.concat(recs).to_csv(os.path.join(base, "recovery.csv"), index=False)
+    if tss:
+        pd.concat(tss).to_csv(os.path.join(base, "timeseries.csv"), index=False)
     with open(os.path.join(base, "commands.txt"), "w") as f:
         f.write("# Run from the repo root. ns3.47-manet = <NS-3 dir>/build/scratch/manet/ns3.47-manet-optimized\n")
         f.write("# (equivalently: ./ns3 run \"manet <args>\" from the NS-3 dir, with absolute paths)\n")
