@@ -1,6 +1,6 @@
-run_id,event_time_s,event,flow,route_available,recovered,recovery_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
-olsr_link_fail_n25_f10_s3,120.0,fail,1,True,True,4.309887000000003,4.309887000000003,290.0,40,23
-olsr_link_fail_n25_f10_s3,120.0,fail,3,True,True,4.392446000000007,4.392446000000007,290.0,40,23
-olsr_link_fail_n25_f10_s3,120.0,fail,6,True,True,4.569059999999993,4.569059999999993,290.0,40,22
-olsr_link_fail_n25_f10_s3,120.0,fail,8,True,True,4.304980999999998,4.304980999999998,290.0,40,23
-olsr_link_fail_n25_f10_s3,120.0,fail,9,True,True,4.492289999999997,4.492289999999997,290.0,40,23
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+olsr_link_fail_n25_f10_s3,120.0,fail,1,True,True,4.309887000000003,4.260007000000002,4.309887000000003,290.0,40,23
+olsr_link_fail_n25_f10_s3,120.0,fail,3,True,True,4.392446000000007,4.253285000000005,4.392446000000007,290.0,40,23
+olsr_link_fail_n25_f10_s3,120.0,fail,6,True,True,4.569059999999993,4.504158999999987,4.569059999999993,290.0,40,22
+olsr_link_fail_n25_f10_s3,120.0,fail,8,True,True,4.304980999999998,4.2563710000000015,4.304980999999998,290.0,40,23
+olsr_link_fail_n25_f10_s3,120.0,fail,9,True,True,4.492289999999997,4.254159000000001,4.492289999999997,290.0,40,23

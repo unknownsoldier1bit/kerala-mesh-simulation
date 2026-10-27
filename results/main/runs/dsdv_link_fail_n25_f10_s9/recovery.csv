@@ -1,8 +1,8 @@
-run_id,event_time_s,event,flow,route_available,recovered,recovery_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
-dsdv_link_fail_n25_f10_s9,120.0,fail,0,False,False,,170.0,290.0,40,0
-dsdv_link_fail_n25_f10_s9,120.0,fail,1,False,False,,170.0,290.0,40,0
-dsdv_link_fail_n25_f10_s9,120.0,fail,2,True,True,0.23695700000000386,0.23695700000000386,290.0,40,40
-dsdv_link_fail_n25_f10_s9,120.0,fail,3,True,True,0.2758759999999967,0.2758759999999967,290.0,40,39
-dsdv_link_fail_n25_f10_s9,120.0,fail,4,True,True,5.921693000000005,5.921693000000005,290.0,40,17
-dsdv_link_fail_n25_f10_s9,120.0,fail,6,False,False,,170.0,290.0,40,0
-dsdv_link_fail_n25_f10_s9,120.0,fail,9,True,True,0.30293899999999496,0.30293899999999496,290.0,40,40
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+dsdv_link_fail_n25_f10_s9,120.0,fail,0,False,False,,,170.0,290.0,40,0
+dsdv_link_fail_n25_f10_s9,120.0,fail,1,False,False,,,170.0,290.0,40,0
+dsdv_link_fail_n25_f10_s9,120.0,fail,2,True,True,0.23695700000000386,0.13782500000000653,0.23695700000000386,290.0,40,40
+dsdv_link_fail_n25_f10_s9,120.0,fail,3,True,True,0.2758759999999967,0.2524099999999976,0.2758759999999967,290.0,40,39
+dsdv_link_fail_n25_f10_s9,120.0,fail,4,True,True,5.921693000000005,5.757656000000011,5.921693000000005,290.0,40,17
+dsdv_link_fail_n25_f10_s9,120.0,fail,6,False,False,,,170.0,290.0,40,0
+dsdv_link_fail_n25_f10_s9,120.0,fail,9,True,True,0.30293899999999496,0.09012599999999793,0.30293899999999496,290.0,40,40

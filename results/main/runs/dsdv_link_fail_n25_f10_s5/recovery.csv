@@ -1,6 +1,6 @@
-run_id,event_time_s,event,flow,route_available,recovered,recovery_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
-dsdv_link_fail_n25_f10_s5,120.0,fail,0,True,True,0.15967399999999543,0.15967399999999543,290.0,40,40
-dsdv_link_fail_n25_f10_s5,120.0,fail,2,True,True,0.2934879999999964,0.2934879999999964,290.0,40,39
-dsdv_link_fail_n25_f10_s5,120.0,fail,3,True,True,0.16518499999999392,0.16518499999999392,290.0,40,40
-dsdv_link_fail_n25_f10_s5,120.0,fail,5,True,True,0.2740540000000067,0.2740540000000067,290.0,40,39
-dsdv_link_fail_n25_f10_s5,120.0,fail,8,True,True,0.30841499999999655,0.30841499999999655,290.0,40,39
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+dsdv_link_fail_n25_f10_s5,120.0,fail,0,True,True,0.15967399999999543,0.011155999999999722,0.15967399999999543,290.0,40,40
+dsdv_link_fail_n25_f10_s5,120.0,fail,2,True,True,0.2934879999999964,0.2532849999999911,0.2934879999999964,290.0,40,39
+dsdv_link_fail_n25_f10_s5,120.0,fail,3,True,True,0.16518499999999392,0.030362999999994145,0.16518499999999392,290.0,40,40
+dsdv_link_fail_n25_f10_s5,120.0,fail,5,True,True,0.2740540000000067,0.25415900000000136,0.2740540000000067,290.0,40,39
+dsdv_link_fail_n25_f10_s5,120.0,fail,8,True,True,0.30841499999999655,0.25153600000000154,0.30841499999999655,290.0,40,39
