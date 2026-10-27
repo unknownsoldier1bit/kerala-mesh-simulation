@@ -1,0 +1,1 @@
+ns3.47-manet --protocol=olsr --topo=results/energy/inputs/n50_s8/topology.csv --flows=results/energy/inputs/n50_s8/flows_f10.csv --outDir=results/energy/runs/olsr_low_idle_radio_n50_f10_s8 --run=8 --simTime=600.0 --range=150.0 --energyJ=0 --idleCurrentA=0.033 --energyFile=results/energy/inputs/n50_s8/battery_low_idle_radio.csv

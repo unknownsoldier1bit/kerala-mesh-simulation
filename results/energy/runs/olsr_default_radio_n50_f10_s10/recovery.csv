@@ -1,0 +1,5 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+olsr_default_radio_n50_f10_s10,233.0,fail,2,True,True,5.264661999999987,5.023516000000001,5.264661999999987,595.0,40,20
+olsr_default_radio_n50_f10_s10,233.0,fail,7,True,True,5.244663000000003,5.004159000000016,5.244663000000003,595.0,40,20
+olsr_default_radio_n50_f10_s10,233.0,fail,8,True,True,5.083886000000007,5.003285000000005,5.083886000000007,595.0,40,20
+olsr_default_radio_n50_f10_s10,322.0,fail,7,True,True,4.497703000000001,4.257199000000014,4.497703000000001,595.0,40,23

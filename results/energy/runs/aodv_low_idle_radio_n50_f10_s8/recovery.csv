@@ -1,0 +1,15 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+aodv_low_idle_radio_n50_f10_s8,176.0,fail,6,True,True,0.4868400000000008,0.336890000000011,0.4868400000000008,595.0,40,39
+aodv_low_idle_radio_n50_f10_s8,183.0,fail,4,True,True,0.2858280000000093,0.26525000000000887,0.2858280000000093,595.0,40,39
+aodv_low_idle_radio_n50_f10_s8,183.0,fail,5,True,True,0.30620700000000056,0.29552300000000287,0.30620700000000056,595.0,40,39
+aodv_low_idle_radio_n50_f10_s8,183.0,fail,7,True,True,0.04286200000001372,0.0032850000000053114,0.04286200000001372,595.0,40,40
+aodv_low_idle_radio_n50_f10_s8,185.0,fail,2,True,True,0.3557010000000105,0.28075300000000425,0.3557010000000105,595.0,40,39
+aodv_low_idle_radio_n50_f10_s8,218.0,fail,2,True,True,0.1084380000000067,0.033490000000000464,0.1084380000000067,595.0,40,40
+aodv_low_idle_radio_n50_f10_s8,218.0,fail,5,True,True,0.29194899999998825,0.28126499999999055,0.29194899999998825,595.0,40,38
+aodv_low_idle_radio_n50_f10_s8,231.0,fail,5,False,False,,,364.0,595.0,40,0
+aodv_low_idle_radio_n50_f10_s8,231.0,fail,6,False,False,,,364.0,595.0,40,0
+aodv_low_idle_radio_n50_f10_s8,231.0,fail,7,False,False,,,364.0,595.0,40,0
+aodv_low_idle_radio_n50_f10_s8,249.0,fail,2,True,True,0.37606999999999857,0.30112199999999234,0.37606999999999857,595.0,40,39
+aodv_low_idle_radio_n50_f10_s8,287.0,fail,5,False,False,,,308.0,595.0,40,0
+aodv_low_idle_radio_n50_f10_s8,287.0,fail,9,True,True,0.2895669999999768,0.26998899999995274,0.2895669999999768,595.0,40,39
+aodv_low_idle_radio_n50_f10_s8,380.0,fail,0,False,False,,,215.0,595.0,24,0

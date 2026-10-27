@@ -1,0 +1,6 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+dsdv_low_idle_radio_n50_f10_s10,160.0,fail,3,True,True,5.5316760000000045,5.392494999999997,5.5316760000000045,595.0,40,19
+dsdv_low_idle_radio_n50_f10_s10,181.0,fail,8,True,True,0.8338850000000093,0.7532840000000078,0.8338850000000093,595.0,40,37
+dsdv_low_idle_radio_n50_f10_s10,234.0,fail,2,True,True,6.746374000000003,6.505228000000017,6.746374000000003,595.0,40,14
+dsdv_low_idle_radio_n50_f10_s10,241.0,fail,7,True,True,14.62213700000001,14.381633000000022,14.62213700000001,595.0,40,0
+dsdv_low_idle_radio_n50_f10_s10,263.0,fail,2,True,True,0.25845199999997703,0.017305999999962296,0.25845199999997703,595.0,40,40
