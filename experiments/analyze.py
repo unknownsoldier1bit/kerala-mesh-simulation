@@ -22,6 +22,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
+import matplotlib.ticker  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 from scipy import stats  # noqa: E402
@@ -149,11 +150,16 @@ def paired_tests(df, keys, metrics):
     return pd.DataFrame(rows)
 
 
-def clip_err(mean, err):
-    """Error bars as (lower, upper), with the lower bar stopping at zero."""
+def clip_err(mean, err, cap=None):
+    """Error bars as (lower, upper): the lower bar stops at zero, the upper one at `cap`."""
     mean = np.asarray(mean, dtype=float)
     err = np.asarray(err, dtype=float)
-    return np.vstack([np.minimum(err, np.where(mean > 0, mean, 0)), err])
+    upper = err if cap is None else np.minimum(err, np.maximum(cap - mean, 0))
+    return np.vstack([np.minimum(err, np.where(mean > 0, mean, 0)), upper])
+
+
+def is_pct(metric):
+    return metric.endswith("_pct")
 
 
 def savefig(fig, name, note=None):
@@ -177,7 +183,7 @@ def grouped_bars(ax, agg, cats, cat_key, metric, protos, cat_labels=None):
         sub = agg[agg.protocol == p].set_index(cat_key)
         mean = np.array([sub[f"{metric}_mean"].get(c, np.nan) for c in cats], dtype=float)
         err = np.array([sub[f"{metric}_ci95"].get(c, np.nan) for c in cats], dtype=float)
-        ax.bar(x + (i - (len(protos) - 1) / 2) * width, mean, width * 0.9, yerr=clip_err(mean, err), color=COLOR[p],
+        ax.bar(x + (i - (len(protos) - 1) / 2) * width, mean, width * 0.9, yerr=clip_err(mean, err, 100 if is_pct(metric) else None), color=COLOR[p],
                error_kw=dict(ecolor=INK2, elinewidth=1, capsize=2), label=LABEL[p])
     ax.set_xticks(x)
     ax.set_xticklabels([(cat_labels or {}).get(c, c) for c in cats], rotation=25, ha="right")
@@ -277,7 +283,7 @@ def main_grid():
             sub = agg[agg.scenario == sc]
             for p in protos:
                 q = sub[sub.protocol == p].sort_values("nodes")
-                ax.errorbar(q.nodes, q[f"{metric}_mean"], yerr=clip_err(q[f"{metric}_mean"], q[f"{metric}_ci95"]), color=COLOR[p],
+                ax.errorbar(q.nodes, q[f"{metric}_mean"], yerr=clip_err(q[f"{metric}_mean"], q[f"{metric}_ci95"], 100 if is_pct(metric) else None), color=COLOR[p],
                             marker=MARKER[p], ms=5, capsize=2, label=LABEL[p])
             ax.set_title(SCEN_LABEL[sc])
             ax.set_xticks(nodes)
@@ -288,12 +294,49 @@ def main_grid():
         legend_protocols(fig, protos)
         savefig(fig, fname)
 
+    for n in nodes:
+        deadline_sweep(df[df.nodes == n], "scenario", scens, SCEN_LABEL, f"main_deadline_sweep_n{n}",
+                       f"{n} nodes. T is a placeholder until set from Kerala data; error bars: 95% CI")
+
     # Delay distribution and control traffic over time (50 nodes, node failure)
     delay_cdf("main", "node_fail", 50, protos)
     control_over_time("main", "node_fail", 50, protos)
     control_over_time("main", "partition", 50, protos)
     notes.append(f"main: {len(df)} runs")
     return notes
+
+
+def deadline_sweep(df, group_col, groups, group_label, fname, title):
+    """Share of sent packets delivered within T, for each deadline T."""
+    Ts = [0.5, 1.0, 2.0, 5.0]
+    cols = [f"within_{T:g}s_pct" for T in Ts]
+    protos = [p for p in PROTOCOLS if p in set(df.protocol)]
+    ncol = min(3, len(groups))
+    nrow = math.ceil(len(groups) / ncol)
+    fig, axes = plt.subplots(nrow, ncol, figsize=(3.4 * ncol, 3.0 * nrow), sharey=True, squeeze=False)
+    for ax in axes.flat[len(groups):]:
+        ax.set_visible(False)
+    for ax, gval in zip(axes.flat, groups):
+        sub = df[df[group_col] == gval]
+        for p in protos:
+            q = sub[sub.protocol == p]
+            if q.empty:
+                continue
+            m = [q[c].mean() for c in cols]
+            e = [ci95(q[c]) for c in cols]
+            dodge = {"aodv": 0.93, "olsr": 1.0, "dsdv": 1.07}[p]  # keep error bars apart
+            ax.errorbar(np.array(Ts) * dodge, m, yerr=clip_err(m, e, 100), color=COLOR[p], marker=MARKER[p],
+                        ms=5, capsize=2)
+        ax.set_xscale("log")
+        ax.xaxis.set_minor_locator(matplotlib.ticker.NullLocator())
+        ax.set_xticks(Ts)
+        ax.set_xticklabels([f"{T:g}" for T in Ts])
+        ax.set_xlabel("Deadline T (s)")
+        ax.set_title(group_label.get(gval, gval))
+    for ax in axes[:, 0]:
+        ax.set_ylabel("Sent packets delivered within T (%)")
+    legend_protocols(fig, protos)
+    savefig(fig, fname, title)
 
 
 def run_dirs(exp, scenario, n):
@@ -381,7 +424,7 @@ def severity():
             sub = agg[agg.scenario == sc]
             for p in protos:
                 q = sub[sub.protocol == p].sort_values("severity")
-                ax.errorbar(100 * q.severity, q[f"{metric}_mean"], yerr=clip_err(q[f"{metric}_mean"], q[f"{metric}_ci95"]), color=COLOR[p],
+                ax.errorbar(100 * q.severity, q[f"{metric}_mean"], yerr=clip_err(q[f"{metric}_mean"], q[f"{metric}_ci95"], 100 if is_pct(metric) else None), color=COLOR[p],
                             marker=MARKER[p], ms=5, capsize=2, label=LABEL[p])
             ax.set_title(title)
             ax.set_xlabel("Failed share (% of all nodes / all links)")
@@ -409,7 +452,7 @@ def load_sweep():
             sub = agg[agg.scenario == sc]
             for p in protos:
                 q = sub[sub.protocol == p].sort_values("n_flows")
-                ax.errorbar(q.n_flows * 16.384, q[f"{metric}_mean"], yerr=clip_err(q[f"{metric}_mean"], q[f"{metric}_ci95"]), color=COLOR[p],
+                ax.errorbar(q.n_flows * 16.384, q[f"{metric}_mean"], yerr=clip_err(q[f"{metric}_mean"], q[f"{metric}_ci95"], 100 if is_pct(metric) else None), color=COLOR[p],
                             marker=MARKER[p], ms=5, capsize=2, label=LABEL[p])
             ax.set_title(SCEN_LABEL[sc] + ", 50 nodes")
             ax.set_xlabel("Offered load (kbps): 5, 10, 20 flows × 16.4 kbps")
@@ -517,6 +560,9 @@ def kerala():
         legend_protocols(fig, protos)
         savefig(fig, f"kerala_within_T_by_phase_n{n}", "Hypothetical, time-compressed scenario anchored to "
                 "dated 2018 events; not measured Kerala data. Error bars: 95% CI over seeds")
+    for n in sorted(df.nodes.unique()):
+        deadline_sweep(df[df.nodes == n], "model", models, mlab, f"kerala_deadline_sweep_n{n}",
+                       "Whole run (acute + sustained). Hypothetical scenario; error bars: 95% CI")
     for n in sorted(df.nodes.unique()):
         sub = df[df.nodes == n]
         ts_path = os.path.join(RES, "kerala" if n == 50 else f"kerala{n}", "timeseries.csv")
