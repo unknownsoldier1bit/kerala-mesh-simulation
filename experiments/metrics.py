@@ -151,9 +151,10 @@ def recovery_analysis(pk, cfg, events, traffic_stop, window_s=10.0):
                 if not recent.empty:
                     continue
             route = has_route(g, fl["src"], fl["dst"], down_nodes, down_links)
-            # Recovery is measured until the next event that changes the network, so a
-            # later restore doesn't get credited to rerouting around this failure.
-            next_t = min((p[0] for p in pts if p[0] > t), default=traffic_stop)
+            # Recovery is measured until the next restore (or the end of traffic), so a
+            # restore isn't credited to rerouting around this failure. Further failures
+            # don't stop the clock.
+            next_t = min((p[0] for p in pts if p[0] > t and p[1] == "restore"), default=traffic_stop)
             after = delivered[(delivered.tx_s >= t) & (delivered.rx_s < next_t)]
             rec = float(after.rx_s.min() - t) if (route and not after.empty) else math.nan
             win = grp[(grp.tx_s >= t) & (grp.tx_s < t + window_s)]
@@ -165,7 +166,7 @@ def recovery_analysis(pk, cfg, events, traffic_stop, window_s=10.0):
                     route_available=route,
                     recovered=not math.isnan(rec),
                     recovery_s=rec,
-                    # time without delivery after the event (censored at the next event)
+                    # time without delivery after the event (censored at the next restore / end)
                     outage_s=rec if not math.isnan(rec) else next_t - t,
                     censored_at_s=next_t,
                     sent_in_window=len(win),

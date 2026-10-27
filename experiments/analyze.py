@@ -478,9 +478,10 @@ def energy():
 
 
 def kerala():
-    df = load("kerala")
-    if df is None:
+    frames = [d for d in (load("kerala"), load("kerala100")) if d is not None]
+    if not frames:
         return []
+    df = pd.concat(frames, ignore_index=True)
     df["model"] = np.where(df.severity.isna(), "control",
                            df.scenario + "_" + (100 * df.severity.fillna(0)).round().astype(int).astype(str))
     metrics = list(KEY_METRICS) + ["connected_pdr_pct", "connected_within_1s_pct", "within_0.5s_pct",
@@ -518,7 +519,7 @@ def kerala():
                 "dated 2018 events; not measured Kerala data. Error bars: 95% CI over seeds")
     for n in sorted(df.nodes.unique()):
         sub = df[df.nodes == n]
-        ts_path = os.path.join(RES, "kerala", "timeseries.csv")
+        ts_path = os.path.join(RES, "kerala" if n == 50 else f"kerala{n}", "timeseries.csv")
         if not os.path.exists(ts_path):
             continue
         ts = pd.read_csv(ts_path).merge(sub[["run_id", "protocol", "model"]], on="run_id")
@@ -661,7 +662,8 @@ def findings_md():
             "nrl_ctrl_per_delivered": "NRL", "recovery_time_s": "recovery s",
             "restore_recovery_mean_s": "after restore s", "energy_mean_per_node_J": "J/node"}
     specs = [("main", ["scenario", "nodes"]), ("severity", ["scenario", "severity"]),
-             ("load", ["scenario", "n_flows"]), ("energy", ["scenario"]), ("kerala", ["scenario", "severity"])]
+             ("load", ["scenario", "n_flows"]), ("energy", ["scenario"]), ("kerala", ["scenario", "severity"]),
+             ("kerala100", ["scenario", "severity"])]
     extra = {"energy": {"first_depletion_s": "1st death s", "depletion_50pct_s": "50% dead s",
                         "connected_pdr_pct": "connected PDR %"},
              "kerala": {"connected_pdr_pct": "connected PDR %", "acute_14_18aug_within_1s_pct": "acute ≤1 s %",
@@ -712,7 +714,7 @@ def findings_md():
 
 def combined_summary_table():
     frames = []
-    for exp in ("main", "severity", "load", "energy", "kerala"):
+    for exp in ("main", "severity", "load", "energy", "kerala", "kerala100"):
         df = load(exp)
         if df is not None:
             t = table_deliverable(df)

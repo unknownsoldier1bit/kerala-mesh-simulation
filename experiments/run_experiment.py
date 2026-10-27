@@ -76,6 +76,8 @@ def grid(name):
         return kerala.energy_runs(name, PROTOCOLS, SEEDS)
     if name == "kerala":
         return kerala.kerala_runs(name, PROTOCOLS, SEEDS)
+    if name == "kerala100":  # same as kerala, with 100 nodes
+        return kerala.kerala_runs(name, PROTOCOLS, SEEDS, nodes=(100,))
     raise SystemExit(f"unknown experiment {name}")
 
 
@@ -224,6 +226,28 @@ def run_one(cfg):
     return cfg["run_id"], "ok", summary, None
 
 
+def recompute_one(cfg):
+    """Recomputes the metrics of a finished run from its raw files (after a metrics change)."""
+    abs_out = os.path.join(REPO, "results", cfg["experiment"], "runs", cfg["run_id"])
+    done_file = os.path.join(abs_out, "summary.json")
+    if not os.path.exists(done_file):
+        return cfg["run_id"], "missing"
+    with open(done_file) as f:
+        old = json.load(f)
+    try:
+        summary, per_flow, rec, ts = metrics.compute(abs_out, cfg)
+    except Exception as e:
+        return cfg["run_id"], f"failed: {type(e).__name__}: {e}"
+    summary["run_seconds"] = old.get("run_seconds")
+    per_flow.to_csv(os.path.join(abs_out, "per_flow.csv"), index=False)
+    rec.to_csv(os.path.join(abs_out, "recovery.csv"), index=False)
+    if ts is not None:
+        ts.to_csv(os.path.join(abs_out, "timeseries.csv"), index=False)
+    with open(done_file, "w") as f:
+        json.dump(summary, f, indent=1, default=float)
+    return cfg["run_id"], "ok"
+
+
 def collect(exp, runs):
     """Rebuilds the experiment-level CSVs from every finished run."""
     base = os.path.join(REPO, "results", exp)
@@ -265,6 +289,7 @@ def main():
     ap.add_argument("--dry", action="store_true")
     ap.add_argument("--jobs", type=int, default=os.cpu_count())
     ap.add_argument("--only", default="", help="substring filter on run_id (for testing)")
+    ap.add_argument("--recompute", action="store_true", help="recompute metrics of finished runs only")
     a = ap.parse_args()
     os.chdir(REPO)
     runs = grid(a.experiment)
@@ -274,6 +299,13 @@ def main():
     if a.dry:
         for r in runs[:20]:
             print(r["run_id"])
+        return
+    if a.recompute:
+        with mp.Pool(a.jobs) as pool:
+            res = pool.map(recompute_one, runs)
+        bad = [r for r in res if r[1] != "ok"]
+        print(f"recomputed {len(res) - len(bad)} runs; not recomputed: {bad[:10]}", flush=True)
+        collect(a.experiment, runs)
         return
     base = os.path.join(REPO, "results", a.experiment)
     failed_path = os.path.join(base, "failed_runs.csv")
