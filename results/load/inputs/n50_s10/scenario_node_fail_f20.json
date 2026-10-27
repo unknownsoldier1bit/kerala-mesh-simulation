@@ -1,0 +1,125 @@
+{
+ "scenario": "node_fail",
+ "severity_param": null,
+ "selection": "deterministic",
+ "assumption": "Relay devices stop working (submerged, destroyed, or battery dead) and stay down. Modelled by switching the radio off. The nodes chosen are the relays carrying the most traffic on shortest paths (targeted, worst-case). Senders and receivers are never failed, so every lost packet is due to routing, not to a missing endpoint.",
+ "failure_start_s": 120.0,
+ "failure_end_s": null,
+ "failed_nodes": [
+  {
+   "node": 12,
+   "x": 304.17,
+   "y": 241.03
+  },
+  {
+   "node": 22,
+   "x": 252.13,
+   "y": 112.92
+  },
+  {
+   "node": 21,
+   "x": 150.14,
+   "y": 54.75
+  },
+  {
+   "node": 20,
+   "x": 92.43,
+   "y": 123.26
+  },
+  {
+   "node": 46,
+   "x": 229.23,
+   "y": 141.21
+  }
+ ],
+ "failed_links": [],
+ "n_failed_nodes": 5,
+ "pct_failed_nodes": 10.0,
+ "n_failed_links": 0,
+ "pct_failed_links": 0.0,
+ "components_after_failure": 1,
+ "flows_with_alternative_route": 20,
+ "flows_total": 20,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 10,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 11,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 12,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 13,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 14,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 15,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 16,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 17,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 18,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 19,
+   "alternative_route_exists": true
+  }
+ ]
+}

@@ -1,0 +1,99 @@
+{
+ "experiment": "load",
+ "run_id": "aodv_baseline_n50_f5_s7",
+ "protocol": "aodv",
+ "scenario": "baseline",
+ "nodes": 50,
+ "seed": 7,
+ "rng_run": 7,
+ "n_flows": 5,
+ "severity": null,
+ "severity_label": "none",
+ "topo": "results/load/inputs/n50_s7/topology.csv",
+ "flows_file": "results/load/inputs/n50_s7/flows_f5.csv",
+ "events_file": "results/load/inputs/n50_s7/events_baseline_f5.csv",
+ "fail_time_s": null,
+ "restore_time_s": null,
+ "traffic_start_s": 60.0,
+ "traffic_stop_s": 290.0,
+ "sim_time_s": 300.0,
+ "payload_bytes": 512,
+ "range_m": 150.0,
+ "energy_j": 0,
+ "deadline_s": 1.0,
+ "energy_model": "states",
+ "flowmon": false,
+ "rt_dump": "",
+ "flows": [
+  {
+   "flow": 0,
+   "src": 9,
+   "dst": 13,
+   "hops": 2,
+   "segments": [
+    [
+     60.09334491489441,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "src": 15,
+   "dst": 2,
+   "hops": 2,
+   "segments": [
+    [
+     60.01383472304145,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "src": 27,
+   "dst": 6,
+   "hops": 5,
+   "segments": [
+    [
+     60.000916105443395,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "src": 38,
+   "dst": 16,
+   "hops": 2,
+   "segments": [
+    [
+     60.2277836013739,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 4,
+   "src": 5,
+   "dst": 22,
+   "hops": 4,
+   "segments": [
+    [
+     60.088506452650456,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  }
+ ]
+}
