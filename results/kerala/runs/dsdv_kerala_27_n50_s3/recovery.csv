@@ -1,0 +1,13 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+dsdv_kerala_27_n50_s3,91.905,fail,3,True,False,,,356.095,448.0,0,0
+dsdv_kerala_27_n50_s3,106.19,fail,0,True,False,,,341.81,448.0,2,0
+dsdv_kerala_27_n50_s3,106.19,fail,14,True,False,,,341.81,448.0,3,0
+dsdv_kerala_27_n50_s3,215.0,fail,1,True,True,44.87625600000001,42.667629000000005,44.87625600000001,448.0,10,0
+dsdv_kerala_27_n50_s3,321.0,fail,1,True,True,10.689823999999987,0.0024099999999975807,10.689823999999987,448.0,0,0
+dsdv_kerala_27_n50_s3,321.0,fail,2,True,True,16.63561199999998,9.769007999999985,16.63561199999998,448.0,5,0
+dsdv_kerala_27_n50_s3,321.0,fail,11,True,False,,,127.0,448.0,0,0
+dsdv_kerala_27_n50_s3,321.0,fail,15,True,False,,,127.0,448.0,0,0
+dsdv_kerala_27_n50_s3,321.0,fail,18,True,True,41.68653899999998,0.003284000000007836,41.68653899999998,448.0,0,0
+dsdv_kerala_27_n50_s3,353.0,fail,2,True,False,,,95.0,448.0,5,0
+dsdv_kerala_27_n50_s3,360.0,fail,1,True,True,15.681872999999996,0.0024099999999975807,15.681872999999996,448.0,0,0
+dsdv_kerala_27_n50_s3,360.0,fail,10,True,True,2.5159590000000094,0.0032850000000053114,2.5159590000000094,448.0,5,5

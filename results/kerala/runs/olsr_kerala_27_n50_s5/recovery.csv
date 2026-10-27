@@ -1,0 +1,7 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+olsr_kerala_27_n50_s5,91.905,fail,3,True,False,,,356.095,448.0,5,0
+olsr_kerala_27_n50_s5,106.19,fail,4,True,True,5.790239,2.6512400000000014,5.790239,448.0,10,5
+olsr_kerala_27_n50_s5,106.19,fail,17,True,True,32.116704999999996,0.0024099999999975807,32.116704999999996,448.0,0,0
+olsr_kerala_27_n50_s5,169.286,fail,11,True,True,5.256378000000012,5.177227000000016,5.256378000000012,448.0,6,5
+olsr_kerala_27_n50_s5,369.0,fail,9,True,True,5.218486999999982,0.4032849999999826,5.218486999999982,448.0,5,3
+olsr_kerala_27_n50_s5,389.0,fail,11,True,True,31.206084999999973,0.0041589999999587235,31.206084999999973,448.0,0,0

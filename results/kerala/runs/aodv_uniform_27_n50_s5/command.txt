@@ -1,0 +1,1 @@
+ns3.47-manet --protocol=aodv --topo=results/kerala/inputs/n50_s5/topology.csv --flows=results/kerala/inputs/n50_s5/flows_bursts.csv --outDir=results/kerala/runs/aodv_uniform_27_n50_s5 --run=5 --simTime=450.0 --range=150.0 --energyJ=0 --events=results/kerala/inputs/n50_s5/events_uniform_27.csv --energyFile=results/kerala/inputs/n50_s5/battery.csv

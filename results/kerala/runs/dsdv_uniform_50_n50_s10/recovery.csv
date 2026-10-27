@@ -1,0 +1,4 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+dsdv_uniform_50_n50_s10,108.0,fail,6,True,True,21.786358000000007,15.477648000000002,21.786358000000007,448.0,5,0
+dsdv_uniform_50_n50_s10,118.667,fail,18,True,True,47.553278000000006,0.0032850000000053114,47.553278000000006,448.0,0,0
+dsdv_uniform_50_n50_s10,130.0,fail,18,True,True,36.22027800000001,0.0032850000000053114,36.22027800000001,448.0,0,0
