@@ -7,12 +7,12 @@ Updated on every push. The full list of requested outputs is in `docs/deliverabl
 | Save deliverables list | done |
 | Build simulator for all scenarios (`sim/manet`) | done |
 | Main grid: 3 protocols × 6 scenarios × 25/50/100 nodes × 10 seeds (540 runs) | 25 and 50 nodes done and committed (360 runs). 100 nodes: a few done; the rest run after the 50-node experiments below (they are the slowest, 2–10 min each) |
-| Failure-severity sweep (240 runs) | running |
-| Traffic-load sweep (180 runs) | queued |
-| Energy and network lifetime (60 runs) | queued |
-| Kerala time-evolving failure model + baselines, 50 nodes (150 runs) | queued |
+| Failure-severity sweep (240 runs) | done, committed |
+| Traffic-load sweep (180 runs) | done, committed |
+| Energy and network lifetime (60 runs) | done, committed |
+| Kerala time-evolving failure model + baselines, 50 nodes (150 runs) | done, committed |
 | Kerala, 100 nodes (150 runs) | queued (extra) |
-| Analysis: tables, figures, statistics | code done; rerun when all results are in |
+| Analysis: tables, figures, statistics | checkpoint committed (`results/analysis/`): everything except the 100-node main runs, which are still running. Will be regenerated at the end |
 | Methods README (`experiments/README.md`) | done |
 
 ## Found along the way

@@ -76,9 +76,17 @@ def ensure_dirs():
         os.makedirs(d, exist_ok=True)
 
 
+MIN_SEEDS = 5  # configurations with fewer finished seeds are left out until they complete
+
+
 def load(exp):
     p = os.path.join(RES, exp, "summary.csv")
-    return pd.read_csv(p) if os.path.exists(p) else None
+    if not os.path.exists(p):
+        return None
+    df = pd.read_csv(p)
+    keys = [k for k in ("scenario", "nodes", "severity", "n_flows", "protocol") if k in df]
+    n = df.groupby(keys, dropna=False).seed.transform("count")
+    return df[n >= MIN_SEEDS].reset_index(drop=True)
 
 
 def ci95(x):
