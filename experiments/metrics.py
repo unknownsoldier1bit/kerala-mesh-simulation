@@ -263,7 +263,7 @@ def compute(run_dir, cfg):
 
     s = {}
     for k in ("experiment", "run_id", "protocol", "scenario", "nodes", "seed", "rng_run", "n_flows",
-              "severity", "fail_time_s", "restore_time_s", "deadline_s"):
+              "severity", "fail_time_s", "restore_time_s", "deadline_s", "traffic_start_s"):
         s[k] = cfg.get(k)
     s["failure_severity"] = cfg.get("severity_label", "")
 

@@ -648,6 +648,29 @@ def flowmon_crosscheck():
     return []
 
 
+def convergence_check():
+    """OLSR/DSDV runs whose routing tables were not yet complete when traffic started."""
+    rows = []
+    for exp in ("main", "severity", "load", "energy", "kerala", "kerala100"):
+        df = load(exp)
+        if df is None or "initial_convergence_s" not in df:
+            continue
+        d = df[df.protocol.isin(["olsr", "dsdv"])]
+        for _, r in d.iterrows():
+            late = pd.isna(r.initial_convergence_s) or r.initial_convergence_s > r.get("traffic_start_s", 60)
+            rows.append(dict(experiment=exp, run_id=r.run_id, protocol=r.protocol, nodes=r.nodes, seed=r.seed,
+                             initial_convergence_s=r.initial_convergence_s,
+                             route_validity_at_traffic_start=r.route_validity_at_traffic_start,
+                             converged_before_traffic=not late))
+    if not rows:
+        return []
+    d = pd.DataFrame(rows)
+    d.to_csv(os.path.join(TAB, "check_initial_convergence.csv"), index=False)
+    late = d[~d.converged_before_traffic]
+    return [f"convergence check: {len(late)} of {len(d)} OLSR/DSDV runs not converged when traffic started "
+            f"({', '.join(sorted(set(late.protocol + ' n' + late.nodes.astype(str) + ' s' + late.seed.astype(str))))})"]
+
+
 def scenario_properties():
     """Averages the scenario metadata (what failed, routes left) per experiment, scenario and size."""
     rows = []
@@ -776,7 +799,7 @@ def main():
     ensure_dirs()
     notes = []
     for step in (main_grid, severity, load_sweep, energy, kerala, energy_validation, flowmon_crosscheck,
-                 scenario_properties, failed_runs, combined_summary_table, findings_md):
+                 convergence_check, scenario_properties, failed_runs, combined_summary_table, findings_md):
         try:
             notes += step()
         except Exception as e:  # keep going so one broken step doesn't hide the rest

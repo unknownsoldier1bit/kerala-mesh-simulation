@@ -43,7 +43,7 @@ The same for every experiment unless the table says otherwise.
 | Seeds and run numbers | Seeds 1–10. NS-3: `RngSeedManager::SetSeed(1)`, `SetRun(seed)`. Inputs (positions, flows, random failures, batteries) use NumPy generators seeded from (node count, seed): see `gen.topo_seed` |
 | Mobility | None: `ConstantPositionMobilityModel` (nodes are static) |
 | Energy | Every run measures each radio's time in each PHY state and converts it to joules with NS-3's `WifiRadioEnergyModel` currents at 3 V (see Checks). Batteries run out only in the energy and Kerala experiments |
-| Warm-up | No traffic during the first 60 s, so OLSR and DSDV can build their tables (measured: tables complete before traffic starts in every checked run; see `initial_convergence_s` in the summaries) |
+| Warm-up | No traffic during the first 60 s, so OLSR and DSDV can build their tables. OLSR's tables were always complete by then. DSDV's were not in a few sparse 25-node topologies (up to 11 hops across), where DSDV needs longer: `results/analysis/tables/check_initial_convergence.csv` lists those runs, and `initial_convergence_s` in the summaries gives the time for every run |
 
 ## 2. Disaster scenarios
 
@@ -144,6 +144,7 @@ Read these before writing the methods and discussion sections.
 - **Unit-disk radio.** Full signal within 150 m, nothing beyond: no fading, no gradual loss, no obstacles except the deliberate link failures. This keeps "is there a route?" exact, but real links are less clear-cut.
 - **Static nodes.** No mobility. Fine for people sheltering in place; it doesn't cover rescue boats or people moving.
 - **Constant-rate traffic** in the main experiments. Real emergency traffic is burstier (used in the Kerala experiment only).
+- **DSDV start-up in sparse networks.** The 60 s warm-up was not enough for DSDV in some sparse 25-node topologies (see `check_initial_convergence.csv`), so part of DSDV's loss there comes from tables that were still being built. That is real DSDV behaviour (slow convergence over many hops), but say so if you compare DSDV at 25 nodes; those runs can be excluded using the check table.
 - **NS-3 default protocol parameters.** Tuning (for example a shorter OLSR HELLO interval) would change the results.
 - **Energy model:** a fixed current per radio state, no sleep scheduling, and nothing but the Wi-Fi radio draws power. Idle listening dominates, which is a real property of always-on ad-hoc Wi-Fi but makes routing traffic a small share of energy use.
 - **Time compression** in the Kerala experiment (see section 5).
