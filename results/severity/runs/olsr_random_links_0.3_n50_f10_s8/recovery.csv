@@ -1,0 +1,6 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+olsr_random_links_0.3_n50_f10_s8,120.0,fail,1,True,True,4.4648870000000045,4.253284000000008,4.4648870000000045,290.0,40,5
+olsr_random_links_0.3_n50_f10_s8,120.0,fail,2,True,True,4.329705000000004,4.254756999999998,4.329705000000004,290.0,40,23
+olsr_random_links_0.3_n50_f10_s8,120.0,fail,5,True,True,4.264842999999999,4.254159000000001,4.264842999999999,290.0,40,23
+olsr_random_links_0.3_n50_f10_s8,120.0,fail,7,True,True,4.313518999999999,4.273942000000005,4.313518999999999,290.0,40,23
+olsr_random_links_0.3_n50_f10_s8,120.0,fail,9,True,True,6.271987999999993,6.252409999999998,6.271987999999993,290.0,40,15

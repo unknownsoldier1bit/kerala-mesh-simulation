@@ -1,0 +1,138 @@
+{
+ "scenario": "random_links",
+ "severity_param": 0.05,
+ "selection": "random",
+ "assumption": "",
+ "failure_start_s": 120.0,
+ "failure_end_s": null,
+ "failed_nodes": [],
+ "failed_links": [
+  {
+   "a": 0,
+   "b": 39,
+   "mid_x": 332.08,
+   "mid_y": 457.43
+  },
+  {
+   "a": 5,
+   "b": 17,
+   "mid_x": 339.52,
+   "mid_y": 224.38
+  },
+  {
+   "a": 5,
+   "b": 26,
+   "mid_x": 374.76,
+   "mid_y": 287.83
+  },
+  {
+   "a": 6,
+   "b": 13,
+   "mid_x": 321.15,
+   "mid_y": 416.53
+  },
+  {
+   "a": 7,
+   "b": 29,
+   "mid_x": 397.22,
+   "mid_y": 60.38
+  },
+  {
+   "a": 9,
+   "b": 23,
+   "mid_x": 408.37,
+   "mid_y": 323.16
+  },
+  {
+   "a": 10,
+   "b": 21,
+   "mid_x": 290.39,
+   "mid_y": 204.59
+  },
+  {
+   "a": 11,
+   "b": 20,
+   "mid_x": 317.54,
+   "mid_y": 174.11
+  },
+  {
+   "a": 11,
+   "b": 21,
+   "mid_x": 334.81,
+   "mid_y": 202.24
+  },
+  {
+   "a": 17,
+   "b": 21,
+   "mid_x": 325.83,
+   "mid_y": 210.48
+  },
+  {
+   "a": 21,
+   "b": 31,
+   "mid_x": 306.86,
+   "mid_y": 199.69
+  },
+  {
+   "a": 23,
+   "b": 40,
+   "mid_x": 373.38,
+   "mid_y": 344.62
+  },
+  {
+   "a": 35,
+   "b": 39,
+   "mid_x": 339.88,
+   "mid_y": 440.45
+  }
+ ],
+ "n_failed_nodes": 0,
+ "pct_failed_nodes": 0.0,
+ "n_failed_links": 13,
+ "pct_failed_links": 4.85,
+ "components_after_failure": 1,
+ "flows_with_alternative_route": 10,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": true
+  }
+ ]
+}

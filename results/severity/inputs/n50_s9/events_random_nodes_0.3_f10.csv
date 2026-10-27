@@ -1,0 +1,16 @@
+time_s,action,kind,a,b,group
+120.0,fail,node,4,-1,random
+120.0,fail,node,6,-1,random
+120.0,fail,node,8,-1,random
+120.0,fail,node,13,-1,random
+120.0,fail,node,14,-1,random
+120.0,fail,node,17,-1,random
+120.0,fail,node,21,-1,random
+120.0,fail,node,24,-1,random
+120.0,fail,node,27,-1,random
+120.0,fail,node,32,-1,random
+120.0,fail,node,35,-1,random
+120.0,fail,node,38,-1,random
+120.0,fail,node,40,-1,random
+120.0,fail,node,45,-1,random
+120.0,fail,node,49,-1,random

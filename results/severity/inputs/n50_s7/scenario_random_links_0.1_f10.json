@@ -1,0 +1,186 @@
+{
+ "scenario": "random_links",
+ "severity_param": 0.1,
+ "selection": "random",
+ "assumption": "",
+ "failure_start_s": 120.0,
+ "failure_end_s": null,
+ "failed_nodes": [],
+ "failed_links": [
+  {
+   "a": 1,
+   "b": 18,
+   "mid_x": 206.58,
+   "mid_y": 93.16
+  },
+  {
+   "a": 2,
+   "b": 19,
+   "mid_x": 367.78,
+   "mid_y": 261.49
+  },
+  {
+   "a": 7,
+   "b": 43,
+   "mid_x": 359.97,
+   "mid_y": 235.85
+  },
+  {
+   "a": 10,
+   "b": 15,
+   "mid_x": 89.7,
+   "mid_y": 419.9
+  },
+  {
+   "a": 11,
+   "b": 25,
+   "mid_x": 188.12,
+   "mid_y": 423.15
+  },
+  {
+   "a": 11,
+   "b": 35,
+   "mid_x": 222.98,
+   "mid_y": 300.19
+  },
+  {
+   "a": 12,
+   "b": 29,
+   "mid_x": 428.72,
+   "mid_y": 470.55
+  },
+  {
+   "a": 15,
+   "b": 26,
+   "mid_x": 125.8,
+   "mid_y": 427.3
+  },
+  {
+   "a": 16,
+   "b": 19,
+   "mid_x": 407.57,
+   "mid_y": 250.05
+  },
+  {
+   "a": 16,
+   "b": 20,
+   "mid_x": 402.59,
+   "mid_y": 283.08
+  },
+  {
+   "a": 20,
+   "b": 23,
+   "mid_x": 342.15,
+   "mid_y": 287.83
+  },
+  {
+   "a": 21,
+   "b": 33,
+   "mid_x": 451.0,
+   "mid_y": 45.99
+  },
+  {
+   "a": 22,
+   "b": 39,
+   "mid_x": 383.3,
+   "mid_y": 171.66
+  },
+  {
+   "a": 22,
+   "b": 41,
+   "mid_x": 406.66,
+   "mid_y": 236.92
+  },
+  {
+   "a": 23,
+   "b": 41,
+   "mid_x": 322.98,
+   "mid_y": 263.65
+  },
+  {
+   "a": 29,
+   "b": 49,
+   "mid_x": 391.38,
+   "mid_y": 483.85
+  },
+  {
+   "a": 30,
+   "b": 34,
+   "mid_x": 128.05,
+   "mid_y": 449.36
+  },
+  {
+   "a": 32,
+   "b": 44,
+   "mid_x": 42.14,
+   "mid_y": 170.09
+  },
+  {
+   "a": 33,
+   "b": 37,
+   "mid_x": 415.4,
+   "mid_y": 28.19
+  },
+  {
+   "a": 35,
+   "b": 48,
+   "mid_x": 235.8,
+   "mid_y": 252.1
+  },
+  {
+   "a": 37,
+   "b": 46,
+   "mid_x": 372.84,
+   "mid_y": 39.35
+  }
+ ],
+ "n_failed_nodes": 0,
+ "pct_failed_nodes": 0.0,
+ "n_failed_links": 21,
+ "pct_failed_links": 10.05,
+ "components_after_failure": 1,
+ "flows_with_alternative_route": 10,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": true
+  }
+ ]
+}

@@ -1,0 +1,2 @@
+protocol,nodes,flows,suppressed_sends,socket_errors,duplicate_receptions,wall_s
+aodv,50,10,0,0,0,25.7052

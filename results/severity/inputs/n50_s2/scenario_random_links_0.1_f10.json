@@ -1,0 +1,222 @@
+{
+ "scenario": "random_links",
+ "severity_param": 0.1,
+ "selection": "random",
+ "assumption": "",
+ "failure_start_s": 120.0,
+ "failure_end_s": null,
+ "failed_nodes": [],
+ "failed_links": [
+  {
+   "a": 0,
+   "b": 35,
+   "mid_x": 402.24,
+   "mid_y": 449.42
+  },
+  {
+   "a": 1,
+   "b": 6,
+   "mid_x": 350.91,
+   "mid_y": 406.67
+  },
+  {
+   "a": 2,
+   "b": 23,
+   "mid_x": 378.13,
+   "mid_y": 278.97
+  },
+  {
+   "a": 3,
+   "b": 18,
+   "mid_x": 138.9,
+   "mid_y": 44.02
+  },
+  {
+   "a": 5,
+   "b": 15,
+   "mid_x": 363.49,
+   "mid_y": 328.12
+  },
+  {
+   "a": 5,
+   "b": 17,
+   "mid_x": 339.52,
+   "mid_y": 224.38
+  },
+  {
+   "a": 6,
+   "b": 27,
+   "mid_x": 349.12,
+   "mid_y": 387.53
+  },
+  {
+   "a": 10,
+   "b": 17,
+   "mid_x": 310.76,
+   "mid_y": 150.53
+  },
+  {
+   "a": 10,
+   "b": 20,
+   "mid_x": 273.12,
+   "mid_y": 176.46
+  },
+  {
+   "a": 10,
+   "b": 46,
+   "mid_x": 236.89,
+   "mid_y": 119.54
+  },
+  {
+   "a": 11,
+   "b": 31,
+   "mid_x": 336.21,
+   "mid_y": 137.4
+  },
+  {
+   "a": 12,
+   "b": 38,
+   "mid_x": 461.87,
+   "mid_y": 67.53
+  },
+  {
+   "a": 13,
+   "b": 34,
+   "mid_x": 249.89,
+   "mid_y": 477.97
+  },
+  {
+   "a": 17,
+   "b": 31,
+   "mid_x": 327.23,
+   "mid_y": 145.64
+  },
+  {
+   "a": 17,
+   "b": 41,
+   "mid_x": 351.48,
+   "mid_y": 225.06
+  },
+  {
+   "a": 19,
+   "b": 37,
+   "mid_x": 117.52,
+   "mid_y": 90.33
+  },
+  {
+   "a": 23,
+   "b": 35,
+   "mid_x": 393.68,
+   "mid_y": 372.89
+  },
+  {
+   "a": 25,
+   "b": 35,
+   "mid_x": 410.19,
+   "mid_y": 452.81
+  },
+  {
+   "a": 28,
+   "b": 42,
+   "mid_x": 149.33,
+   "mid_y": 147.27
+  },
+  {
+   "a": 28,
+   "b": 46,
+   "mid_x": 168.27,
+   "mid_y": 92.16
+  },
+  {
+   "a": 30,
+   "b": 44,
+   "mid_x": 52.57,
+   "mid_y": 302.56
+  },
+  {
+   "a": 34,
+   "b": 39,
+   "mid_x": 235.38,
+   "mid_y": 473.24
+  },
+  {
+   "a": 35,
+   "b": 39,
+   "mid_x": 339.88,
+   "mid_y": 440.45
+  },
+  {
+   "a": 35,
+   "b": 48,
+   "mid_x": 430.87,
+   "mid_y": 362.22
+  },
+  {
+   "a": 41,
+   "b": 48,
+   "mid_x": 404.22,
+   "mid_y": 292.85
+  },
+  {
+   "a": 42,
+   "b": 47,
+   "mid_x": 231.19,
+   "mid_y": 205.75
+  },
+  {
+   "a": 43,
+   "b": 45,
+   "mid_x": 27.45,
+   "mid_y": 412.13
+  }
+ ],
+ "n_failed_nodes": 0,
+ "pct_failed_nodes": 0.0,
+ "n_failed_links": 27,
+ "pct_failed_links": 10.07,
+ "components_after_failure": 1,
+ "flows_with_alternative_route": 10,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": true
+  }
+ ]
+}

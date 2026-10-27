@@ -1,0 +1,2 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+aodv_random_links_0.1_n50_f10_s6,120.0,fail,8,True,True,0.4208459999999974,0.26662499999999056,0.4208459999999974,290.0,40,39

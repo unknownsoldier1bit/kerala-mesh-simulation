@@ -1,0 +1,110 @@
+{
+ "scenario": "random_nodes",
+ "severity_param": 0.2,
+ "selection": "random",
+ "assumption": "",
+ "failure_start_s": 120.0,
+ "failure_end_s": null,
+ "failed_nodes": [
+  {
+   "node": 4,
+   "x": 195.91,
+   "y": 408.6
+  },
+  {
+   "node": 6,
+   "x": 211.55,
+   "y": 112.4
+  },
+  {
+   "node": 10,
+   "x": 203.3,
+   "y": 229.15
+  },
+  {
+   "node": 14,
+   "x": 372.66,
+   "y": 496.09
+  },
+  {
+   "node": 15,
+   "x": 199.07,
+   "y": 99.43
+  },
+  {
+   "node": 32,
+   "x": 247.2,
+   "y": 448.66
+  },
+  {
+   "node": 38,
+   "x": 375.15,
+   "y": 150.7
+  },
+  {
+   "node": 41,
+   "x": 291.1,
+   "y": 204.43
+  },
+  {
+   "node": 43,
+   "x": 392.11,
+   "y": 198.06
+  },
+  {
+   "node": 44,
+   "x": 319.03,
+   "y": 313.27
+  }
+ ],
+ "failed_links": [],
+ "n_failed_nodes": 10,
+ "pct_failed_nodes": 20.0,
+ "n_failed_links": 0,
+ "pct_failed_links": 0.0,
+ "components_after_failure": 1,
+ "flows_with_alternative_route": 10,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": true
+  }
+ ]
+}

@@ -1,0 +1,14 @@
+time_s,action,kind,a,b,group
+120,fail,link,1,47,random
+120,fail,link,2,40,random
+120,fail,link,3,12,random
+120,fail,link,5,25,random
+120,fail,link,7,33,random
+120,fail,link,10,24,random
+120,fail,link,11,48,random
+120,fail,link,13,42,random
+120,fail,link,17,20,random
+120,fail,link,22,25,random
+120,fail,link,27,40,random
+120,fail,link,30,37,random
+120,fail,link,34,37,random

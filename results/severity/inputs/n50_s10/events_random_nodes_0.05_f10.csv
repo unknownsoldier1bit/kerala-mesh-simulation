@@ -1,0 +1,3 @@
+time_s,action,kind,a,b,group
+120.0,fail,node,2,-1,random
+120.0,fail,node,43,-1,random
