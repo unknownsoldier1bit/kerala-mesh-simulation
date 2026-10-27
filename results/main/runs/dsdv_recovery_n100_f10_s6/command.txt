@@ -1,0 +1,1 @@
+ns3.47-manet --protocol=dsdv --topo=results/main/inputs/n100_s6/topology.csv --flows=results/main/inputs/n100_s6/flows_f10.csv --outDir=results/main/runs/dsdv_recovery_n100_f10_s6 --run=6 --simTime=300.0 --range=150.0 --energyJ=0 --events=results/main/inputs/n100_s6/events_recovery_f10.csv
