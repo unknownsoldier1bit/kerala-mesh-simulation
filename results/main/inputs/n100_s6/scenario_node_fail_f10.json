@@ -1,0 +1,110 @@
+{
+ "scenario": "node_fail",
+ "severity_param": null,
+ "selection": "deterministic",
+ "assumption": "Relay devices stop working (submerged, destroyed, or battery dead) and stay down. Modelled by switching the radio off. The nodes chosen are the relays carrying the most traffic on shortest paths (targeted, worst-case). Senders and receivers are never failed, so every lost packet is due to routing, not to a missing endpoint.",
+ "failure_start_s": 120.0,
+ "failure_end_s": null,
+ "failed_nodes": [
+  {
+   "node": 11,
+   "x": 396.91,
+   "y": 357.53
+  },
+  {
+   "node": 65,
+   "x": 390.75,
+   "y": 347.53
+  },
+  {
+   "node": 43,
+   "x": 320.34,
+   "y": 273.33
+  },
+  {
+   "node": 15,
+   "x": 482.17,
+   "y": 356.06
+  },
+  {
+   "node": 48,
+   "x": 403.24,
+   "y": 229.61
+  },
+  {
+   "node": 19,
+   "x": 296.73,
+   "y": 365.34
+  },
+  {
+   "node": 33,
+   "x": 400.89,
+   "y": 116.9
+  },
+  {
+   "node": 44,
+   "x": 426.72,
+   "y": 119.8
+  },
+  {
+   "node": 60,
+   "x": 288.16,
+   "y": 302.71
+  },
+  {
+   "node": 54,
+   "x": 276.23,
+   "y": 265.04
+  }
+ ],
+ "failed_links": [],
+ "n_failed_nodes": 10,
+ "pct_failed_nodes": 10.0,
+ "n_failed_links": 0,
+ "pct_failed_links": 0.0,
+ "components_after_failure": 1,
+ "flows_with_alternative_route": 10,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": true
+  }
+ ]
+}

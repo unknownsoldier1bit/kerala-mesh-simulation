@@ -1,0 +1,90 @@
+{
+ "scenario": "link_fail",
+ "severity_param": null,
+ "selection": "deterministic",
+ "assumption": "Individual radio links stop working while both devices keep running, as when floodwater, debris or a collapsed structure blocks the path between two devices. Modelled as the two nodes no longer hearing each other. The links chosen are the ones carrying the most traffic on shortest paths (a targeted, worst-case choice).",
+ "failure_start_s": 120.0,
+ "failure_end_s": null,
+ "failed_nodes": [],
+ "failed_links": [
+  {
+   "a": 9,
+   "b": 19,
+   "mid_x": 242.74,
+   "mid_y": 187.37
+  },
+  {
+   "a": 5,
+   "b": 9,
+   "mid_x": 334.68,
+   "mid_y": 197.47
+  },
+  {
+   "a": 9,
+   "b": 13,
+   "mid_x": 276.3,
+   "mid_y": 257.39
+  },
+  {
+   "a": 0,
+   "b": 9,
+   "mid_x": 314.27,
+   "mid_y": 135.05
+  },
+  {
+   "a": 3,
+   "b": 19,
+   "mid_x": 145.74,
+   "mid_y": 128.9
+  }
+ ],
+ "n_failed_nodes": 0,
+ "pct_failed_nodes": 0.0,
+ "n_failed_links": 5,
+ "pct_failed_links": 10.42,
+ "components_after_failure": 3,
+ "flows_with_alternative_route": 2,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": false
+  }
+ ]
+}

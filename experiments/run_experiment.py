@@ -131,8 +131,9 @@ def standard_runs(exp, scenarios, nodes, flows, severities):
                                 sim_time_s=gen.SIM_TIME_S, payload_bytes=gen.PAYLOAD_B, range_m=gen.RANGE_M,
                                 energy_j=0, deadline_s=1.0,
                                 # seed 1 of the main grid also runs the ns-3 energy framework, to check
-                                # the fast state-based energy numbers against it
-                                energy_model=("ns3" if seed == 1 and exp == "main" else "states"),
+                                # the fast state-based energy numbers against it. Not at 100 nodes: the
+                                # framework's memory grows by gigabytes there (see experiments/README.md).
+                                energy_model=("ns3" if seed == 1 and exp == "main" and n <= 50 else "states"),
                                 flowmon=(seed == 1 and exp == "main"),
                                 rt_dump=("119,140" if seed == 1 and exp == "main" else ""),
                                 flows=flows_meta,

@@ -1,0 +1,13 @@
+time_s,action,kind,a,b,group
+120,fail,link,1,6,wave1
+120,fail,link,9,14,wave1
+120,fail,link,18,19,wave1
+120,fail,node,4,-1,wave1
+135,fail,link,0,22,wave2
+135,fail,link,1,10,wave2
+135,fail,link,10,17,wave2
+135,fail,node,23,-1,wave2
+150,fail,link,0,19,wave3
+150,fail,link,4,23,wave3
+150,fail,link,10,14,wave3
+150,fail,node,7,-1,wave3

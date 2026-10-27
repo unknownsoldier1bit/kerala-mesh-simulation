@@ -1,0 +1,11 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+aodv_recovery_n50_f10_s8,120.0,fail,0,True,True,0.5056399999999996,0.5056399999999996,210.0,40,39
+aodv_recovery_n50_f10_s8,120.0,fail,1,True,True,0.5985919999999965,0.5985919999999965,210.0,40,39
+aodv_recovery_n50_f10_s8,120.0,fail,3,True,True,0.3874969999999962,0.3874969999999962,210.0,40,39
+aodv_recovery_n50_f10_s8,120.0,fail,5,False,False,,90.0,210.0,40,0
+aodv_recovery_n50_f10_s8,120.0,fail,6,False,False,,90.0,210.0,40,0
+aodv_recovery_n50_f10_s8,120.0,fail,7,False,False,,90.0,210.0,40,0
+aodv_recovery_n50_f10_s8,120.0,fail,8,True,True,0.3500850000000071,0.3500850000000071,210.0,40,39
+aodv_recovery_n50_f10_s8,210.0,restore,5,True,True,4.20662999999999,4.20662999999999,290.0,40,26
+aodv_recovery_n50_f10_s8,210.0,restore,6,True,True,4.192414000000014,4.192414000000014,290.0,40,25
+aodv_recovery_n50_f10_s8,210.0,restore,7,True,True,3.810575,3.810575,290.0,40,26

@@ -1,0 +1,5 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+dsdv_link_fail_n50_f10_s6,120.0,fail,0,True,True,0.2773210000000006,0.2773210000000006,290.0,40,40
+dsdv_link_fail_n50_f10_s6,120.0,fail,1,True,True,0.37361699999999587,0.37361699999999587,290.0,40,39
+dsdv_link_fail_n50_f10_s6,120.0,fail,2,True,True,0.2495789999999971,0.2495789999999971,290.0,40,40
+dsdv_link_fail_n50_f10_s6,120.0,fail,3,True,True,0.30214200000000346,0.30214200000000346,290.0,40,40

@@ -1,0 +1,325 @@
+{
+ "scenario": "multi_fail",
+ "severity_param": null,
+ "selection": "random",
+ "assumption": "Damage spreads over time: three waves of randomly chosen relay failures and link failures, 15 s apart, as more devices and paths are lost while water rises. Random selection (seeded), so it is not aimed at the busiest paths.",
+ "failure_start_s": 120.0,
+ "failure_end_s": null,
+ "failed_nodes": [
+  {
+   "node": 29,
+   "x": 490.01,
+   "y": 434.91
+  },
+  {
+   "node": 31,
+   "x": 326.36,
+   "y": 389.57
+  },
+  {
+   "node": 3,
+   "x": 222.86,
+   "y": 446.29
+  },
+  {
+   "node": 37,
+   "x": 308.78,
+   "y": 193.03
+  },
+  {
+   "node": 11,
+   "x": 76.78,
+   "y": 366.98
+  },
+  {
+   "node": 30,
+   "x": 351.46,
+   "y": 291.05
+  }
+ ],
+ "failed_links": [
+  {
+   "a": 1,
+   "b": 19,
+   "mid_x": 23.28,
+   "mid_y": 311.11
+  },
+  {
+   "a": 2,
+   "b": 8,
+   "mid_x": 76.0,
+   "mid_y": 34.21
+  },
+  {
+   "a": 3,
+   "b": 12,
+   "mid_x": 250.81,
+   "mid_y": 450.75
+  },
+  {
+   "a": 5,
+   "b": 7,
+   "mid_x": 19.82,
+   "mid_y": 232.88
+  },
+  {
+   "a": 7,
+   "b": 49,
+   "mid_x": 21.17,
+   "mid_y": 200.69
+  },
+  {
+   "a": 12,
+   "b": 16,
+   "mid_x": 210.99,
+   "mid_y": 434.33
+  },
+  {
+   "a": 13,
+   "b": 26,
+   "mid_x": 394.22,
+   "mid_y": 226.96
+  },
+  {
+   "a": 14,
+   "b": 47,
+   "mid_x": 283.85,
+   "mid_y": 399.97
+  },
+  {
+   "a": 15,
+   "b": 37,
+   "mid_x": 341.65,
+   "mid_y": 206.53
+  },
+  {
+   "a": 17,
+   "b": 22,
+   "mid_x": 351.3,
+   "mid_y": 378.51
+  },
+  {
+   "a": 24,
+   "b": 48,
+   "mid_x": 442.8,
+   "mid_y": 36.02
+  },
+  {
+   "a": 30,
+   "b": 35,
+   "mid_x": 302.43,
+   "mid_y": 316.98
+  },
+  {
+   "a": 45,
+   "b": 46,
+   "mid_x": 214.47,
+   "mid_y": 206.33
+  },
+  {
+   "a": 0,
+   "b": 15,
+   "mid_x": 407.69,
+   "mid_y": 229.39
+  },
+  {
+   "a": 3,
+   "b": 18,
+   "mid_x": 188.25,
+   "mid_y": 423.0
+  },
+  {
+   "a": 5,
+   "b": 10,
+   "mid_x": 24.76,
+   "mid_y": 246.66
+  },
+  {
+   "a": 6,
+   "b": 36,
+   "mid_x": 348.64,
+   "mid_y": 258.99
+  },
+  {
+   "a": 9,
+   "b": 14,
+   "mid_x": 364.4,
+   "mid_y": 439.37
+  },
+  {
+   "a": 11,
+   "b": 40,
+   "mid_x": 43.47,
+   "mid_y": 396.42
+  },
+  {
+   "a": 12,
+   "b": 20,
+   "mid_x": 318.97,
+   "mid_y": 391.92
+  },
+  {
+   "a": 12,
+   "b": 31,
+   "mid_x": 302.55,
+   "mid_y": 422.39
+  },
+  {
+   "a": 22,
+   "b": 37,
+   "mid_x": 326.85,
+   "mid_y": 261.93
+  },
+  {
+   "a": 25,
+   "b": 37,
+   "mid_x": 352.4,
+   "mid_y": 165.87
+  },
+  {
+   "a": 32,
+   "b": 44,
+   "mid_x": 353.25,
+   "mid_y": 445.18
+  },
+  {
+   "a": 33,
+   "b": 40,
+   "mid_x": 79.42,
+   "mid_y": 439.99
+  },
+  {
+   "a": 40,
+   "b": 43,
+   "mid_x": 53.87,
+   "mid_y": 405.39
+  },
+  {
+   "a": 0,
+   "b": 26,
+   "mid_x": 421.05,
+   "mid_y": 220.7
+  },
+  {
+   "a": 1,
+   "b": 43,
+   "mid_x": 67.96,
+   "mid_y": 325.18
+  },
+  {
+   "a": 6,
+   "b": 20,
+   "mid_x": 350.11,
+   "mid_y": 274.45
+  },
+  {
+   "a": 10,
+   "b": 11,
+   "mid_x": 56.31,
+   "mid_y": 300.42
+  },
+  {
+   "a": 12,
+   "b": 17,
+   "mid_x": 318.21,
+   "mid_y": 440.71
+  },
+  {
+   "a": 17,
+   "b": 29,
+   "mid_x": 423.84,
+   "mid_y": 430.56
+  },
+  {
+   "a": 18,
+   "b": 33,
+   "mid_x": 151.16,
+   "mid_y": 426.91
+  },
+  {
+   "a": 18,
+   "b": 43,
+   "mid_x": 125.62,
+   "mid_y": 392.31
+  },
+  {
+   "a": 19,
+   "b": 39,
+   "mid_x": 5.77,
+   "mid_y": 315.34
+  },
+  {
+   "a": 22,
+   "b": 36,
+   "mid_x": 350.59,
+   "mid_y": 314.26
+  },
+  {
+   "a": 22,
+   "b": 47,
+   "mid_x": 285.58,
+   "mid_y": 357.55
+  },
+  {
+   "a": 30,
+   "b": 45,
+   "mid_x": 294.41,
+   "mid_y": 279.16
+  },
+  {
+   "a": 44,
+   "b": 47,
+   "mid_x": 278.39,
+   "mid_y": 412.13
+  }
+ ],
+ "n_failed_nodes": 6,
+ "pct_failed_nodes": 12.0,
+ "n_failed_links": 39,
+ "pct_failed_links": 15.23,
+ "components_after_failure": 1,
+ "flows_with_alternative_route": 10,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": true
+  }
+ ]
+}

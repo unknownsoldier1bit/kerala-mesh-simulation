@@ -1,0 +1,11 @@
+time_s,action,kind,a,b,group
+120.0,fail,node,15,-1,relays
+120.0,fail,node,16,-1,relays
+120.0,fail,node,21,-1,relays
+120.0,fail,node,26,-1,relays
+120.0,fail,node,38,-1,relays
+120.0,fail,node,55,-1,relays
+120.0,fail,node,64,-1,relays
+120.0,fail,node,70,-1,relays
+120.0,fail,node,75,-1,relays
+120.0,fail,node,89,-1,relays

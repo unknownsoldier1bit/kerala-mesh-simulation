@@ -1,0 +1,90 @@
+{
+ "scenario": "partition",
+ "severity_param": null,
+ "selection": "deterministic",
+ "assumption": "The area is split in two: every link crossing the vertical midline stops working, then all come back. This abstracts losing every device or path that bridged two neighbourhoods (for example both sides of a flooded channel). It is not a physical propagation model; it guarantees a clean partition so protocol behaviour during and after a split can be measured.",
+ "failure_start_s": 120.0,
+ "failure_end_s": 210.0,
+ "failed_nodes": [],
+ "failed_links": [
+  {
+   "a": 2,
+   "b": 18,
+   "mid_x": 268.04,
+   "mid_y": 411.58
+  },
+  {
+   "a": 2,
+   "b": 20,
+   "mid_x": 302.43,
+   "mid_y": 408.91
+  },
+  {
+   "a": 6,
+   "b": 18,
+   "mid_x": 253.17,
+   "mid_y": 372.41
+  },
+  {
+   "a": 16,
+   "b": 18,
+   "mid_x": 267.97,
+   "mid_y": 381.77
+  },
+  {
+   "a": 16,
+   "b": 20,
+   "mid_x": 302.36,
+   "mid_y": 379.1
+  }
+ ],
+ "n_failed_nodes": 0,
+ "pct_failed_nodes": 0.0,
+ "n_failed_links": 5,
+ "pct_failed_links": 7.46,
+ "components_after_failure": 2,
+ "flows_with_alternative_route": 4,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": false
+  }
+ ]
+}

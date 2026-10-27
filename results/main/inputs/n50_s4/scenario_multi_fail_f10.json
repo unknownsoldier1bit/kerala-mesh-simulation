@@ -1,0 +1,379 @@
+{
+ "scenario": "multi_fail",
+ "severity_param": null,
+ "selection": "random",
+ "assumption": "Damage spreads over time: three waves of randomly chosen relay failures and link failures, 15 s apart, as more devices and paths are lost while water rises. Random selection (seeded), so it is not aimed at the busiest paths.",
+ "failure_start_s": 120.0,
+ "failure_end_s": null,
+ "failed_nodes": [
+  {
+   "node": 0,
+   "x": 395.44,
+   "y": 42.88
+  },
+  {
+   "node": 22,
+   "x": 316.54,
+   "y": 117.83
+  },
+  {
+   "node": 4,
+   "x": 195.91,
+   "y": 408.6
+  },
+  {
+   "node": 17,
+   "x": 231.84,
+   "y": 6.61
+  },
+  {
+   "node": 7,
+   "x": 258.21,
+   "y": 450.98
+  },
+  {
+   "node": 43,
+   "x": 392.11,
+   "y": 198.06
+  }
+ ],
+ "failed_links": [
+  {
+   "a": 1,
+   "b": 16,
+   "mid_x": 47.27,
+   "mid_y": 344.8
+  },
+  {
+   "a": 1,
+   "b": 29,
+   "mid_x": 128.9,
+   "mid_y": 322.57
+  },
+  {
+   "a": 3,
+   "b": 35,
+   "mid_x": 301.94,
+   "mid_y": 118.78
+  },
+  {
+   "a": 8,
+   "b": 28,
+   "mid_x": 279.82,
+   "mid_y": 314.33
+  },
+  {
+   "a": 8,
+   "b": 44,
+   "mid_x": 304.42,
+   "mid_y": 294.59
+  },
+  {
+   "a": 10,
+   "b": 11,
+   "mid_x": 237.79,
+   "mid_y": 176.22
+  },
+  {
+   "a": 15,
+   "b": 19,
+   "mid_x": 229.89,
+   "mid_y": 131.74
+  },
+  {
+   "a": 15,
+   "b": 46,
+   "mid_x": 205.03,
+   "mid_y": 59.3
+  },
+  {
+   "a": 17,
+   "b": 40,
+   "mid_x": 198.06,
+   "mid_y": 48.7
+  },
+  {
+   "a": 17,
+   "b": 49,
+   "mid_x": 213.68,
+   "mid_y": 41.21
+  },
+  {
+   "a": 25,
+   "b": 37,
+   "mid_x": 70.0,
+   "mid_y": 268.22
+  },
+  {
+   "a": 29,
+   "b": 37,
+   "mid_x": 117.04,
+   "mid_y": 303.44
+  },
+  {
+   "a": 35,
+   "b": 38,
+   "mid_x": 320.35,
+   "mid_y": 142.44
+  },
+  {
+   "a": 38,
+   "b": 41,
+   "mid_x": 333.13,
+   "mid_y": 177.57
+  },
+  {
+   "a": 42,
+   "b": 44,
+   "mid_x": 343.96,
+   "mid_y": 302.72
+  },
+  {
+   "a": 47,
+   "b": 49,
+   "mid_x": 193.92,
+   "mid_y": 71.54
+  },
+  {
+   "a": 0,
+   "b": 24,
+   "mid_x": 423.14,
+   "mid_y": 50.86
+  },
+  {
+   "a": 2,
+   "b": 23,
+   "mid_x": 296.52,
+   "mid_y": 217.08
+  },
+  {
+   "a": 3,
+   "b": 20,
+   "mid_x": 297.27,
+   "mid_y": 152.01
+  },
+  {
+   "a": 4,
+   "b": 29,
+   "mid_x": 181.45,
+   "mid_y": 380.12
+  },
+  {
+   "a": 7,
+   "b": 32,
+   "mid_x": 252.7,
+   "mid_y": 449.82
+  },
+  {
+   "a": 8,
+   "b": 34,
+   "mid_x": 269.93,
+   "mid_y": 216.96
+  },
+  {
+   "a": 9,
+   "b": 39,
+   "mid_x": 386.15,
+   "mid_y": 477.83
+  },
+  {
+   "a": 11,
+   "b": 19,
+   "mid_x": 266.5,
+   "mid_y": 143.67
+  },
+  {
+   "a": 11,
+   "b": 20,
+   "mid_x": 264.25,
+   "mid_y": 161.97
+  },
+  {
+   "a": 17,
+   "b": 35,
+   "mid_x": 248.7,
+   "mid_y": 70.4
+  },
+  {
+   "a": 19,
+   "b": 35,
+   "mid_x": 263.13,
+   "mid_y": 149.12
+  },
+  {
+   "a": 23,
+   "b": 33,
+   "mid_x": 211.49,
+   "mid_y": 261.76
+  },
+  {
+   "a": 25,
+   "b": 33,
+   "mid_x": 117.95,
+   "mid_y": 287.21
+  },
+  {
+   "a": 29,
+   "b": 48,
+   "mid_x": 189.1,
+   "mid_y": 299.48
+  },
+  {
+   "a": 34,
+   "b": 46,
+   "mid_x": 230.51,
+   "mid_y": 88.6
+  },
+  {
+   "a": 37,
+   "b": 48,
+   "mid_x": 139.16,
+   "mid_y": 251.27
+  },
+  {
+   "a": 2,
+   "b": 20,
+   "mid_x": 294.64,
+   "mid_y": 202.25
+  },
+  {
+   "a": 2,
+   "b": 38,
+   "mid_x": 354.11,
+   "mid_y": 177.28
+  },
+  {
+   "a": 2,
+   "b": 41,
+   "mid_x": 312.08,
+   "mid_y": 204.15
+  },
+  {
+   "a": 2,
+   "b": 43,
+   "mid_x": 362.58,
+   "mid_y": 200.96
+  },
+  {
+   "a": 3,
+   "b": 19,
+   "mid_x": 299.51,
+   "mid_y": 133.71
+  },
+  {
+   "a": 3,
+   "b": 23,
+   "mid_x": 299.16,
+   "mid_y": 166.84
+  },
+  {
+   "a": 6,
+   "b": 22,
+   "mid_x": 264.04,
+   "mid_y": 115.11
+  },
+  {
+   "a": 6,
+   "b": 46,
+   "mid_x": 211.26,
+   "mid_y": 65.79
+  },
+  {
+   "a": 8,
+   "b": 43,
+   "mid_x": 340.96,
+   "mid_y": 236.98
+  },
+  {
+   "a": 10,
+   "b": 19,
+   "mid_x": 232.0,
+   "mid_y": 196.6
+  },
+  {
+   "a": 11,
+   "b": 22,
+   "mid_x": 294.41,
+   "mid_y": 120.56
+  },
+  {
+   "a": 11,
+   "b": 27,
+   "mid_x": 249.45,
+   "mid_y": 109.11
+  },
+  {
+   "a": 12,
+   "b": 27,
+   "mid_x": 172.1,
+   "mid_y": 98.1
+  },
+  {
+   "a": 12,
+   "b": 31,
+   "mid_x": 78.65,
+   "mid_y": 73.94
+  },
+  {
+   "a": 15,
+   "b": 48,
+   "mid_x": 205.15,
+   "mid_y": 173.37
+  },
+  {
+   "a": 20,
+   "b": 47,
+   "mid_x": 224.27,
+   "mid_y": 133.96
+  }
+ ],
+ "n_failed_nodes": 6,
+ "pct_failed_nodes": 12.0,
+ "n_failed_links": 48,
+ "pct_failed_links": 15.38,
+ "components_after_failure": 1,
+ "flows_with_alternative_route": 10,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": true
+  }
+ ]
+}

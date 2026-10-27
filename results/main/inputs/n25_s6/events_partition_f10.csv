@@ -1,0 +1,17 @@
+time_s,action,kind,a,b,group
+120.0,fail,link,1,7,cut
+120.0,fail,link,1,14,cut
+120.0,fail,link,1,20,cut
+120.0,fail,link,3,21,cut
+120.0,fail,link,5,14,cut
+120.0,fail,link,14,19,cut
+120.0,fail,link,14,23,cut
+120.0,fail,link,19,20,cut
+210.0,restore,link,1,7,cut
+210.0,restore,link,1,14,cut
+210.0,restore,link,1,20,cut
+210.0,restore,link,3,21,cut
+210.0,restore,link,5,14,cut
+210.0,restore,link,14,19,cut
+210.0,restore,link,14,23,cut
+210.0,restore,link,19,20,cut

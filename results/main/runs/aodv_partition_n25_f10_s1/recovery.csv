@@ -1,0 +1,17 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+aodv_partition_n25_f10_s1,120.0,fail,0,False,False,,90.0,210.0,40,0
+aodv_partition_n25_f10_s1,120.0,fail,1,False,False,,90.0,210.0,40,0
+aodv_partition_n25_f10_s1,120.0,fail,2,False,False,,90.0,210.0,40,0
+aodv_partition_n25_f10_s1,120.0,fail,3,False,False,,90.0,210.0,40,0
+aodv_partition_n25_f10_s1,120.0,fail,6,False,False,,90.0,210.0,40,0
+aodv_partition_n25_f10_s1,120.0,fail,7,False,False,,90.0,210.0,40,0
+aodv_partition_n25_f10_s1,120.0,fail,8,False,False,,90.0,210.0,40,0
+aodv_partition_n25_f10_s1,120.0,fail,9,False,False,,90.0,210.0,40,0
+aodv_partition_n25_f10_s1,210.0,restore,0,True,True,4.2747830000000135,4.2747830000000135,290.0,40,26
+aodv_partition_n25_f10_s1,210.0,restore,1,True,True,3.8401719999999955,3.8401719999999955,290.0,40,26
+aodv_partition_n25_f10_s1,210.0,restore,2,True,True,4.288184999999999,4.288184999999999,290.0,40,26
+aodv_partition_n25_f10_s1,210.0,restore,3,True,True,4.1102579999999875,4.1102579999999875,290.0,40,25
+aodv_partition_n25_f10_s1,210.0,restore,6,True,True,4.267866999999995,4.267866999999995,290.0,40,26
+aodv_partition_n25_f10_s1,210.0,restore,7,True,True,4.302590000000009,4.302590000000009,290.0,40,24
+aodv_partition_n25_f10_s1,210.0,restore,8,True,True,3.6312479999999994,3.6312479999999994,290.0,40,27
+aodv_partition_n25_f10_s1,210.0,restore,9,True,True,3.8027270000000044,3.8027270000000044,290.0,40,26
