@@ -594,6 +594,25 @@ LogEvent(const std::string& action, const std::string& kind, int a, int b, const
     g_eventLog.push_back({Simulator::Now().GetSeconds(), action, kind, a, b, group});
 }
 
+// Switches a radio off: no send, receive or ACK, like a dead device. A radio in the
+// middle of sending a frame finishes it first (a few ms at most): ns-3.47 crashes if a
+// radio is switched off while sending a frame that needs no acknowledgement, because
+// FrameExchangeManager::TransmissionSucceeded then runs after Reset() cleared m_dcf.
+void
+SwitchOff(uint32_t node)
+{
+    Ptr<WifiPhy> phy = PhyOf(node);
+    if (phy->IsStateTx())
+    {
+        Simulator::Schedule(MicroSeconds(100), &SwitchOff, node);
+        return;
+    }
+    if (!phy->IsStateOff())
+    {
+        phy->SetOffMode();
+    }
+}
+
 void
 ApplyEvent(FailureEvent e)
 {
@@ -601,11 +620,11 @@ ApplyEvent(FailureEvent e)
     {
         if (e.action == "fail" && g_alive[e.a])
         {
-            PhyOf(e.a)->SetOffMode(); // radio off: no send, receive or ACK, like a dead device
+            SwitchOff(e.a);
             g_alive[e.a] = false;
             LogEvent("fail", "node", e.a, -1, e.group);
         }
-        else if (e.action == "restore" && !g_alive[e.a] && !g_depleted[e.a])
+        else if (e.action == "restore" && !g_alive[e.a] && !g_depleted[e.a] && PhyOf(e.a)->IsStateOff())
         {
             PhyOf(e.a)->ResumeFromOff();
             g_alive[e.a] = true;
@@ -634,7 +653,7 @@ OnDepleted(uint32_t node)
     g_depleted[node] = true;
     if (g_alive[node])
     {
-        PhyOf(node)->SetOffMode();
+        SwitchOff(node);
         g_alive[node] = false;
     }
     LogEvent("deplete", "node", node, -1, "battery");
