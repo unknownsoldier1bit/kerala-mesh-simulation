@@ -1,0 +1,5 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+dsdv_kerala_50_n100_s8,66.0,fail,14,True,False,,,382.0,448.0,5,0
+dsdv_kerala_50_n100_s8,100.667,fail,18,True,True,5.256709999999998,0.3698700000000059,5.256709999999998,448.0,5,5
+dsdv_kerala_50_n100_s8,153.0,fail,17,True,False,,,295.0,448.0,10,0
+dsdv_kerala_50_n100_s8,241.0,fail,6,True,True,35.48339600000003,0.002410000000054424,35.48339600000003,448.0,0,0
