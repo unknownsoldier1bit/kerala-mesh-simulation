@@ -436,7 +436,9 @@ def compute(run_dir, cfg):
         dl = (gg.rx_s - gg.tx_s).values * 1000
         st = _stats(dl)
         times = np.sort(gg.rx_s.values)
-        gaps = np.diff(np.concatenate(([t0], times))) if len(times) else np.array([t1 - t0])
+        # Gaps from the start of traffic, between deliveries, and from the last delivery
+        # to the end of traffic, so a flow that stops delivering for good is counted.
+        gaps = np.diff(np.concatenate(([t0], times, [t1]))) if len(times) else np.array([t1 - t0])
         fl_rows.append(
             dict(
                 run_id=cfg["run_id"], flow=fl["flow"], src=fl["src"], dst=fl["dst"], shortest_hops=fl["hops"],
