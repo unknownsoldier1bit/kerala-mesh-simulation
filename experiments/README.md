@@ -106,7 +106,7 @@ Metrics that don't apply to a protocol are left empty, never set to zero.
 | `energy` | 3 protocols × 2 radio profiles × 50 nodes × seeds 1–10, batteries run out | 60 |
 | `kerala` | 3 protocols × {no-flood control, Kerala 27%, random 27%, Kerala 50%, random 50%} × 50 nodes × seeds 1–10 | 150 |
 
-Failed or incomplete runs, with the reason, are listed in `results/<experiment>/failed_runs.csv` and `results/analysis/tables/failed_runs_all.csv`.
+Failed or incomplete runs, with the reason, are listed in `results/<experiment>/failed_runs.csv` (final pass) and `results/analysis/tables/failed_runs_all.csv`. In the final datasets no run failed. Earlier attempts of four 100-node runs failed (three killed for lack of memory, one crash); all were redone, and the history is in `results/main/failed_runs_history.csv`.
 
 ## 5. Energy and Kerala experiments
 

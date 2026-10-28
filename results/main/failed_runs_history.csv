@@ -1,0 +1,5 @@
+run_id,attempt,reason,resolution
+aodv_baseline_n100_f10_s1,1,"killed by the kernel (out of memory): NS-3's energy framework grew to several GB per 100-node run and four such runs ran in parallel","re-run without the NS-3 energy framework (state-based energy only); completed"
+aodv_link_fail_n100_f10_s1,1,"killed (out of memory), same cause; a memory test run started alongside also contributed","re-run without the NS-3 energy framework; completed"
+dsdv_baseline_n100_f10_s1,1,"killed (out of memory), same cause","re-run without the NS-3 energy framework; completed"
+aodv_node_fail_n100_f10_s1,2,"segmentation fault in ns3::FrameExchangeManager::TransmissionSucceeded: a radio was switched off while sending a broadcast (ns-3.47 bug, see docs/ns3-defaults.md)","simulator changed so a failing radio finishes its frame first; every run with node failures was redone with the change; completed"
