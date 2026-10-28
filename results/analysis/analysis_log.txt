@@ -1,12 +1,12 @@
-main: 360 runs
+main: 540 runs
 severity: 240 runs
 load: 180 runs
 energy: 60 runs
 kerala: 150 runs
 energy check: 38 runs, max relative difference 7.56e-01
-FlowMonitor check: 41 runs, max |received difference| 10, after excluding packets slower than 10 s: 0; max |sent difference| after excluding source refusals: 0
-convergence check: 12 of 660 OLSR/DSDV runs not converged when traffic started (dsdv n25 s10, dsdv n25 s4)
+FlowMonitor check: 54 runs, max |received difference| 10, after excluding packets slower than 10 s: 0; max |sent difference| after excluding source refusals: 0
+convergence check: 12 of 780 OLSR/DSDV runs not converged when traffic started (dsdv n25 s10, dsdv n25 s4)
 scenario properties: 420 scenario files
 failed runs: 0
-combined summary table: 990 runs
+combined summary table: 1170 runs
 findings digest written
