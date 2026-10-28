@@ -605,6 +605,32 @@ def kerala():
 # ---------------------------------------------------------------------------
 
 
+def rtscts_check():
+    """100-node baseline with and without RTS/CTS (sensitivity check on hidden-terminal collisions)."""
+    on = load("rtscts100")
+    main = load("main")
+    if on is None or main is None:
+        return []
+    off = main[(main.scenario == "baseline") & (main.nodes == 100)].assign(rts_cts="off")
+    on = on.assign(rts_cts="on", scenario="baseline")
+    df = pd.concat([off, on], ignore_index=True)
+    metrics = ["pdr_pct", "within_1s_pct", "delay_mean_ms", "delay_p95_ms", "control_pkts_per_node_s",
+               "mac_link_break_detections", "route_errors_rerr_tx", "route_discoveries"]
+    agg = aggregate(df, ["rts_cts", "protocol"], metrics)
+    agg.to_csv(os.path.join(TAB, "sensitivity_rtscts_n100_by_config.csv"), index=False)
+    paired_tests(df, ["rts_cts"], metrics).to_csv(os.path.join(TAB, "sensitivity_rtscts_n100_stats_tests.csv"),
+                                                 index=False)
+    table_deliverable(on).to_csv(os.path.join(TAB, "summary_table_rtscts100.csv"), index=False)
+    protos = [p for p in PROTOCOLS if p in set(df.protocol)]
+    fig, axes = plt.subplots(1, 3, figsize=(10, 3.2))
+    for ax, m in zip(axes, ["pdr_pct", "within_1s_pct", "mac_link_break_detections"]):
+        grouped_bars(ax, agg, ["off", "on"], "rts_cts", m, protos, {"off": "RTS/CTS off", "on": "RTS/CTS on"})
+        ax.set_title(KEY_METRICS.get(m, "Link breaks detected by the MAC"))
+    legend_protocols(fig, protos)
+    savefig(fig, "sensitivity_rtscts_n100", "100 nodes, baseline (no failures). Error bars: 95% CI over seeds")
+    return [f"RTS/CTS sensitivity: {len(on)} runs"]
+
+
 def energy_validation():
     rows = []
     for f in glob.glob(os.path.join(RES, "main", "runs", "*", "energy.csv")):
@@ -740,7 +766,7 @@ def findings_md():
             "restore_recovery_mean_s": "after restore s", "energy_mean_per_node_J": "J/node"}
     specs = [("main", ["scenario", "nodes"]), ("severity", ["scenario", "severity"]),
              ("load", ["scenario", "n_flows"]), ("energy", ["scenario"]), ("kerala", ["scenario", "severity"]),
-             ("kerala100", ["scenario", "severity"])]
+             ("kerala100", ["scenario", "severity"]), ("rtscts100", ["scenario"])]
     extra = {"energy": {"first_depletion_s": "1st death s", "depletion_50pct_s": "50% dead s",
                         "connected_pdr_pct": "connected PDR %"},
              "kerala": {"connected_pdr_pct": "connected PDR %", "acute_14_18aug_within_1s_pct": "acute ≤1 s %",
@@ -791,7 +817,7 @@ def findings_md():
 
 def combined_summary_table():
     frames = []
-    for exp in ("main", "severity", "load", "energy", "kerala", "kerala100"):
+    for exp in ("main", "severity", "load", "energy", "kerala", "kerala100", "rtscts100"):
         df = load(exp)
         if df is not None:
             t = table_deliverable(df)
@@ -806,7 +832,7 @@ def combined_summary_table():
 def main():
     ensure_dirs()
     notes = []
-    for step in (main_grid, severity, load_sweep, energy, kerala, energy_validation, flowmon_crosscheck,
+    for step in (main_grid, severity, load_sweep, energy, kerala, rtscts_check, energy_validation, flowmon_crosscheck,
                  convergence_check, scenario_properties, failed_runs, combined_summary_table, findings_md):
         try:
             notes += step()

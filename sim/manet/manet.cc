@@ -855,6 +855,7 @@ main(int argc, char* argv[])
     std::string rtDump;
     std::string energyFile;
     std::string energyModel = "states";
+    bool rtsCts = false;
     double idleCurrentA = STATE_CURRENT_A[0];
     double txPowerDbm = 16.0206; // ns-3 WifiPhy default
 
@@ -869,6 +870,7 @@ main(int argc, char* argv[])
     cmd.AddValue("range", "Radio range (m): RangePropagationLossModel MaxRange", g_range);
     cmd.AddValue("txPower", "Transmit power (dBm)", txPowerDbm);
     cmd.AddValue("energyJ", "Initial battery energy per node (J); 0 = unlimited (energy still measured)", energyJ);
+    cmd.AddValue("rtsCts", "Use RTS/CTS for every unicast frame (default: off, as in ns-3)", rtsCts);
     cmd.AddValue("energyModel", "states (fast, default) or ns3 (also run BasicEnergySource + WifiRadioEnergyModel)", energyModel);
     cmd.AddValue("idleCurrentA", "Idle and CCA-busy current (A) for --energyModel=states (default 0.273)", idleCurrentA);
     cmd.AddValue("energyFile", "Per-node initial energy CSV: node,initial_J (overrides --energyJ)", energyFile);
@@ -929,6 +931,18 @@ main(int argc, char* argv[])
                                  StringValue("DsssRate11Mbps"),
                                  "ControlMode",
                                  StringValue("DsssRate1Mbps"));
+    if (rtsCts)
+    {
+        // RTS/CTS before every unicast frame (ns-3 default: off), to test how much
+        // hidden-terminal collisions matter.
+        wifi.SetRemoteStationManager("ns3::ConstantRateWifiManager",
+                                     "DataMode",
+                                     StringValue("DsssRate11Mbps"),
+                                     "ControlMode",
+                                     StringValue("DsssRate1Mbps"),
+                                     "RtsCtsThreshold",
+                                     UintegerValue(0));
+    }
     WifiMacHelper mac;
     mac.SetType("ns3::AdhocWifiMac");
     g_devices = wifi.Install(phy, mac, g_nodes);

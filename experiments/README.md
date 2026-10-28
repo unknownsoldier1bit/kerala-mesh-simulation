@@ -105,6 +105,8 @@ Metrics that don't apply to a protocol are left empty, never set to zero.
 | `load` | 3 protocols × {baseline, node_fail} × {5, 10, 20} flows × 50 nodes × seeds 1–10 | 180 |
 | `energy` | 3 protocols × 2 radio profiles × 50 nodes × seeds 1–10, batteries run out | 60 |
 | `kerala` | 3 protocols × {no-flood control, Kerala 27%, random 27%, Kerala 50%, random 50%} × 50 nodes × seeds 1–10 | 150 |
+| `kerala100` | The same as `kerala`, with 100 nodes | 150 |
+| `rtscts100` | Sensitivity check: 3 protocols × baseline × 100 nodes × seeds 1–10 with RTS/CTS switched on (same topologies and traffic as the main grid) | 30 |
 
 Failed or incomplete runs, with the reason, are listed in `results/<experiment>/failed_runs.csv` (final pass) and `results/analysis/tables/failed_runs_all.csv`. In the final datasets no run failed. Earlier attempts of four 100-node runs failed (three killed for lack of memory, one crash); all were redone, and the history is in `results/main/failed_runs_history.csv`.
 
@@ -147,6 +149,7 @@ Read these before writing the methods and discussion sections.
 - **Static nodes.** No mobility. Fine for people sheltering in place; it doesn't cover rescue boats or people moving.
 - **Constant-rate traffic** in the main experiments. Real emergency traffic is burstier (used in the Kerala experiment only).
 - **DSDV start-up in sparse networks.** The 60 s warm-up was not enough for DSDV in some sparse 25-node topologies (see `check_initial_convergence.csv`), so part of DSDV's loss there comes from tables that were still being built. That is real DSDV behaviour (slow convergence over many hops), but say so if you compare DSDV at 25 nodes; those runs can be excluded using the check table.
+- **No RTS/CTS** (the NS-3 default), so hidden-terminal collisions hit unicast frames in dense networks. AODV treats a frame that fails after the retry limit as a broken link, so collisions turn into route errors and new route discoveries. The `rtscts100` experiment repeats the 100-node baseline with RTS/CTS on to show how much this matters.
 - **NS-3 default protocol parameters.** Tuning (for example a shorter OLSR HELLO interval) would change the results.
 - **Energy model:** a fixed current per radio state, no sleep scheduling, and nothing but the Wi-Fi radio draws power. Idle listening dominates, which is a real property of always-on ad-hoc Wi-Fi but makes routing traffic a small share of energy use.
 - **Time compression** in the Kerala experiment (see section 5).

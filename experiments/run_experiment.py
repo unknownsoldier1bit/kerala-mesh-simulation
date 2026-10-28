@@ -76,6 +76,12 @@ def grid(name):
         return kerala.energy_runs(name, PROTOCOLS, SEEDS)
     if name == "kerala":
         return kerala.kerala_runs(name, PROTOCOLS, SEEDS)
+    if name == "rtscts100":  # sensitivity check: 100-node baseline with RTS/CTS on
+        runs = standard_runs(name, scenarios=["baseline"], nodes=[100], flows=[10], severities=[None])
+        for r in runs:
+            r.update(rts_cts=True, flowmon=False, rt_dump="", energy_model="states")
+            r["run_id"] = r["run_id"].replace("_baseline_", "_baseline_rtscts_")
+        return runs
     if name == "kerala100":  # same as kerala, with 100 nodes
         return kerala.kerala_runs(name, PROTOCOLS, SEEDS, nodes=(100,))
     raise SystemExit(f"unknown experiment {name}")
@@ -167,6 +173,8 @@ def command(cfg, out_dir):
         args.append(f"--events={cfg['events_file']}")
     if cfg.get("energy_model", "states") != "states":
         args.append(f"--energyModel={cfg['energy_model']}")
+    if cfg.get("rts_cts"):
+        args.append("--rtsCts=true")
     if cfg.get("idle_current_a") is not None:
         args.append(f"--idleCurrentA={cfg['idle_current_a']}")
     if cfg.get("energy_file"):
