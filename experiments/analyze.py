@@ -125,7 +125,9 @@ def paired_tests(df, keys, metrics):
                 continue
             wide = g.pivot_table(index="seed", columns="protocol", values=m, aggfunc="first")
             protos = [p for p in PROTOCOLS if p in wide]
-            wide = wide[protos].dropna()
+            # Round away floating-point noise (~1e-15) so exact ties between protocols
+            # are treated as ties by Friedman and Wilcoxon, whatever the CSV round trip.
+            wide = wide[protos].dropna().round(9)
             base = dict(zip(keys, k), metric=m, n_seeds=len(wide))
             if len(wide) < 5 or len(protos) < 2:
                 continue

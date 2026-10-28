@@ -70,7 +70,7 @@ Significant paired differences:
 | baseline | 25 | PDR % | AODV − DSDV | 0.147 | 0.0176 | 10 |
 | baseline | 25 | delay ms | AODV − OLSR | 0.67 | 0.00781 | 10 |
 | baseline | 25 | delay ms | OLSR − DSDV | -0.658 | 0.00586 | 10 |
-| baseline | 25 | kbps | AODV − DSDV | 0.24 | 0.0117 | 10 |
+| baseline | 25 | kbps | AODV − DSDV | 0.24 | 0.0176 | 10 |
 | baseline | 25 | ctrl/node/s | AODV − OLSR | 0.413 | 0.00586 | 10 |
 | baseline | 25 | ctrl/node/s | AODV − DSDV | -0.273 | 0.00586 | 10 |
 | baseline | 25 | ctrl/node/s | OLSR − DSDV | -0.714 | 0.00586 | 10 |
@@ -234,7 +234,7 @@ Significant paired differences:
 | node_fail | 25 | ≤1 s % | AODV − DSDV | 1.3 | 0.00586 | 10 |
 | node_fail | 25 | delay ms | AODV − OLSR | 1.04 | 0.00586 | 10 |
 | node_fail | 25 | delay ms | OLSR − DSDV | -0.49 | 0.00586 | 10 |
-| node_fail | 25 | p95 ms | OLSR − DSDV | -0.619 | 0.0293 | 10 |
+| node_fail | 25 | p95 ms | OLSR − DSDV | -0.619 | 0.0469 | 10 |
 | node_fail | 25 | kbps | AODV − OLSR | 2.42 | 0.00781 | 10 |
 | node_fail | 25 | kbps | AODV − DSDV | 2.13 | 0.00586 | 10 |
 | node_fail | 25 | ctrl/node/s | AODV − OLSR | 0.392 | 0.00586 | 10 |
@@ -300,8 +300,8 @@ Significant paired differences:
 | partition | 25 | delay ms | AODV − OLSR | 1.23 | 0.00586 | 10 |
 | partition | 25 | delay ms | AODV − DSDV | -35 | 0.00586 | 10 |
 | partition | 25 | delay ms | OLSR − DSDV | -36.6 | 0.00586 | 10 |
-| partition | 25 | p95 ms | AODV − DSDV | -2.2 | 0.00586 | 10 |
-| partition | 25 | p95 ms | OLSR − DSDV | -2.36 | 0.00586 | 10 |
+| partition | 25 | p95 ms | AODV − DSDV | -2.2 | 0.0117 | 10 |
+| partition | 25 | p95 ms | OLSR − DSDV | -2.36 | 0.0117 | 10 |
 | partition | 25 | kbps | AODV − OLSR | 0.882 | 0.00586 | 10 |
 | partition | 25 | ctrl/node/s | AODV − OLSR | 0.795 | 0.00586 | 10 |
 | partition | 25 | ctrl/node/s | AODV − DSDV | 0.177 | 0.00586 | 10 |
@@ -335,7 +335,7 @@ Significant paired differences:
 | partition | 50 | J/node | OLSR − DSDV | -0.993 | 0.00586 | 10 |
 | partition | 100 | PDR % | AODV − OLSR | -23.1 | 0.00586 | 10 |
 | partition | 100 | PDR % | AODV − DSDV | -22.4 | 0.00586 | 10 |
-| partition | 100 | PDR % | OLSR − DSDV | 1.12 | 0.00586 | 10 |
+| partition | 100 | PDR % | OLSR − DSDV | 1.13 | 0.00586 | 10 |
 | partition | 100 | ≤1 s % | AODV − OLSR | -24.1 | 0.00586 | 10 |
 | partition | 100 | ≤1 s % | AODV − DSDV | -23.3 | 0.00586 | 10 |
 | partition | 100 | ≤1 s % | OLSR − DSDV | 1.16 | 0.00586 | 10 |

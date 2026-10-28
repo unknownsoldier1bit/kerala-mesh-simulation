@@ -24,6 +24,14 @@ All finished runs completed without failures in their final pass. Four 100-node 
 2. `results/analysis/figures/` has every figure as PNG and PDF.
 3. `experiments/README.md` covers how everything was set up, the metric definitions, the checks, and the limitations you need to state in the paper.
 
+## Audit and corrections, 28 Oct 2026 (evening)
+
+- All 1,350 runs present: 10 seeds per configuration, no duplicates, no failed runs, no errors in any `stderr.log`, every raw file listed in deliverables §6 present.
+- Every run's metrics recomputed from raw files with the final `metrics.py`: identical to the committed summaries.
+- Fixed `longest_delivery_gap_s` (deliverables §4, time without delivery): it now includes the time from a flow's last delivery to the end of traffic. Per-flow files regenerated.
+- Fixed tie handling in the paired tests (deliverables §8): exact ties are no longer broken by floating-point noise. 24 Holm-corrected comparisons are no longer significant at 0.05. All tables, figures and `FINDINGS.md` regenerated, and the analysis now reproduces identically.
+- `DELIVERABLES-HANDOFF.md` in the repo root maps every deliverables item to its files.
+
 ## Found along the way
 
 - AODV's link-break detection was silently disabled by `NeighborCacheHelper` in both sims. Fixed; see `docs/ns3-defaults.md`. Re-run any diamond AODV results made before 27 Oct.
