@@ -1077,3 +1077,40 @@ Significant paired differences:
 | uniform | 0.5 | J/node | AODV − DSDV | -0.482 | 0.00586 | 10 |
 | uniform | 0.5 | J/node | OLSR − DSDV | -0.656 | 0.00586 | 10 |
 
+## rtscts100 (30 runs)
+
+| scenario | protocol | runs | PDR % | ≤1 s % | delay ms | p95 ms | kbps | ctrl/node/s | NRL | recovery s | after restore s | J/node |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| baseline | aodv | 10 | 48.5 ± 5.3 | 46.7 ± 5.5 | 255 ± 42 | 905 ± 1.1e+02 | 79.5 ± 8.7 | 16.7 ± 1.1 | 113 ± 23 |  |  | 254 ± 0.39 |
+| baseline | olsr | 10 | 99.9 ± 0.095 | 99.9 ± 0.095 | 5 ± 0.55 | 9.62 ± 1.8 | 164 ± 0.16 | 0.75 ± 0.023 | 1.9 ± 0.058 |  |  | 248 ± 0.16 |
+| baseline | dsdv | 10 | 97.1 ± 0.27 | 97.1 ± 0.27 | 18.4 ± 1.2 | 24.9 ± 3.7 | 159 ± 0.45 | 6.83 ± 0.029 | 17.4 ± 0.042 |  |  | 250 ± 0.13 |
+
+Significant paired differences:
+
+| scenario | metric | pair | median paired difference | Holm p | seeds |
+|---|---|---|---|---|---|
+| baseline | PDR % | AODV − OLSR | -50.2 | 0.00586 | 10 |
+| baseline | PDR % | AODV − DSDV | -47.2 | 0.00586 | 10 |
+| baseline | PDR % | OLSR − DSDV | 2.75 | 0.00586 | 10 |
+| baseline | ≤1 s % | AODV − OLSR | -51.8 | 0.00586 | 10 |
+| baseline | ≤1 s % | AODV − DSDV | -48.8 | 0.00586 | 10 |
+| baseline | ≤1 s % | OLSR − DSDV | 2.75 | 0.00586 | 10 |
+| baseline | delay ms | AODV − OLSR | 256 | 0.00586 | 10 |
+| baseline | delay ms | AODV − DSDV | 243 | 0.00586 | 10 |
+| baseline | delay ms | OLSR − DSDV | -13.5 | 0.00586 | 10 |
+| baseline | p95 ms | AODV − OLSR | 886 | 0.00586 | 10 |
+| baseline | p95 ms | AODV − DSDV | 872 | 0.00586 | 10 |
+| baseline | p95 ms | OLSR − DSDV | -14.1 | 0.00586 | 10 |
+| baseline | kbps | AODV − OLSR | -82.2 | 0.00586 | 10 |
+| baseline | kbps | AODV − DSDV | -77.3 | 0.00586 | 10 |
+| baseline | kbps | OLSR − DSDV | 4.51 | 0.00586 | 10 |
+| baseline | ctrl/node/s | AODV − OLSR | 15.4 | 0.00586 | 10 |
+| baseline | ctrl/node/s | AODV − DSDV | 9.3 | 0.00586 | 10 |
+| baseline | ctrl/node/s | OLSR − DSDV | -6.06 | 0.00586 | 10 |
+| baseline | NRL | AODV − OLSR | 99.6 | 0.00586 | 10 |
+| baseline | NRL | AODV − DSDV | 84 | 0.00586 | 10 |
+| baseline | NRL | OLSR − DSDV | -15.5 | 0.00586 | 10 |
+| baseline | J/node | AODV − OLSR | 5.51 | 0.00586 | 10 |
+| baseline | J/node | AODV − DSDV | 4.07 | 0.00586 | 10 |
+| baseline | J/node | OLSR − DSDV | -1.47 | 0.00586 | 10 |
+

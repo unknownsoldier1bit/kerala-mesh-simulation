@@ -12,8 +12,8 @@ Updated on every push. The full list of requested outputs is in `docs/deliverabl
 | Energy and network lifetime (60 runs) | done, committed |
 | Kerala time-evolving failure model + baselines, 50 nodes (150 runs) | done, committed |
 | Kerala, 100 nodes (150 runs) | done, committed (extra) |
-| RTS/CTS sensitivity check, 100-node baseline (30 runs) | running (extra; added because AODV degrades sharply at 100 nodes) |
-| Analysis: tables, figures, statistics | done for everything above; regenerated once the sensitivity check finishes |
+| RTS/CTS sensitivity check, 100-node baseline (30 runs) | done, committed (extra: checks whether hidden-terminal collisions explain the 100-node AODV results) |
+| Analysis: tables, figures, statistics | done for all 1,350 runs (`results/analysis/`) |
 | Methods README (`experiments/README.md`) | done |
 
 All finished runs completed without failures in their final pass. Four 100-node runs failed in earlier attempts and were redone (`results/main/failed_runs_history.csv`).

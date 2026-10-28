@@ -1319,3 +1319,33 @@ kerala100,DSDV,kerala,100,10 / dsdv_kerala_50_n100_s10,62.0,50 nodes flooded (50
 kerala100,AODV,uniform,100,10 / aodv_uniform_50_n100_s10,62.0,50 nodes flooded (50.0%) + batteries,1032,459,44.477,59.972,312.743,4.846,125645,6200474,573,55.523,11.526,20904.11
 kerala100,OLSR,uniform,100,10 / olsr_uniform_50_n100_s10,62.0,50 nodes flooded (50.0%) + batteries,1032,544,52.713,2.985,4.999,5.743,19006,3940484,488,47.287,23.349,20885.19
 kerala100,DSDV,uniform,100,10 / dsdv_uniform_50_n100_s10,62.0,50 nodes flooded (50.0%) + batteries,1032,532,51.55,14.508,16.233,5.616,143817,9466320,500,48.45,16.853,20948.03
+rtscts100,AODV,baseline,100,1 / aodv_baseline_rtscts_n100_f10_s1,,none,9200,4474,48.63,252.154,895.747,79.676,503321,25083836,4726,51.37,unavailable,25367.06
+rtscts100,OLSR,baseline,100,1 / olsr_baseline_rtscts_n100_f10_s1,,none,9200,9192,99.913,4.593,8.019,163.698,22852,5877400,8,0.087,unavailable,24797.74
+rtscts100,DSDV,baseline,100,1 / dsdv_baseline_rtscts_n100_f10_s1,,none,9200,8940,97.174,18.204,20.687,159.21,204524,12971300,260,2.826,unavailable,24946.98
+rtscts100,AODV,baseline,100,2 / aodv_baseline_rtscts_n100_f10_s2,,none,9200,5398,58.674,141.173,633.193,96.131,459472,22898898,3802,41.326,unavailable,25313.81
+rtscts100,OLSR,baseline,100,2 / olsr_baseline_rtscts_n100_f10_s2,,none,9200,9199,99.989,4.375,8.002,163.822,21356,5571240,1,0.011,unavailable,24787.2
+rtscts100,DSDV,baseline,100,2 / dsdv_baseline_rtscts_n100_f10_s2,,none,9200,8985,97.663,17.49,21.908,160.011,207109,13093684,215,2.337,unavailable,24955.49
+rtscts100,AODV,baseline,100,3 / aodv_baseline_rtscts_n100_f10_s3,,none,9200,3108,33.783,357.973,1157.319,55.349,591717,29447970,6092,66.217,unavailable,25448.21
+rtscts100,OLSR,baseline,100,3 / olsr_baseline_rtscts_n100_f10_s3,,none,9200,9162,99.587,4.633,8.359,163.163,22014,5804244,38,0.413,unavailable,24786.84
+rtscts100,DSDV,baseline,100,3 / dsdv_baseline_rtscts_n100_f10_s3,,none,9200,8998,97.804,18.277,25.029,160.243,206302,13050748,202,2.196,unavailable,24942.84
+rtscts100,AODV,baseline,100,4 / aodv_baseline_rtscts_n100_f10_s4,,none,9200,4372,47.522,291.365,1029.882,77.86,486494,24195142,4828,52.478,unavailable,25354.74
+rtscts100,OLSR,baseline,100,4 / olsr_baseline_rtscts_n100_f10_s4,,none,9200,9176,99.739,4.584,9.504,163.413,22599,5921696,24,0.261,unavailable,24793.95
+rtscts100,DSDV,baseline,100,4 / dsdv_baseline_rtscts_n100_f10_s4,,none,9200,8925,97.011,18.636,28.268,158.943,205763,13024988,275,2.989,unavailable,24943.83
+rtscts100,AODV,baseline,100,5 / aodv_baseline_rtscts_n100_f10_s5,,none,9200,4839,52.598,268.48,1008.811,86.176,477499,23820270,4361,47.402,unavailable,25333.15
+rtscts100,OLSR,baseline,100,5 / olsr_baseline_rtscts_n100_f10_s5,,none,9200,9197,99.967,4.556,7.776,163.787,21264,5537268,3,0.033,unavailable,24791.05
+rtscts100,DSDV,baseline,100,5 / dsdv_baseline_rtscts_n100_f10_s5,,none,9200,8903,96.772,17.166,21.41,158.551,203931,12935892,297,3.228,unavailable,24932.06
+rtscts100,AODV,baseline,100,6 / aodv_baseline_rtscts_n100_f10_s6,,none,9200,5079,55.207,224.171,815.596,90.45,482350,24053238,4121,44.793,unavailable,25346.51
+rtscts100,OLSR,baseline,100,6 / olsr_baseline_rtscts_n100_f10_s6,,none,9200,9199,99.989,4.653,8.101,163.822,23511,6388028,1,0.011,unavailable,24810.97
+rtscts100,DSDV,baseline,100,6 / dsdv_baseline_rtscts_n100_f10_s6,,none,9200,8957,97.359,18.02,20.951,159.512,205266,13014060,243,2.641,unavailable,24943.96
+rtscts100,AODV,baseline,100,7 / aodv_baseline_rtscts_n100_f10_s7,,none,9200,4685,50.924,212.874,795.215,83.434,464689,23091512,4515,49.076,unavailable,25310.42
+rtscts100,OLSR,baseline,100,7 / olsr_baseline_rtscts_n100_f10_s7,,none,9200,9198,99.978,4.81,8.81,163.804,22040,6010116,2,0.022,unavailable,24792.05
+rtscts100,DSDV,baseline,100,7 / dsdv_baseline_rtscts_n100_f10_s7,,none,9200,8903,96.772,15.55,18.217,158.551,203168,12889424,297,3.228,unavailable,24928.66
+rtscts100,AODV,baseline,100,8 / aodv_baseline_rtscts_n100_f10_s8,,none,9200,4064,44.174,300.992,988.31,72.375,555980,27870192,5136,55.826,unavailable,25462.53
+rtscts100,OLSR,baseline,100,8 / olsr_baseline_rtscts_n100_f10_s8,,none,9200,9199,99.989,6.226,14.784,163.822,24117,7182664,1,0.011,unavailable,24857.9
+rtscts100,DSDV,baseline,100,8 / dsdv_baseline_rtscts_n100_f10_s8,,none,9200,8898,96.717,18.7,29.11,158.462,205423,13016740,302,3.283,unavailable,24985.37
+rtscts100,AODV,baseline,100,9 / aodv_baseline_rtscts_n100_f10_s9,,none,9200,4905,53.315,220.303,828.278,87.352,444477,22107776,4295,46.685,unavailable,25349.05
+rtscts100,OLSR,baseline,100,9 / olsr_baseline_rtscts_n100_f10_s9,,none,9200,9192,99.913,4.964,9.177,163.698,21897,5930988,8,0.087,unavailable,24820.17
+rtscts100,DSDV,baseline,100,9 / dsdv_baseline_rtscts_n100_f10_s9,,none,9200,8912,96.87,21.475,34.96,158.711,203594,12911552,288,3.13,unavailable,24971.36
+rtscts100,AODV,baseline,100,10 / aodv_baseline_rtscts_n100_f10_s10,,none,9200,3691,40.12,279.35,898.067,65.732,549004,27336522,5509,59.88,unavailable,25422.94
+rtscts100,OLSR,baseline,100,10 / olsr_baseline_rtscts_n100_f10_s10,,none,9200,9194,99.935,6.638,13.667,163.733,23345,6071496,6,0.065,unavailable,24816.56
+rtscts100,DSDV,baseline,100,10 / dsdv_baseline_rtscts_n100_f10_s10,,none,9200,8940,97.174,20.297,28.8,159.21,204903,12983076,260,2.826,unavailable,24960.93
