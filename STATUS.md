@@ -6,14 +6,23 @@ Updated on every push. The full list of requested outputs is in `docs/deliverabl
 |---|---|
 | Save deliverables list | done |
 | Build simulator for all scenarios (`sim/manet`) | done |
-| Main grid: 3 protocols × 6 scenarios × 25/50/100 nodes × 10 seeds (540 runs) | 25 and 50 nodes done and committed (360 runs). 100 nodes: a few done; the rest run after the 50-node experiments below (they are the slowest, 2–10 min each) |
+| Main grid: 3 protocols × 6 scenarios × 25/50/100 nodes × 10 seeds (540 runs) | done, committed |
 | Failure-severity sweep (240 runs) | done, committed |
 | Traffic-load sweep (180 runs) | done, committed |
 | Energy and network lifetime (60 runs) | done, committed |
 | Kerala time-evolving failure model + baselines, 50 nodes (150 runs) | done, committed |
-| Kerala, 100 nodes (150 runs) | queued (extra) |
-| Analysis: tables, figures, statistics | checkpoint committed (`results/analysis/`): everything except the 100-node main runs, which are still running. Will be regenerated at the end |
+| Kerala, 100 nodes (150 runs) | done, committed (extra) |
+| RTS/CTS sensitivity check, 100-node baseline (30 runs) | running (extra; added because AODV degrades sharply at 100 nodes) |
+| Analysis: tables, figures, statistics | done for everything above; regenerated once the sensitivity check finishes |
 | Methods README (`experiments/README.md`) | done |
+
+All finished runs completed without failures in their final pass. Four 100-node runs failed in earlier attempts and were redone (`results/main/failed_runs_history.csv`).
+
+## Where to start reading
+
+1. `results/analysis/FINDINGS.md` has the numbers (means ± 95% CI and significant paired differences). Fill in `PREDICTIONS.md` first if you want a blind check.
+2. `results/analysis/figures/` has every figure as PNG and PDF.
+3. `experiments/README.md` covers how everything was set up, the metric definitions, the checks, and the limitations you need to state in the paper.
 
 ## Found along the way
 

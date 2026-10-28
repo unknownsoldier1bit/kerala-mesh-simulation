@@ -33,6 +33,7 @@ main,partition_f10,100,deterministic,10,0.0,0.0,190.9,16.891,3.7,10.0,2.0
 main,recovery_f10,25,deterministic,10,2.0,8.0,0.0,0.0,8.8,10.0,1.2
 main,recovery_f10,50,deterministic,10,5.0,10.0,0.0,0.0,9.7,10.0,1.1
 main,recovery_f10,100,deterministic,10,10.0,10.0,0.0,0.0,10.0,10.0,1.0
+rtscts100,baseline_f10,100,deterministic,10,0.0,0.0,0.0,0.0,10.0,10.0,1.0
 severity,random_links_0.05_f10,50,random,10,0.0,0.0,13.1,4.974,10.0,10.0,1.1
 severity,random_links_0.1_f10,50,random,10,0.0,0.0,26.4,10.029,10.0,10.0,1.0
 severity,random_links_0.2_f10,50,random,10,0.0,0.0,52.6,19.992,10.0,10.0,1.1

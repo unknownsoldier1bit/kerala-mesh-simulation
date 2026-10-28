@@ -930,3 +930,150 @@ Significant paired differences:
 | uniform | 0.5 | acute conn ≤1 s % | AODV − DSDV | 6.06 | 0.0117 | 10 |
 | uniform | 0.5 | acute conn ≤1 s % | OLSR − DSDV | 5.44 | 0.0273 | 10 |
 
+## kerala100 (150 runs)
+
+| scenario | severity | protocol | runs | PDR % | ≤1 s % | delay ms | p95 ms | kbps | ctrl/node/s | NRL | recovery s | after restore s | J/node |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| control |  | aodv | 10 | 73.3 ± 2.8 | 73 ± 2.8 | 68.8 ± 11 | 356 ± 52 | 16.4 ± 0.99 | 8.71 ± 0.75 | 250 ± 28 | 12.4 ± 2.2 |  | 325 ± 5.2 |
+| control |  | olsr | 10 | 87.9 ± 2.8 | 87.9 ± 2.8 | 2.74 ± 0.12 | 5.64 ± 0.51 | 19.7 ± 1.1 | 0.654 ± 0.02 | 13.5 ± 0.76 | 18 ± 3.7 |  | 324 ± 5 |
+| control |  | dsdv | 10 | 85.5 ± 2.6 | 85.5 ± 2.6 | 11.7 ± 1.7 | 13.1 ± 2.7 | 19.1 ± 1 | 5.63 ± 0.11 | 115 ± 5.8 | 18.1 ± 3.8 |  | 325 ± 5.1 |
+| kerala | 0.27 | aodv | 10 | 56.6 ± 5.1 | 56.3 ± 5.1 | 54.8 ± 8.6 | 296 ± 38 | 10 ± 1.4 | 5.67 ± 0.43 | 270 ± 38 | 12.5 ± 3.4 |  | 262 ± 4.4 |
+| kerala | 0.27 | olsr | 10 | 64.6 ± 5.7 | 64.6 ± 5.7 | 2.42 ± 0.11 | 4.58 ± 0.47 | 11.4 ± 1.5 | 0.508 ± 0.012 | 17.6 ± 2.2 | 15.6 ± 4.4 |  | 262 ± 4.3 |
+| kerala | 0.27 | dsdv | 10 | 62.2 ± 5.1 | 62.2 ± 5.1 | 12 ± 2.3 | 13.9 ± 2.9 | 11 ± 1.4 | 4.29 ± 0.08 | 146 ± 19 | 14 ± 2.6 |  | 263 ± 4.4 |
+| kerala | 0.5 | aodv | 10 | 45 ± 5.5 | 45 ± 5.6 | 51.7 ± 11 | 300 ± 55 | 6.04 ± 0.84 | 3.71 ± 0.27 | 290 ± 45 | 11.7 ± 5.9 |  | 210 ± 2.7 |
+| kerala | 0.5 | olsr | 10 | 51.5 ± 5.6 | 51.5 ± 5.6 | 2.34 ± 0.2 | 4.31 ± 0.66 | 6.92 ± 0.89 | 0.392 ± 0.012 | 20.9 ± 2.6 | 14.7 ± 4.3 |  | 209 ± 2.7 |
+| kerala | 0.5 | dsdv | 10 | 49.7 ± 5.7 | 49.7 ± 5.7 | 10.8 ± 2.1 | 12.2 ± 3.9 | 6.66 ± 0.87 | 3.23 ± 0.05 | 162 ± 19 | 15.9 ± 5.3 |  | 210 ± 2.7 |
+| uniform | 0.27 | aodv | 10 | 62.6 ± 5.5 | 62.5 ± 5.5 | 49.4 ± 6.2 | 281 ± 10 | 10.9 ± 1.1 | 5.04 ± 0.5 | 217 ± 28 | 13.6 ± 2 |  | 262 ± 4.4 |
+| uniform | 0.27 | olsr | 10 | 69.6 ± 6.5 | 69.6 ± 6.5 | 2.55 ± 0.12 | 4.53 ± 0.47 | 12.2 ± 1.4 | 0.523 ± 0.018 | 17 ± 2 | 16.2 ± 1.1 |  | 262 ± 4.3 |
+| uniform | 0.27 | dsdv | 10 | 66.9 ± 6.1 | 66.9 ± 6.1 | 10.9 ± 2.4 | 14.7 ± 7.5 | 11.6 ± 1.2 | 4.22 ± 0.091 | 133 ± 14 | 17.2 ± 3 |  | 262 ± 4.4 |
+| uniform | 0.5 | aodv | 10 | 48.3 ± 8.1 | 48.2 ± 8.1 | 51.9 ± 8.4 | 314 ± 37 | 6 ± 1.4 | 2.75 ± 0.31 | 222 ± 47 | 14.1 ± 2.4 |  | 208 ± 4 |
+| uniform | 0.5 | olsr | 10 | 52.7 ± 7.5 | 52.7 ± 7.5 | 2.79 ± 0.18 | 4.62 ± 0.51 | 6.56 ± 1.4 | 0.413 ± 0.012 | 24.5 ± 4.1 | 18.6 ± 2.5 |  | 208 ± 4 |
+| uniform | 0.5 | dsdv | 10 | 51.2 ± 7.1 | 51.2 ± 7.1 | 10.3 ± 2.4 | 12.5 ± 3.6 | 6.37 ± 1.4 | 3.13 ± 0.063 | 168 ± 28 | 18 ± 2.5 |  | 208 ± 4 |
+
+Significant paired differences:
+
+| scenario | severity | metric | pair | median paired difference | Holm p | seeds |
+|---|---|---|---|---|---|---|
+| control |  | PDR % | AODV − OLSR | -15.5 | 0.00586 | 10 |
+| control |  | PDR % | AODV − DSDV | -12.5 | 0.00586 | 10 |
+| control |  | PDR % | OLSR − DSDV | 2.14 | 0.00586 | 10 |
+| control |  | ≤1 s % | AODV − OLSR | -15.9 | 0.00586 | 10 |
+| control |  | ≤1 s % | AODV − DSDV | -12.9 | 0.00586 | 10 |
+| control |  | ≤1 s % | OLSR − DSDV | 2.14 | 0.00586 | 10 |
+| control |  | delay ms | AODV − OLSR | 60.5 | 0.00586 | 10 |
+| control |  | delay ms | AODV − DSDV | 53.8 | 0.00586 | 10 |
+| control |  | delay ms | OLSR − DSDV | -8.85 | 0.00586 | 10 |
+| control |  | p95 ms | AODV − OLSR | 318 | 0.00586 | 10 |
+| control |  | p95 ms | AODV − DSDV | 313 | 0.00586 | 10 |
+| control |  | p95 ms | OLSR − DSDV | -7.05 | 0.00586 | 10 |
+| control |  | kbps | AODV − OLSR | -3.58 | 0.00586 | 10 |
+| control |  | kbps | AODV − DSDV | -2.85 | 0.00586 | 10 |
+| control |  | kbps | OLSR − DSDV | 0.512 | 0.00586 | 10 |
+| control |  | ctrl/node/s | AODV − OLSR | 7.97 | 0.00586 | 10 |
+| control |  | ctrl/node/s | AODV − DSDV | 3.05 | 0.00586 | 10 |
+| control |  | ctrl/node/s | OLSR − DSDV | -4.96 | 0.00586 | 10 |
+| control |  | NRL | AODV − OLSR | 229 | 0.00586 | 10 |
+| control |  | NRL | AODV − DSDV | 129 | 0.00586 | 10 |
+| control |  | NRL | OLSR − DSDV | -103 | 0.00586 | 10 |
+| control |  | recovery s | AODV − OLSR | -4.33 | 0.0391 | 10 |
+| control |  | recovery s | AODV − DSDV | -4.1 | 0.00586 | 10 |
+| control |  | J/node | AODV − OLSR | 1.06 | 0.00586 | 10 |
+| control |  | J/node | OLSR − DSDV | -1.04 | 0.00586 | 10 |
+| kerala | 0.27 | PDR % | AODV − OLSR | -7.7 | 0.00586 | 10 |
+| kerala | 0.27 | PDR % | AODV − DSDV | -5.45 | 0.00586 | 10 |
+| kerala | 0.27 | PDR % | OLSR − DSDV | 1.87 | 0.00586 | 10 |
+| kerala | 0.27 | ≤1 s % | AODV − OLSR | -8.12 | 0.00586 | 10 |
+| kerala | 0.27 | ≤1 s % | AODV − DSDV | -5.8 | 0.00586 | 10 |
+| kerala | 0.27 | ≤1 s % | OLSR − DSDV | 1.87 | 0.00586 | 10 |
+| kerala | 0.27 | delay ms | AODV − OLSR | 51.3 | 0.00586 | 10 |
+| kerala | 0.27 | delay ms | AODV − DSDV | 42.4 | 0.00586 | 10 |
+| kerala | 0.27 | delay ms | OLSR − DSDV | -10.2 | 0.00586 | 10 |
+| kerala | 0.27 | p95 ms | AODV − OLSR | 277 | 0.00586 | 10 |
+| kerala | 0.27 | p95 ms | AODV − DSDV | 265 | 0.00586 | 10 |
+| kerala | 0.27 | p95 ms | OLSR − DSDV | -9.63 | 0.00586 | 10 |
+| kerala | 0.27 | kbps | AODV − OLSR | -1.34 | 0.00586 | 10 |
+| kerala | 0.27 | kbps | AODV − DSDV | -0.929 | 0.00586 | 10 |
+| kerala | 0.27 | kbps | OLSR − DSDV | 0.385 | 0.00586 | 10 |
+| kerala | 0.27 | ctrl/node/s | AODV − OLSR | 4.99 | 0.00586 | 10 |
+| kerala | 0.27 | ctrl/node/s | AODV − DSDV | 1.19 | 0.00586 | 10 |
+| kerala | 0.27 | ctrl/node/s | OLSR − DSDV | -3.79 | 0.00586 | 10 |
+| kerala | 0.27 | NRL | AODV − OLSR | 248 | 0.00586 | 10 |
+| kerala | 0.27 | NRL | AODV − DSDV | 120 | 0.00586 | 10 |
+| kerala | 0.27 | NRL | OLSR − DSDV | -129 | 0.00586 | 10 |
+| kerala | 0.27 | J/node | AODV − OLSR | 0.626 | 0.00586 | 10 |
+| kerala | 0.27 | J/node | AODV − DSDV | -0.305 | 0.00586 | 10 |
+| kerala | 0.27 | J/node | OLSR − DSDV | -0.97 | 0.00586 | 10 |
+| kerala | 0.5 | PDR % | AODV − OLSR | -6.95 | 0.00586 | 10 |
+| kerala | 0.5 | PDR % | AODV − DSDV | -5.32 | 0.00586 | 10 |
+| kerala | 0.5 | PDR % | OLSR − DSDV | 1.45 | 0.00586 | 10 |
+| kerala | 0.5 | ≤1 s % | AODV − OLSR | -7.1 | 0.00586 | 10 |
+| kerala | 0.5 | ≤1 s % | AODV − DSDV | -5.43 | 0.00586 | 10 |
+| kerala | 0.5 | ≤1 s % | OLSR − DSDV | 1.45 | 0.00586 | 10 |
+| kerala | 0.5 | delay ms | AODV − OLSR | 45.2 | 0.00586 | 10 |
+| kerala | 0.5 | delay ms | AODV − DSDV | 37.1 | 0.00586 | 10 |
+| kerala | 0.5 | delay ms | OLSR − DSDV | -8.49 | 0.00586 | 10 |
+| kerala | 0.5 | p95 ms | AODV − OLSR | 269 | 0.00586 | 10 |
+| kerala | 0.5 | p95 ms | AODV − DSDV | 259 | 0.00586 | 10 |
+| kerala | 0.5 | p95 ms | OLSR − DSDV | -7.03 | 0.00586 | 10 |
+| kerala | 0.5 | kbps | AODV − OLSR | -0.918 | 0.00586 | 10 |
+| kerala | 0.5 | kbps | AODV − DSDV | -0.723 | 0.00586 | 10 |
+| kerala | 0.5 | kbps | OLSR − DSDV | 0.201 | 0.00586 | 10 |
+| kerala | 0.5 | ctrl/node/s | AODV − OLSR | 3.28 | 0.00586 | 10 |
+| kerala | 0.5 | ctrl/node/s | AODV − DSDV | 0.508 | 0.00586 | 10 |
+| kerala | 0.5 | ctrl/node/s | OLSR − DSDV | -2.84 | 0.00586 | 10 |
+| kerala | 0.5 | NRL | AODV − OLSR | 259 | 0.00586 | 10 |
+| kerala | 0.5 | NRL | AODV − DSDV | 133 | 0.00586 | 10 |
+| kerala | 0.5 | NRL | OLSR − DSDV | -141 | 0.00586 | 10 |
+| kerala | 0.5 | J/node | AODV − OLSR | 0.368 | 0.00586 | 10 |
+| kerala | 0.5 | J/node | AODV − DSDV | -0.412 | 0.00586 | 10 |
+| kerala | 0.5 | J/node | OLSR − DSDV | -0.793 | 0.00586 | 10 |
+| uniform | 0.27 | PDR % | AODV − OLSR | -6.58 | 0.00586 | 10 |
+| uniform | 0.27 | PDR % | AODV − DSDV | -3.7 | 0.00586 | 10 |
+| uniform | 0.27 | PDR % | OLSR − DSDV | 2.62 | 0.00586 | 10 |
+| uniform | 0.27 | ≤1 s % | AODV − OLSR | -6.78 | 0.00586 | 10 |
+| uniform | 0.27 | ≤1 s % | AODV − DSDV | -3.76 | 0.00586 | 10 |
+| uniform | 0.27 | ≤1 s % | OLSR − DSDV | 2.62 | 0.00586 | 10 |
+| uniform | 0.27 | delay ms | AODV − OLSR | 45.1 | 0.00586 | 10 |
+| uniform | 0.27 | delay ms | AODV − DSDV | 37.3 | 0.00586 | 10 |
+| uniform | 0.27 | delay ms | OLSR − DSDV | -8.45 | 0.00586 | 10 |
+| uniform | 0.27 | p95 ms | AODV − OLSR | 273 | 0.00586 | 10 |
+| uniform | 0.27 | p95 ms | AODV − DSDV | 265 | 0.00586 | 10 |
+| uniform | 0.27 | p95 ms | OLSR − DSDV | -6.58 | 0.00586 | 10 |
+| uniform | 0.27 | kbps | AODV − OLSR | -1.18 | 0.00586 | 10 |
+| uniform | 0.27 | kbps | AODV − DSDV | -0.639 | 0.00586 | 10 |
+| uniform | 0.27 | kbps | OLSR − DSDV | 0.491 | 0.00586 | 10 |
+| uniform | 0.27 | ctrl/node/s | AODV − OLSR | 4.52 | 0.00586 | 10 |
+| uniform | 0.27 | ctrl/node/s | AODV − DSDV | 0.853 | 0.00586 | 10 |
+| uniform | 0.27 | ctrl/node/s | OLSR − DSDV | -3.69 | 0.00586 | 10 |
+| uniform | 0.27 | NRL | AODV − OLSR | 189 | 0.00586 | 10 |
+| uniform | 0.27 | NRL | AODV − DSDV | 69.6 | 0.00586 | 10 |
+| uniform | 0.27 | NRL | OLSR − DSDV | -118 | 0.00586 | 10 |
+| uniform | 0.27 | J/node | AODV − OLSR | 0.452 | 0.00586 | 10 |
+| uniform | 0.27 | J/node | AODV − DSDV | -0.401 | 0.00586 | 10 |
+| uniform | 0.27 | J/node | OLSR − DSDV | -0.837 | 0.00586 | 10 |
+| uniform | 0.5 | PDR % | AODV − OLSR | -3.36 | 0.00586 | 10 |
+| uniform | 0.5 | PDR % | AODV − DSDV | -2.32 | 0.0117 | 10 |
+| uniform | 0.5 | PDR % | OLSR − DSDV | 1.34 | 0.0117 | 10 |
+| uniform | 0.5 | ≤1 s % | AODV − OLSR | -3.45 | 0.00586 | 10 |
+| uniform | 0.5 | ≤1 s % | AODV − DSDV | -2.41 | 0.0117 | 10 |
+| uniform | 0.5 | ≤1 s % | OLSR − DSDV | 1.34 | 0.0117 | 10 |
+| uniform | 0.5 | delay ms | AODV − OLSR | 52 | 0.00586 | 10 |
+| uniform | 0.5 | delay ms | AODV − DSDV | 43.9 | 0.00586 | 10 |
+| uniform | 0.5 | delay ms | OLSR − DSDV | -7.52 | 0.00586 | 10 |
+| uniform | 0.5 | p95 ms | AODV − OLSR | 297 | 0.00586 | 10 |
+| uniform | 0.5 | p95 ms | AODV − DSDV | 290 | 0.00586 | 10 |
+| uniform | 0.5 | p95 ms | OLSR − DSDV | -7.98 | 0.00586 | 10 |
+| uniform | 0.5 | kbps | AODV − OLSR | -0.438 | 0.00586 | 10 |
+| uniform | 0.5 | kbps | AODV − DSDV | -0.269 | 0.0117 | 10 |
+| uniform | 0.5 | kbps | OLSR − DSDV | 0.216 | 0.0117 | 10 |
+| uniform | 0.5 | ctrl/node/s | AODV − OLSR | 2.32 | 0.00586 | 10 |
+| uniform | 0.5 | ctrl/node/s | AODV − DSDV | -0.396 | 0.0273 | 10 |
+| uniform | 0.5 | ctrl/node/s | OLSR − DSDV | -2.73 | 0.00586 | 10 |
+| uniform | 0.5 | NRL | AODV − OLSR | 192 | 0.00586 | 10 |
+| uniform | 0.5 | NRL | AODV − DSDV | 57.8 | 0.00977 | 10 |
+| uniform | 0.5 | NRL | OLSR − DSDV | -154 | 0.00586 | 10 |
+| uniform | 0.5 | recovery s | AODV − DSDV | -2.6 | 0.0176 | 10 |
+| uniform | 0.5 | J/node | AODV − OLSR | 0.17 | 0.00586 | 10 |
+| uniform | 0.5 | J/node | AODV − DSDV | -0.482 | 0.00586 | 10 |
+| uniform | 0.5 | J/node | OLSR − DSDV | -0.656 | 0.00586 | 10 |
+
