@@ -1,0 +1,177 @@
+{
+ "scenario": "uniform_27",
+ "selection": "uniformly random (seeded)",
+ "assumption": "same number of node failures at the same times, but nodes picked uniformly at random instead of lowest first",
+ "failure_start_s": 63.704,
+ "failure_end_s": null,
+ "failed_nodes": [
+  {
+   "node": 4,
+   "time_s": 63.704,
+   "x": 487.65,
+   "y": 11.43
+  },
+  {
+   "node": 81,
+   "time_s": 71.111,
+   "x": 386.63,
+   "y": 207.97
+  },
+  {
+   "node": 91,
+   "time_s": 78.519,
+   "x": 160.95,
+   "y": 39.59
+  },
+  {
+   "node": 60,
+   "time_s": 85.926,
+   "x": 288.16,
+   "y": 302.71
+  },
+  {
+   "node": 25,
+   "time_s": 91.111,
+   "x": 493.57,
+   "y": 227.22
+  },
+  {
+   "node": 85,
+   "time_s": 93.58,
+   "x": 171.61,
+   "y": 399.07
+  },
+  {
+   "node": 66,
+   "time_s": 96.049,
+   "x": 472.67,
+   "y": 98.46
+  },
+  {
+   "node": 32,
+   "time_s": 98.519,
+   "x": 242.85,
+   "y": 314.27
+  },
+  {
+   "node": 18,
+   "time_s": 100.988,
+   "x": 417.68,
+   "y": 406.15
+  },
+  {
+   "node": 2,
+   "time_s": 103.457,
+   "x": 88.76,
+   "y": 303.27
+  },
+  {
+   "node": 20,
+   "time_s": 105.926,
+   "x": 416.5,
+   "y": 34.55
+  },
+  {
+   "node": 61,
+   "time_s": 108.395,
+   "x": 194.27,
+   "y": 462.18
+  },
+  {
+   "node": 89,
+   "time_s": 110.864,
+   "x": 440.14,
+   "y": 270.69
+  },
+  {
+   "node": 93,
+   "time_s": 113.333,
+   "x": 296.93,
+   "y": 496.81
+  },
+  {
+   "node": 14,
+   "time_s": 115.802,
+   "x": 457.16,
+   "y": 225.67
+  },
+  {
+   "node": 92,
+   "time_s": 118.272,
+   "x": 199.69,
+   "y": 128.5
+  },
+  {
+   "node": 27,
+   "time_s": 121.111,
+   "x": 203.99,
+   "y": 271.92
+  },
+  {
+   "node": 7,
+   "time_s": 124.815,
+   "x": 84.26,
+   "y": 353.44
+  },
+  {
+   "node": 0,
+   "time_s": 128.519,
+   "x": 267.18,
+   "y": 113.95
+  },
+  {
+   "node": 52,
+   "time_s": 132.222,
+   "x": 55.0,
+   "y": 142.95
+  },
+  {
+   "node": 65,
+   "time_s": 135.926,
+   "x": 390.75,
+   "y": 347.53
+  },
+  {
+   "node": 3,
+   "time_s": 139.63,
+   "x": 186.05,
+   "y": 162.81
+  },
+  {
+   "node": 82,
+   "time_s": 143.333,
+   "x": 40.3,
+   "y": 298.92
+  },
+  {
+   "node": 31,
+   "time_s": 147.037,
+   "x": 423.89,
+   "y": 208.46
+  },
+  {
+   "node": 35,
+   "time_s": 152.222,
+   "x": 256.8,
+   "y": 399.94
+  },
+  {
+   "node": 28,
+   "time_s": 163.333,
+   "x": 349.3,
+   "y": 239.97
+  },
+  {
+   "node": 22,
+   "time_s": 174.444,
+   "x": 147.46,
+   "y": 287.33
+  }
+ ],
+ "n_failed_nodes": 27,
+ "pct_failed_nodes": 27.0,
+ "n_failed_links": 0,
+ "pct_failed_links": 0.0,
+ "components_at_peak_flood": 1,
+ "battery_depletion": "yes (see battery.csv; no recharging)"
+}

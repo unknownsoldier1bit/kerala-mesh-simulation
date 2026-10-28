@@ -1,0 +1,14 @@
+{
+ "scenario": "control",
+ "selection": "none",
+ "assumption": "no flood failures; batteries still run down",
+ "failure_start_s": null,
+ "failure_end_s": null,
+ "failed_nodes": [],
+ "n_failed_nodes": 0,
+ "pct_failed_nodes": 0.0,
+ "n_failed_links": 0,
+ "pct_failed_links": 0.0,
+ "components_at_peak_flood": 1,
+ "battery_depletion": "yes (see battery.csv; no recharging)"
+}

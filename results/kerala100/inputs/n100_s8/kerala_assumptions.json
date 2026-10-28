@@ -1,0 +1,12 @@
+{
+ "time_compression": "1 day = 30 simulated s; 14 Aug 2018 00:00 = 60 s; run ends at 27 Aug 00:00. Only the failure process is compressed: routing timers and traffic run at real speed.",
+ "phases": "acute phase = 14-18 Aug (flood failures); sustained phase = 18-27 Aug (no new flooding, no grid power, batteries run down). Dates from data/sources.md: dam releases 14-18 Aug, IMD red rain 15-17 Aug, Chalakudy flooded early 15 Aug (one source says 17 Aug), power for the last Thrissur substation back on 27 Aug.",
+ "flood_curve": "share of eventual flood failures by date: 14 Aug 0%, 15 Aug 15%, 16 Aug 60%, 17 Aug 90%, 18 Aug 100% (assumed shape; steepest during the red-alert rain)",
+ "peak_failure_share": "share of mesh nodes lost to flooding by 18 Aug: 27% or 50%. 27% matches the statewide share of base stations down (press report, data/sources.md) and is used as a floor; 50% is a harsher hypothetical. The CAG report's 'total failure' in Chalakudy taluk is a ceiling no mesh can route through, so it isn't simulated.",
+ "spatial_pattern": "a river runs along the west edge (x = 0). Ground height = x / 500 m + Gaussian noise (sd 0.1). Nodes flood in order of height, lowest first. Flooded nodes stay down (submerged, abandoned or evacuated).",
+ "uniform_random_baseline": "same number of node failures at the same times, but nodes picked uniformly at random instead of lowest first",
+ "no_failure_control": "no flood failures; batteries still run down",
+ "batteries": "no recharging during the whole run (power cut from flood onset). Each node's initial charge would last, idling only, until a random date between 19 Aug and 6 Sep (uniform), so devices die one by one through the sustained phase and about half of the devices that escaped flooding are still running on 27 Aug. Real device battery life under continuous ad-hoc Wi-Fi is not documented in data/sources.md; this is a modelling choice.",
+ "traffic": "20 flows of short message bursts: each burst is 5 packets of 512 B, 0.2 s apart; bursts start at random times, on average every 15 s per flow (exponential gaps). Disaster message traffic is not documented (data/sources.md lists it as missing).",
+ "connectivity_control": "for every packet, whether a path existed between source and destination at the moment it was sent (computed from the topology and the failures). 'connected PDR' = delivered / sent while a path existed, which separates routing performance from packets no protocol could have delivered."
+}

@@ -1,0 +1,12 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+olsr_uniform_50_n100_s3,82.0,fail,4,True,True,3.366078999999999,0.8024099999999947,3.366078999999999,448.0,5,1
+olsr_uniform_50_n100_s3,94.0,fail,13,True,True,21.827186999999995,19.427244,21.827186999999995,448.0,5,0
+olsr_uniform_50_n100_s3,94.0,fail,14,True,False,,,354.0,448.0,0,0
+olsr_uniform_50_n100_s3,95.333,fail,6,True,True,7.552901000000006,5.786377999999999,7.552901000000006,448.0,15,5
+olsr_uniform_50_n100_s3,96.667,fail,16,True,True,34.83846,0.0024099999999975807,34.83846,448.0,0,0
+olsr_uniform_50_n100_s3,99.333,fail,18,True,False,,,348.66700000000003,448.0,0,0
+olsr_uniform_50_n100_s3,119.333,fail,17,True,False,,,328.66700000000003,448.0,5,0
+olsr_uniform_50_n100_s3,143.0,fail,4,True,True,17.138578999999993,14.013747999999993,17.138578999999993,448.0,5,0
+olsr_uniform_50_n100_s3,165.0,fail,6,True,True,19.137452999999994,0.0032839999999794145,19.137452999999994,448.0,0,0
+olsr_uniform_50_n100_s3,366.0,fail,6,True,False,,,82.0,448.0,0,0
+olsr_uniform_50_n100_s3,382.0,fail,6,True,False,,,66.0,448.0,0,0
