@@ -1,0 +1,3 @@
+file,url,accessed_utc,bytes,sha256
+data/chalakudy/raw/overture/division_area.parquet,"https://overturemaps-us-west-2.s3.amazonaws.com/release/2026-10-21.0/theme=divisions/type=division_area/ (row groups overlapping (76.2, 10.2, 76.45, 10.42))",2026-10-29 06:50,4923745,7df616db0eb4f462d9145c4aed22d4722dad04a7c1e8072fd1a4f90801a44b02
+data/chalakudy/raw/datameet/kl.geojson,https://raw.githubusercontent.com/naveenpf/indian_village_boundaries/master/kl/kl.geojson,2026-10-29 06:52,12031331,0f396cbdc176e520870f97a93c778df1cf46b8d030f0fa27ae995c0c6abfee53

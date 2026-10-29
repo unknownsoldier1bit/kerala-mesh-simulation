@@ -9,9 +9,9 @@ A running log of the `chalakudy` experiment, newest entry at the bottom. It is c
 | Branch `chalakudy-buildings` from `overnight-experiments` (contains audit commits 9e9cd24a, b93ee861, 1c0a13cd) | done |
 | Read CLAUDE.md, STATUS.md, DELIVERABLES-HANDOFF.md, experiments/README.md, docs/ns3-defaults.md, data/sources.md | done |
 | Check which data hosts are reachable | done (see log 06:45) |
-| Study area boundary | not started |
+| Study area boundary | municipality polygon found (DataMeet/naveenpf, ODbL); sub-area choice pending |
 | Building footprints | not started |
-| Census (population, households) and device ownership | not started |
+| Census (population, households) and device ownership | sources blocked; owner must download (list pending) |
 | Elevation model | not started |
 | River and channels | not started |
 | 2018 flood extent | not started |
@@ -62,3 +62,13 @@ Blocked (403 at the proxy): openstreetmap.org (Overpass, Nominatim, API), downlo
   - ascending, relative orbit 173 (about 13:06 UTC = 18:36 IST): 21 and 27 Aug.
 - No scene between 10 and 20 Aug, so the flood peak (15–17 Aug) was not imaged. The 21 Aug 06:10 IST scene is the first after the peak; it can only show water that was still standing then, so it is a lower bound on the peak extent.
 - First scan attempt failed with `ConnectionResetError` from the proxy; added retries and fewer parallel requests.
+
+### 2026-10-29 07:45 UTC: boundary found; census sources blocked
+
+- Overture's `division_area` near Chalakudy (fetched with `chalakudy_fetch.py overture divisions division_area`, reading only matching Parquet row groups because Overture's STAC catalog host is blocked) has Kerala, Thrissur district and a few small localities, but no Chalakudy municipality or ward polygons.
+- GitHub search API is not available to this session (only repo-scoped endpoints). raw.githubusercontent.com works, so known files can be fetched.
+- Boundary: `naveenpf/indian_village_boundaries` (mirror of DataMeet's Indian Village Boundaries, ODbL), file `kl/kl.geojson`, has "Chalakudy", TYPE Town, census 2001 code 3207000540727000, Mukundapuram sub-district, Thrissur. Its notes (`kl/kl.md`) give the source as the Kerala LSG "Delimitation Map 2010, Maps of Villages and Towns" (delimitation.lsgkerala.gov.in/map). Polygon area 24.83 km² (UTM 43N), 5.4 km × 7.7 km, centroid 76.3278°E 10.3126°N.
+- Census figures appear only in search-result snippets (population 49,525 in 2011; households 12,567 per a Kudumbashree page vs 12,218 per the AMRUT city water balance plan; area 25.23 km²; 36 wards). These are NOT verified: kudumbashree.org, amrutkerala.org, censusindia.gov.in, wikipedia and citypopulation.de are all blocked, and the WebFetch tool is blocked for the same hosts (`getaddrinfo ENOTFOUND`). They will need manual download by the owner.
+- Ward boundaries: not available (OSM blocked; no ward file in the DataMeet repo).
+
+Design problem found: at the 150 m unit-disk range the whole 24.8 km² municipality would need roughly 2,800 nodes for a connected mesh (about 8 neighbours per node), far beyond what NS-3 can run here (100-node runs take minutes each and AODV collapses there). So the simulated area has to be a smaller part of the town, chosen from data (where buildings and measured 2018 flooding coincide), with the number of nodes set by device density × a swept participation rate. To be decided after the flood map is made.

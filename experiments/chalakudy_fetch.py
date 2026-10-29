@@ -7,6 +7,7 @@ data/chalakudy/raw/) can be fetched again and checked.
 Usage, from the repo root:
     python3 experiments/chalakudy_fetch.py gfd-events          # flood-database events, Jul-Sep 2018
     python3 experiments/chalakudy_fetch.py s1-scan 2018-07-01 2018-09-30
+    python3 experiments/chalakudy_fetch.py overture divisions division_area   # also buildings building, base water
 """
 
 import concurrent.futures as cf
@@ -130,6 +131,79 @@ def gfd_events():
 
 
 # ---------------------------------------------------------------------------
+# Overture Maps (OpenStreetMap boundaries and water; OSM, Microsoft and Google buildings)
+# ---------------------------------------------------------------------------
+
+OVERTURE = "https://overturemaps-us-west-2.s3.amazonaws.com"
+OVERTURE_RELEASE = "2026-10-21.0"
+# Box used to cut Overture data: Chalakudy town and its surroundings, with margin.
+OVERTURE_BOX = (76.20, 10.20, 76.45, 10.42)
+
+
+def s3_keys(base, prefix):
+    keys, token = [], None
+    while True:
+        params = {"list-type": "2", "prefix": prefix, "max-keys": "1000"}
+        if token:
+            params["continuation-token"] = token
+        r = HTTP.get(base + "/", params=params, timeout=60)
+        r.raise_for_status()
+        keys += re.findall(r"<Key>([^<]+)</Key>", r.text)
+        m = re.search(r"<NextContinuationToken>([^<]+)</NextContinuationToken>", r.text)
+        if not m:
+            return keys
+        token = m.group(1)
+
+
+def overture_extract(theme, typ, box=OVERTURE_BOX):
+    """Reads only the row groups of the release's GeoParquet files whose bbox statistics overlap `box`."""
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    prefix = f"release/{OVERTURE_RELEASE}/theme={theme}/type={typ}/"
+    keys = [k for k in s3_keys(OVERTURE, prefix) if k.endswith(".parquet")]
+    x0, y0, x1, y1 = box
+
+    def overlapping(key):
+        pf = pq.ParquetFile(io.BufferedReader(HttpFile(f"{OVERTURE}/{key}"), buffer_size=1 << 20))
+        names = pf.schema_arrow.names
+        md = pf.metadata
+        cols = {md.row_group(0).column(j).path_in_schema: j for j in range(md.num_columns)}
+        hits = []
+        for i in range(md.num_row_groups):
+            rg = md.row_group(i)
+            st = {k: rg.column(cols[f"bbox.{k}"]).statistics for k in ("xmin", "xmax", "ymin", "ymax")}
+            if any(v is None or not v.has_min_max for v in st.values()):
+                hits.append(i)
+            elif st["xmin"].min <= x1 and st["xmax"].max >= x0 and st["ymin"].min <= y1 and st["ymax"].max >= y0:
+                hits.append(i)
+        return key, names, hits
+
+    with cf.ThreadPoolExecutor(8) as ex:
+        found = [(k, n, h) for k, n, h in ex.map(overlapping, keys) if h]
+    print(f"{theme}/{typ}: {len(keys)} files, {sum(len(h) for _, _, h in found)} row groups overlap the box", flush=True)
+    tables = []
+    for key, names, hits in found:
+        pf = pq.ParquetFile(io.BufferedReader(HttpFile(f"{OVERTURE}/{key}"), buffer_size=1 << 22))
+        for i in hits:
+            t = pf.read_row_group(i)
+            b = t.column("bbox").combine_chunks()
+            xmin, xmax = b.field("xmin").to_numpy(), b.field("xmax").to_numpy()
+            ymin, ymax = b.field("ymin").to_numpy(), b.field("ymax").to_numpy()
+            keep = (xmin <= x1) & (xmax >= x0) & (ymin <= y1) & (ymax >= y0)
+            if keep.any():
+                tables.append(t.filter(pa.array(keep)))
+    table = pa.concat_tables(tables, promote_options="permissive") if tables else None
+    os.makedirs(os.path.join(RAW, "overture"), exist_ok=True)
+    out = os.path.join(RAW, "overture", f"{typ}.parquet")
+    if table is not None:
+        pq.write_table(table, out)
+        record_download(f"{OVERTURE}/{prefix} (row groups overlapping {box})", out)
+        print(f"{table.num_rows} features written to {os.path.relpath(out, REPO)}")
+    return out
+
+
+# ---------------------------------------------------------------------------
 # Sentinel-1: which scenes cover Chalakudy?
 # ---------------------------------------------------------------------------
 
@@ -221,5 +295,7 @@ if __name__ == "__main__":
         gfd_events()
     elif cmd == "s1-scan":
         s1_scan(sys.argv[2], sys.argv[3])
+    elif cmd == "overture":  # e.g. overture divisions division_area
+        overture_extract(sys.argv[2], sys.argv[3])
     else:
         raise SystemExit(f"unknown command {cmd}")
