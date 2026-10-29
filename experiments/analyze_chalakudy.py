@@ -132,10 +132,19 @@ def scenario_table():
         m = json.load(open(f))
         n, seed = map(int, re.search(r"n(\d+)_s(\d+)", f).groups())
         net = json.load(open(os.path.join(os.path.dirname(f), "network.json")))
+        topo = pd.read_csv(os.path.join(os.path.dirname(f), "topology.csv")).set_index("node_id")
+        ids = [x["node"] for x in m["failed_nodes"]]
+        nn = np.nan
+        if len(ids) >= 2:  # how clustered the failures are: distance to the nearest other failed device
+            xy = topo.loc[ids][["x", "y"]].values
+            dd = np.sqrt(((xy[:, None, :] - xy[None, :, :]) ** 2).sum(-1))
+            np.fill_diagonal(dd, np.inf)
+            nn = float(dd.min(axis=1).mean())
         rows.append(dict(experiment=exp, nodes=n, seed=seed, scenario=m["scenario"], onset_day=m["onset_day"],
                          n_failed_nodes=m["n_failed_nodes"], pct_failed_nodes=m["pct_failed_nodes"],
                          n_observed_flooded_in_sample=m["n_observed_flooded_in_sample"],
-                         components_at_peak=m["components_at_peak"], mean_degree=net["mean_degree"],
+                         components_at_peak=m["components_at_peak"], failed_nearest_failed_m=nn,
+                         mean_degree=net["mean_degree"],
                          largest_component_share=net["largest_component_share"],
                          diameter=net["diameter_largest_component"]))
     d = pd.DataFrame(rows)
@@ -439,7 +448,8 @@ def findings_md(agg, ptests, mtests, check_lines, scen):
     if scen is not None and len(scen):
         s = scen[scen.experiment == "chalakudy"].groupby(["nodes", "scenario", "onset_day"]).agg(
             seeds=("seed", "size"), failed=("n_failed_nodes", "mean"), observed=("n_observed_flooded_in_sample", "mean"),
-            components_at_peak=("components_at_peak", "mean"), mean_degree=("mean_degree", "mean"),
+            components_at_peak=("components_at_peak", "mean"), failed_nearest_failed_m=("failed_nearest_failed_m", "mean"),
+            mean_degree=("mean_degree", "mean"),
             largest_component=("largest_component_share", "mean")).reset_index()
         lines += ["## Scenario properties (main experiment)", "", A.md_table(s), ""]
     for exp, title in (("chalakudy", "Main experiment"), ("chalakudy_prop", "Propagation sensitivity (log-distance)"),
