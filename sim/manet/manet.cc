@@ -119,6 +119,13 @@ std::vector<uint64_t> g_ctrlPkts;
 std::vector<uint64_t> g_ctrlBytes;
 std::vector<std::array<uint64_t, N_TYPES>> g_ctrlTypes;
 std::vector<uint64_t> g_macRetryDrops; // unicast frames given up after the retry limit (link breaks)
+// A routing packet larger than the MTU leaves as IP fragments, and the IP Tx trace fires once
+// per fragment (OLSR packs up to 64 messages into one packet, so this happens at high density).
+// OnIpTx joins the fragments back together before reading the routing headers.
+std::map<uint32_t, Ptr<Packet>> g_txFragments; // node -> payload of the fragments so far
+std::map<uint32_t, uint32_t> g_txFragmentBytes;  // node -> IP-layer bytes of those fragments
+std::map<uint32_t, uint16_t> g_txFragmentId;     // node -> IP identification of that packet
+uint64_t g_fragmentedRoutingPackets = 0;
 
 // ---- AODV route discoveries ----
 struct Discovery
@@ -374,7 +381,8 @@ OnForward(uint32_t node, const Ipv4Header& header, Ptr<const Packet> payload, ui
 {
     uint32_t f;
     uint32_t seq;
-    if (header.GetProtocol() == UdpL4Protocol::PROT_NUMBER && ParseData(payload, f, seq))
+    if (header.GetProtocol() == UdpL4Protocol::PROT_NUMBER && header.GetFragmentOffset() == 0 &&
+        ParseData(payload, f, seq))
     {
         g_flows[f].packets[seq].path.push_back(node);
     }
@@ -390,7 +398,7 @@ OnIpDrop(uint32_t node,
          Ptr<Ipv4>,
          uint32_t)
 {
-    if (header.GetProtocol() != UdpL4Protocol::PROT_NUMBER)
+    if (header.GetProtocol() != UdpL4Protocol::PROT_NUMBER || header.GetFragmentOffset() != 0)
     {
         return;
     }
@@ -438,7 +446,8 @@ OnMacDrop(uint32_t node, WifiMacDropReason reason, Ptr<const WifiMpdu> mpdu)
     copy->RemoveHeader(ip);
     uint32_t f;
     uint32_t seq;
-    if (ip.GetProtocol() == UdpL4Protocol::PROT_NUMBER && ParseData(copy, f, seq))
+    if (ip.GetProtocol() == UdpL4Protocol::PROT_NUMBER && ip.GetFragmentOffset() == 0 &&
+        ParseData(copy, f, seq))
     {
         RecordDrop(f, seq, 20 + static_cast<int>(reason), node);
     }
@@ -449,7 +458,8 @@ OnMacDrop(uint32_t node, WifiMacDropReason reason, Ptr<const WifiMpdu> mpdu)
 // ---------------------------------------------------------------------------
 
 // Counts every routing packet a working node hands to its interface, including
-// rebroadcasts. Bytes are IP-layer bytes (IP + UDP headers + routing message).
+// rebroadcasts. Bytes are IP-layer bytes (IP + UDP headers + routing message). A packet
+// sent as IP fragments counts once, with the bytes of all its fragments.
 void
 OnIpTx(uint32_t node, Ptr<const Packet> packet, Ptr<Ipv4>, uint32_t)
 {
@@ -464,6 +474,38 @@ OnIpTx(uint32_t node, Ptr<const Packet> packet, Ptr<Ipv4>, uint32_t)
     {
         return;
     }
+    uint32_t ipBytes = packet->GetSize();
+    if (ip.GetFragmentOffset() != 0 || !ip.IsLastFragment())
+    {
+        // Fragments of one packet are traced back to back, in order, so join them here.
+        if (ip.GetFragmentOffset() == 0)
+        {
+            g_txFragments[node] = copy;
+            g_txFragmentBytes[node] = ipBytes;
+            g_txFragmentId[node] = ip.GetIdentification();
+            return;
+        }
+        auto it = g_txFragments.find(node);
+        if (it == g_txFragments.end() || g_txFragmentId[node] != ip.GetIdentification())
+        {
+            return;
+        }
+        it->second->AddAtEnd(copy);
+        g_txFragmentBytes[node] += ipBytes;
+        if (!ip.IsLastFragment())
+        {
+            return;
+        }
+        copy = it->second;
+        ipBytes = g_txFragmentBytes[node];
+        g_txFragments.erase(it);
+        UdpHeader peek;
+        copy->PeekHeader(peek);
+        if (peek.GetDestinationPort() == g_routingPort)
+        {
+            g_fragmentedRoutingPackets++;
+        }
+    }
     UdpHeader udp;
     copy->RemoveHeader(udp);
     if (udp.GetDestinationPort() != g_routingPort)
@@ -472,7 +514,7 @@ OnIpTx(uint32_t node, Ptr<const Packet> packet, Ptr<Ipv4>, uint32_t)
     }
     uint32_t bin = Bin();
     g_ctrlPkts[bin]++;
-    g_ctrlBytes[bin] += packet->GetSize();
+    g_ctrlBytes[bin] += ipBytes;
 
     if (g_protocol == "aodv")
     {
@@ -554,7 +596,7 @@ OnIpRx(uint32_t node, Ptr<const Packet> packet, Ptr<Ipv4>, uint32_t)
     Ptr<Packet> copy = packet->Copy();
     Ipv4Header ip;
     copy->RemoveHeader(ip);
-    if (ip.GetProtocol() != UdpL4Protocol::PROT_NUMBER)
+    if (ip.GetProtocol() != UdpL4Protocol::PROT_NUMBER || ip.GetFragmentOffset() != 0)
     {
         return;
     }
@@ -1243,7 +1285,8 @@ main(int argc, char* argv[])
     stats.close();
 
     std::cout << "done protocol=" << g_protocol << " nodes=" << g_n << " flows=" << g_flows.size()
-              << " wall_s=" << wall << std::endl;
+              << " wall_s=" << wall << " fragmented_routing_packets=" << g_fragmentedRoutingPackets
+              << std::endl;
 
     Simulator::Destroy();
     return 0;
