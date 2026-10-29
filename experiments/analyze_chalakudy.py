@@ -496,7 +496,8 @@ def fig_sensitivity(df):
     savefig(fig, "chalakudy_sensitivity_acute",
               "One parameter changed at a time from the main setting (25% flooded, 15 s gap, 50% battery share); onset "
               "15 Aug. Flooded share and traffic: no battery limit. Battery share: batteries limited (every device runs "
-              "flat within hours of the power cut). All swept values are assumptions. Error bars: 95% CI over seeds, "
+              "flat within hours of the power cut). Real data: building positions, ground-height failure order, event dates; "
+              "all swept values are assumptions. Error bars: 95% CI over seeds, "
               "clipped to 0-100%.")
 
 
