@@ -1,0 +1,13 @@
+time_s,action,kind,a,b,group
+93.75,fail,node,22,-1,flood
+101.25,fail,node,21,-1,flood
+108.75,fail,node,1,-1,flood
+116.25,fail,node,14,-1,flood
+123.75,fail,node,2,-1,flood
+131.25,fail,node,26,-1,flood
+138.75,fail,node,16,-1,flood
+146.25,fail,node,4,-1,flood
+153.75,fail,node,19,-1,flood
+161.25,fail,node,13,-1,flood
+168.75,fail,node,42,-1,flood
+176.25,fail,node,45,-1,flood

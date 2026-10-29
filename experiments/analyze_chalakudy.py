@@ -225,10 +225,12 @@ def checks(df):
         e = pd.read_csv(os.path.join(rd, "energy.csv"))
         if e.consumed_ns3_J.notna().all():
             rel = ((e.consumed_J - e.consumed_ns3_J).abs() / e.consumed_ns3_J.replace(0, np.nan)).max()
-            dep = e[e.depleted_s.notna()]
-            en.append(dict(run_id=os.path.basename(rd), state_based_total_J=e.consumed_J.sum(),
-                           ns3_energy_model_total_J=e.consumed_ns3_J.sum(), max_relative_difference=rel,
-                           nodes_depleted=len(dep)))
+            limited = e.initial_J.notna().any()
+            en.append(dict(run_id=os.path.basename(rd), battery="limited" if limited else "unlimited",
+                           state_based_total_J=e.consumed_J.sum(), ns3_energy_model_total_J=e.consumed_ns3_J.sum(),
+                           max_relative_difference=rel, nodes_depleted=int(e.depleted_s.notna().sum()),
+                           ns3_counted_share_of_initial_mean=(e.consumed_ns3_J / e.initial_J).mean() if limited
+                           else np.nan))
     if fm:
         d = pd.DataFrame(fm)
         d.to_csv(os.path.join(TAB, "check_tracker_vs_flowmonitor.csv"), index=False)
@@ -239,8 +241,33 @@ def checks(df):
     if en:
         d = pd.DataFrame(en)
         d.to_csv(os.path.join(TAB, "check_energy_vs_ns3_model.csv"), index=False)
-        lines.append(f"energy check ({len(d)} runs, 50 devices): max relative difference per device "
-                     f"{d.max_relative_difference.max():.2e}")
+        u, lim = d[d.battery == "unlimited"], d[d.battery == "limited"]
+        lines.append(f"energy accounting vs ns-3's energy framework ({len(u)} runs with unlimited batteries, 50 "
+                     f"devices): max relative difference per device {u.max_relative_difference.max():.2e}")
+        if len(lim):
+            lines.append(f"ns-3's energy framework with finite batteries ({len(lim)} runs) did not work: its radio "
+                         f"model stopped counting at {lim.ns3_counted_share_of_initial_mean.mean():.3f} of the initial "
+                         f"energy on average and reported {int(lim.nodes_depleted.sum())} depletions, so in these runs "
+                         f"no battery ran out (the experiments use the state-based battery instead)")
+
+    # state-based batteries: a radio must switch off within one check interval (1 s) of reaching 90% use
+    dep = []
+    for exp in EXPS:
+        for f in glob.glob(os.path.join(A.RES, exp, "runs", "*_batt*", "energy.csv")):
+            e = pd.read_csv(f)
+            e = e[e.depleted_s.notna()]
+            idle_s = (e.consumed_J - (1 - C.LOW_BATTERY) * e.initial_J) / C.IDLE_W
+            dep.append(dict(experiment=exp, run_id=os.path.basename(os.path.dirname(f)), depleted=len(e),
+                            overshoot_s_min=idle_s.min() if len(e) else np.nan,
+                            overshoot_s_max=idle_s.max() if len(e) else np.nan,
+                            depleted_s_min=e.depleted_s.min() if len(e) else np.nan,
+                            depleted_s_max=e.depleted_s.max() if len(e) else np.nan))
+    if dep:
+        d = pd.DataFrame(dep).sort_values(["experiment", "run_id"])
+        d.to_csv(os.path.join(TAB, "check_battery_depletion.csv"), index=False)
+        lines.append(f"state-based batteries ({len(d)} runs, {int(d.depleted.sum())} depletions): energy used beyond "
+                     f"90% of the battery when the radio switched off = {d.overshoot_s_min.min():.2f} to "
+                     f"{d.overshoot_s_max.max():.2f} s of idling (expected 0 to 1 s: the check runs once a second)")
     return lines
 
 
@@ -507,6 +534,10 @@ def main():
     ptests.to_csv(os.path.join(TAB, "chalakudy_protocol_tests.csv"), index=False)
     mtests = model_tests(df, [m for m in METRICS if "within" in m or "pdr" in m])
     mtests.to_csv(os.path.join(TAB, "chalakudy_flood_vs_uniform_tests.csv"), index=False)
+    label = df.experiment + ": " + df.tag + ", onset " + df.onset.astype(str) + " Aug, " + df.battery + ", gap " + \
+        df.gap.map("{:g} s".format)
+    A.table_deliverable(df.assign(scenario=label).sort_values("run_id")).to_csv(
+        os.path.join(TAB, "summary_table_chalakudy.csv"), index=False)
     scen = scenario_table()
     check_lines = checks(df)
     main_ = lambda a: (a.experiment == "chalakudy") & (a.battery == "nobatt")  # noqa: E731
