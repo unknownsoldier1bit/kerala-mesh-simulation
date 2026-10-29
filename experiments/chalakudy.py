@@ -460,7 +460,7 @@ def battery_energy(n, seed, onset, share_for_radio):
 
 def chalakudy_runs(exp, protocols, seeds, onsets=(15,), batteries=("unlimited",), nodes=(100,),
                    shares=(0.25,), radio_shares=(0.5,), gaps=(15.0,), models=("flood", "uniform", "control"),
-                   loss_model="range"):
+                   loss_model="range", flowmon=False, energy_model="states"):
     rows = read_buildings()
     sq, origin = square_buildings(rows)
     runs = []
@@ -534,7 +534,7 @@ def chalakudy_runs(exp, protocols, seeds, onsets=(15,), batteries=("unlimited",)
                                                             if failed else "no flooding"),
                                             onset_day=onset, battery=btag, burst_gap_s=gap, loss_model=loss_model,
                                             topo=topo, flows_file=ffile, events_file=efile, energy_file=bfile,
-                                            energy_j=0, energy_model="states",
+                                            energy_j=0, energy_model=energy_model, flowmon=flowmon,
                                             fail_time_s=meta["failure_start_s"], restore_time_s=None,
                                             traffic_start_s=DAY0_S, traffic_stop_s=SIM_END_S - 2,
                                             sim_time_s=SIM_END_S, payload_bytes=gen.PAYLOAD_B,
@@ -558,13 +558,18 @@ VARIANTS = {
     "chalakudy_battery": dict(onsets=(15,), batteries=("limited",), radio_shares=(0.25, 1.0)),
     # propagation sensitivity: same devices, flows and failures as the main runs, log-distance radio
     "chalakudy_prop": dict(onsets=(15,), loss_model="logdistance"),
+    # cross-checks, 50 devices, seeds 1-2: ns-3 FlowMonitor vs this project's packet tracker, and the ns-3
+    # energy framework vs the state-based energy count (allowed at <= 50 nodes; no radio is ever restored)
+    "chalakudy_check": dict(onsets=(15,), batteries=("limited", "unlimited"), nodes=(50,), flowmon=True,
+                            energy_model="ns3", seeds=(1, 2)),
     # feasibility pilot (run time, routing start-up): no flooding, seed 1 only; not part of the results
     "chalakudy_pilot": dict(onsets=(15,), batteries=("limited", "unlimited"), models=("control",), nodes=(100, 150)),
 }
 
 
 def runs_for(exp, protocols, seeds):
-    return chalakudy_runs(exp, protocols, seeds, **VARIANTS[exp])
+    v = dict(VARIANTS[exp])
+    return chalakudy_runs(exp, protocols, v.pop("seeds", seeds), **v)
 
 
 def network_table():
