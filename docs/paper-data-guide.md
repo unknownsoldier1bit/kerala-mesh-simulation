@@ -84,7 +84,7 @@ All numbers are from `data/chalakudy/data_summary.json` unless another file is n
 - Copernicus DEM GLO-30. It is a surface model: heights include trees and roofs, not bare ground. Heights are relative to the EGM2008 geoid.
 - Ground estimate per building (DERIVED): the 5th percentile of DEM cells within 50 m of the centroid (the lowest nearby cell is the best ground proxy a surface model gives).
 - Municipality: median 15.0 m (10th–90th percentile 10.6–27.6 m). Study square: median 12.1 m (10th–90th percentile 10.0–13.5 m). The square is nearly flat.
-- Used only to rank buildings from lowest to highest, never for absolute water levels: canopy bias makes absolute heights unreliable. Radar-visible flood water inside the municipality on 21 Aug lies at a median 4.9 m on this DEM (10th–90th percentile 3.4–6.0 m), while the buildings' ground estimates in the square are around 12 m; taken literally that would mean almost no building flooded, which contradicts the reports that Chalakudy town was under water.
+- Used only to rank buildings from lowest to highest, never for absolute water levels: canopy bias makes absolute heights unreliable. Radar-visible flood water inside the municipality on 21 Aug lies at a median 4.9 m on this DEM (10th–90th percentile 3.4–6.0 m), while the buildings' ground estimates in the square are around 12 m; taken literally that would mean almost no building flooded, at odds with the press reports that Chalakudy flooded (section 4.5).
 
 ### 4.4 Radar flood maps
 
@@ -127,3 +127,45 @@ All numbers are from `data/chalakudy/data_summary.json` unless another file is n
 | 2 Sep | 00:40 | S1A | descending 165 | −12.4 | 2.6 | 90.6 | 1.34 |
 | 14 Sep | 00:40 | S1A | descending 165 | −12.8 | 2.5 | 89.6 | 0.98 |
 | 26 Sep | 00:40 | S1A | descending 165 | −12.8 | 2.2 | 89.8 | 0.69 |
+
+### 4.5 Timeline and time compression
+
+| Date (2018) | Event | Used as | Source | Status |
+|---|---|---|---|---|
+| 14–18 Aug | Dam releases (Idukki shutters opened 10 Aug) | Water rises until 18 Aug 00:00 (peak) | CAG Report No. 6 of 2021, Chapter III | OK |
+| 15–17 Aug | IMD "red" heavy rain in Thrissur district | Same | Kerala Additional Memorandum, Table 3, pp. 11–12 | OK |
+| 15 Aug (early) or 17 Aug | Chalakudy floods | Onset of device failures; both dates are run | Deccan Herald (15 Aug); Scroll, quoting an MP (17 Aug); the sources disagree | NEEDS URL |
+| 16 Aug | Total communications failure in Chalakudy and Idukki taluks; Poringalkuthu dam station down | Context only (not a parameter) | CAG §3.5.2 | OK |
+| 27 Aug | Last Thrissur substation back on | End of the run (power, so recharging, returns) | KSEB, "How KSEBL survived flood 2018" | NEEDS URL |
+
+- Power cut: ASSUMED at 00:00 on the onset day (the KSEB cut-off date for Chalakudy was not found).
+- Time compression (ASSUMED, as in the Kerala-anchored experiment): 1 day = 30 simulated seconds, a factor of 2,880. 14 Aug 00:00 is at 60 s, 18 Aug 00:00 at 180 s, 27 Aug 00:00 at 450 s (end). The first 60 s are warm-up with no traffic.
+- Only the scenario calendar is compressed: routing timers and traffic run in real simulated seconds, so a 15 s gap between message bursts spans 12 hours of the scenario calendar. Say plainly that these are accelerated stress tests that keep the order and relative timing of events, not their real durations.
+
+### 4.6 Failure models (the three comparisons)
+
+- **Flood order (DERIVED order, ASSUMED amount):** 25% of devices fail (10% and 50% swept). They fail one at a time, evenly spaced from the onset day until 18 Aug 00:00: device number r of k fails at onset + (r + 0.5)/k × (18 Aug − onset). Devices near radar-visible flood water would fail first, then the rest from lowest ground estimate upward. In this square no device is near radar-visible flood water, so **the order comes from ground height alone**. Flooded devices do not come back (ASSUMED: households evacuate or lose the device; there is no data on returns).
+- **Uniform random:** the same number of failures at the same times, at devices drawn at random (seeded). This isolates the effect of *which* devices fail.
+- **No-flood control:** no flood failures. This isolates the effect of the real topology itself. Any difference that already exists in the control (for example AODV below OLSR) must not be attributed to flooding.
+- How different the two failure patterns are, at 100 devices and 25% flooded (seeds 1–10): a failed device's nearest other failed device is 83 m away on average under the flood order and 104 m under uniform random; at the peak the network is split into 3.3 vs 4.2 groups on average. The flood pattern is clustered, but only moderately, because the square is nearly flat.
+- Connected PDR (the connectivity control): every result is also reported for packets sent while the unit-disk graph of working devices still had a path from source to destination.
+
+### 4.7 Batteries (all ASSUMED)
+
+- Battery-limited runs only. From the power cut, each device has a random charge (uniform 20–100%) × the share of the battery left for the mesh radio (50%; 25% and 100% swept) × 3,000 mAh × 3.85 V. Both 3,000 mAh and 3.85 V are placeholders until a cited 2018 figure is found (`MANUAL_DOWNLOADS.md` item 7).
+- The energy is scaled by the same time compression (× 30/86,400), so a battery that would last 10 real hours lasts about 12.5 simulated seconds. The radio switches off at 10% charge left (the ns-3 default).
+- Energy use comes from ns-3's default radio currents (idle 0.273 A at 3 V = 0.82 W, no power saving). Only the Wi-Fi radio is modelled (no screen, processor or cellular radio), and these are not measurements of a 2018 phone.
+- Result to report as a property of these assumptions: the last device runs flat 4, 7 and 14 real hours after the power cut (25, 50, 100% share), at the same time under every protocol, so nothing is sent in the sustained phase. The unlimited-battery runs isolate the flood effect.
+- In battery-limited runs, compare protocols on delivered-of-scheduled messages (`delivered_of_scheduled_pct`), not whole-run PDR: a flat device sends nothing, so PDR (85–97%) hides that only 6–26% of scheduled messages arrive.
+
+### 4.8 Message traffic (ASSUMED: no data exists on disaster message traffic)
+
+- 20 flows per run between devices in the same connected group and at least 2 hops apart (chosen on the 150 m graph, so every flow starts with a path).
+- Bursts of 5 packets 0.2 s apart, 512-byte UDP payload; exponential gaps between bursts, mean 15 s (7.5 s and 30 s swept); from 60 s to 448 s.
+
+### 4.9 Radio range and the propagation check
+
+- Main configuration (ASSUMED, for comparability with the other experiments): 802.11b, a 150 m unit disk (full signal within 150 m, nothing beyond).
+- Sensitivity run: the 3GPP TR 37.885 V2V-Urban NLOS path-loss formula, PL = 36.85 + 30 log10(d) + 18.9 log10(f), at ns-3's default 2,412 MHz (exponent 3, 44.08 dB at 1 m), nothing adjusted. With ns-3's default transmit power (16.02 dBm) and preamble-detection threshold (−82 dBm), frames get through up to 62.8 m (checked with two devices: 100/100 packets at 62.5 m, 0/100 at 63 m).
+- NLOS for every link is ASSUMED (devices in houses under dense tree cover). The model was made for vehicles near street level, not for devices inside houses.
+- What it shows: at 62.8 m the 100 devices split into about 48 groups (the largest holds 10%), no traffic pair is connected, and no packet is delivered in any of the 90 runs (184,731 sent). A connected network under this model would need about 500 devices in the square (largest group 92%), about one per three buildings. Every Chalakudy result is therefore conditional on the 150 m range.
