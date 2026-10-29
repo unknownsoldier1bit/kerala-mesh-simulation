@@ -47,6 +47,26 @@ The session's network policy blocked the news sites, so these were seen only as 
 
 None of these were used to set simulation parameters. The Kerala experiment uses only the dates in the Verified table above.
 
+## Chalakudy building-level data (added 29 Oct 2026)
+
+Used in the `chalakudy` experiment; full table with URLs, access dates, licences and checksums in `data/chalakudy/PROVENANCE.md`, `downloads.csv` and `derived_files.csv`.
+
+| What | Source | Status |
+|---|---|---|
+| Chalakudy municipality boundary | DataMeet Indian Village Boundaries, Kerala (ODbL) | downloaded, checksummed |
+| Building footprints (21,355 in the municipality) | Overture Maps 2026-10-21.0: Google Open Buildings (dated 2023-05-01 in Overture) and OpenStreetMap | downloaded, checksummed |
+| Rivers, canals, ponds | OpenStreetMap via Overture (ODbL) | downloaded, checksummed |
+| Ground height | Copernicus DEM GLO-30 tile N10E076 (a surface model: trees and roofs included) | downloaded, checksummed |
+| Water on 24 dates in 2018 | Sentinel-1 GRD scenes from the AWS archive; no image between 10 and 20 Aug | processed (`experiments/chalakudy_flood.py`) |
+| Global Flood Database (MODIS) | Google Cloud bucket `gfd_v1_4` | checked: no event covers Kerala in August 2018 |
+| 3GPP TR 37.885 V2V-Urban path loss | formula read from ns-3.47's implementation (the 3GPP site is blocked here) | used for the propagation sensitivity |
+
+Finding: the radar shows flooded fields around the town but not water between houses, so it cannot say which buildings flooded; building-level flood order comes from ground height.
+
+Leads seen only as search-result snippets on 29 Oct (documents NOT opened; do not cite until opened): Chalakudy (M) 2011 census population 49,525; 12,218 or 12,567 households (two snippets disagree); about 36 wards. The files that would confirm them are in `data/chalakudy/MANUAL_DOWNLOADS.md`.
+
+Still missing for Chalakudy (see `MANUAL_DOWNLOADS.md`): census population and households, mobile-phone ownership, the CWC water-level record for the Chalakudy River (Arangali gauge), the KSEB power-cut date, a cited 2018 phone battery capacity, a bare-earth DEM (FABDEM), the Dartmouth flood map, cell-tower locations.
+
 ## Don't cite (no source found)
 
 ~300 Kerala towers down, 4–8 h tower batteries, Nepal ~90%, Maria ~95%, Haiti ~60%. Death tolls vary by source (339 / 433 / 474 / 483); pick one and name it.
