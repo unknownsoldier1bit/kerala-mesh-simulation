@@ -1,0 +1,1 @@
+ns3.47-manet --protocol=aodv --topo=results/chalakudy_traffic/inputs/n100_s2/topology.csv --flows=results/chalakudy_traffic/inputs/n100_s2/flows_gap7.5.csv --outDir=results/chalakudy_traffic/runs/aodv_control_on15_nobatt_g7.5_n100_s2 --run=2 --simTime=450.0 --range=150.0 --energyJ=0 --events=results/chalakudy_traffic/inputs/n100_s2/events_control_on15.csv

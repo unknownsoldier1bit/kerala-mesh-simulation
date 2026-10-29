@@ -1,0 +1,14 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+dsdv_flood25_on15_nobatt_g30_n100_s7,120.6,fail,5,True,False,,,327.4,448.0,0,0
+dsdv_flood25_on15_nobatt_g30_n100_s7,124.2,fail,2,True,True,17.620246999999992,0.005908000000005131,17.620246999999992,448.0,0,0
+dsdv_flood25_on15_nobatt_g30_n100_s7,124.2,fail,11,True,True,160.849085,128.16534199999998,160.849085,448.0,0,0
+dsdv_flood25_on15_nobatt_g30_n100_s7,131.4,fail,17,True,False,,,316.6,448.0,0,0
+dsdv_flood25_on15_nobatt_g30_n100_s7,135.0,fail,1,True,False,,,313.0,448.0,0,0
+dsdv_flood25_on15_nobatt_g30_n100_s7,145.8,fail,16,False,False,,,302.2,448.0,5,0
+dsdv_flood25_on15_nobatt_g30_n100_s7,149.4,fail,1,False,False,,,298.6,448.0,0,0
+dsdv_flood25_on15_nobatt_g30_n100_s7,149.4,fail,17,False,False,,,298.6,448.0,0,0
+dsdv_flood25_on15_nobatt_g30_n100_s7,153.0,fail,2,True,True,51.293744000000004,0.005908000000005131,51.293744000000004,448.0,0,0
+dsdv_flood25_on15_nobatt_g30_n100_s7,153.0,fail,3,True,True,14.386383999999993,0.005032999999997401,14.386383999999993,448.0,0,0
+dsdv_flood25_on15_nobatt_g30_n100_s7,153.0,fail,13,True,True,94.62894600000001,63.11321000000001,94.62894600000001,448.0,0,0
+dsdv_flood25_on15_nobatt_g30_n100_s7,163.8,fail,1,False,False,,,284.2,448.0,5,0
+dsdv_flood25_on15_nobatt_g30_n100_s7,167.4,fail,3,True,True,17.571011,17.389659999999992,17.571011,448.0,4,0
