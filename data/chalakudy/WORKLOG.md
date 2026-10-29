@@ -10,11 +10,11 @@ A running log of the `chalakudy` experiment, newest entry at the bottom. It is c
 | Read CLAUDE.md, STATUS.md, DELIVERABLES-HANDOFF.md, experiments/README.md, docs/ns3-defaults.md, data/sources.md | done |
 | Check which data hosts are reachable | done (see log 06:45) |
 | Study area boundary | municipality polygon found (DataMeet/naveenpf, ODbL); sub-area choice pending |
-| Building footprints | not started |
+| Building footprints | done: Overture 2026-10-21.0, 21,355 in the municipality (11,841 Google Open Buildings 2023, 9,514 OSM) |
 | Census (population, households) and device ownership | sources blocked; owner must download (list pending) |
-| Elevation model | not started |
-| River and channels | not started |
-| 2018 flood extent | not started |
+| Elevation model | done: Copernicus GLO-30 tile N10E076 (surface model, includes trees/roofs) |
+| River and channels | done: Overture base/water (OSM): Chalakudy River, canals, streams, ponds |
+| 2018 flood extent | in progress: deriving from Sentinel-1 radar (no ready-made map reachable) |
 | Timeline, power restoration, cell towers, battery capacity | not started |
 | `experiments/chalakudy.py` (raw data → simulator inputs) | not started |
 | `data/chalakudy/PROVENANCE.md` | not started |
@@ -72,3 +72,12 @@ Blocked (403 at the proxy): openstreetmap.org (Overpass, Nominatim, API), downlo
 - Ward boundaries: not available (OSM blocked; no ward file in the DataMeet repo).
 
 Design problem found: at the 150 m unit-disk range the whole 24.8 km² municipality would need roughly 2,800 nodes for a connected mesh (about 8 neighbours per node), far beyond what NS-3 can run here (100-node runs take minutes each and AODV collapses there). So the simulated area has to be a smaller part of the town, chosen from data (where buildings and measured 2018 flooding coincide), with the number of nodes set by device density × a swept participation rate. To be decided after the flood map is made.
+
+### 2026-10-29 08:05 UTC: buildings, rivers, elevation; flood-map route
+
+- Buildings (`chalakudy_fetch.py overture buildings building 76.29 10.26 76.37 10.36`): 65,958 footprints in the box, 21,355 with centroid inside the municipality: 11,841 from Google Open Buildings (Overture says update year 2023) and 9,514 from OpenStreetMap (6,850 last edited in 2018). Footprints are later than or close to 2018, so some buildings may not have existed in Aug 2018 (limitation).
+- Water (`... overture base water`): 3,604 features incl. "Chalakudy River"/"Chalakkudy" river polygons, irrigation canals (Idamalayar, Chalakudy), streams, 1,375 ponds.
+- Elevation: Copernicus GLO-30 DSM tile `Copernicus_DSM_COG_10_N10_00_E076_00_DEM.tif` from copernicus-dem-30m.s3.amazonaws.com (45.9 MB, checksum in downloads.csv). 1 arc-second (~30 m), heights relative to the EGM2008 geoid, surface model (includes trees and roofs).
+- Ready-made 2018 flood maps: none reachable. The Dartmouth Flood Observatory page for event 4663 (https://floodobservatory.colorado.edu/Events/4663/2018India4663.html) reportedly lists Sentinel-1 flood-extent shapefiles, but the host is blocked. Owner to download if possible (cross-check).
+- Sentinel-1 GRD images can be read remotely by window (GDAL /vsicurl/, tiles 1024×1024), so only the Chalakudy part of each 700 MB image is fetched.
+- Geolocation problem found: GRD geolocation grids use a reference height per image line (255–402 m on 21 Aug), while Chalakudy's ground is near sea level and the geoid around Kerala is well below the ellipsoid. Without correction, pixels would be displaced by hundreds of metres in range. The geoid model (cdn.proj.org, download.osgeo.org) is blocked, so the constant geoid offset will be estimated from the data by aligning the Chalakudy River's dark water pixels with the OSM river polygon; the DEM handles height differences inside the area.

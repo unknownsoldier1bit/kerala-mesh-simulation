@@ -196,6 +196,8 @@ def overture_extract(theme, typ, box=OVERTURE_BOX):
     table = pa.concat_tables(tables, promote_options="permissive") if tables else None
     os.makedirs(os.path.join(RAW, "overture"), exist_ok=True)
     out = os.path.join(RAW, "overture", f"{typ}.parquet")
+    if os.path.exists(out):
+        os.remove(out)
     if table is not None:
         pq.write_table(table, out)
         record_download(f"{OVERTURE}/{prefix} (row groups overlapping {box})", out)
@@ -295,7 +297,8 @@ if __name__ == "__main__":
         gfd_events()
     elif cmd == "s1-scan":
         s1_scan(sys.argv[2], sys.argv[3])
-    elif cmd == "overture":  # e.g. overture divisions division_area
-        overture_extract(sys.argv[2], sys.argv[3])
+    elif cmd == "overture":  # e.g. overture divisions division_area [lon0 lat0 lon1 lat1]
+        box = tuple(float(v) for v in sys.argv[4:8]) if len(sys.argv) >= 8 else OVERTURE_BOX
+        overture_extract(sys.argv[2], sys.argv[3], box)
     else:
         raise SystemExit(f"unknown command {cmd}")
