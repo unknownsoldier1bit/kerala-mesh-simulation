@@ -56,7 +56,9 @@ PARAMS = {
                             sweep="alternative rule reported (most buildings within 300 m of 21-Aug flood water)",
                             why="Ward boundaries are not available; the lowest-lying built-up square is the "
                                 "best data-based stand-in for 'worst-flooded wards'."),
-    "nodes": dict(value=100, kind="assumed", sweep=[50, 100, 150],
+    "nodes": dict(value=100, kind="assumed",
+                  sweep="network structure only, 50-1000 devices (network_structure.csv); the 50/150-device "
+                        "simulation sweep (chalakudy_nodes) was not run (owner's compute decision, 29 Oct 2026)",
                   why="Number of devices in the square that run the mesh app. Census and phone-ownership "
                       "figures (pending, see MANUAL_DOWNLOADS.md) only change the implied participation "
                       "rate, not the simulation inputs."),
