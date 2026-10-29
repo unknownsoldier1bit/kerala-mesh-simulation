@@ -168,3 +168,17 @@ Pilot `chalakudy_pilot` (no-flood control only; 100 and 150 devices; batteries l
 - Measured how clustered the flood failures are (100 devices, 25% lost, seeds 1–10): a failed device's nearest other failed device is 83 m away on average, against 104 m for uniform random (closer in 9 of 10 seeds; Wilcoxon p = 0.006). The flood pattern leaves fewer separate groups at the peak (3.3 vs 4.2). The square is nearly flat, so the clustering is moderate.
 - Docs: `experiments/README.md` (Chalakudy section 8, experiments table, fragment check, limitations), `data/sources.md` (new data, unopened leads, gaps).
 - Main runs: 66 of 360 done at 08:18; the full queue should finish around 10:20 UTC.
+
+### 2026-10-29 09:16 UTC: main experiment done (360 runs) and checked
+
+- `chalakudy`: 360/360 runs, 0 failed, no output on stderr, no fragmented routing packets (100 devices); committed and pushed by the driver (1e4989f). Recomputing all 360 runs' metrics from the raw files reproduces `summary.csv`, `per_flow.csv`, `timeseries.csv` and `recovery.csv` exactly.
+- Sanity checks: up to the onset the three models are the same scenario, and before-onset delivery within 1 s and control traffic are identical across models for every protocol and seed. Whole-window PDR before the onset differs by up to 0.8 points in one DSDV run, because a few packets sent just before the onset arrived after it (10 in the control, 5 with failures).
+- Numbers (mean over seeds 1–10, no battery limit, onset 15 Aug; `results/analysis_chalakudy/FINDINGS.md` has all of them with 95% CIs and tests). Delivered within T = 1 s, all packets sent:
+  - No flooding, every window: OLSR 100%, DSDV 97–98%, AODV 90–91%. AODV is below OLSR by about 9 points with no flooding at all (Holm p < 0.01), so a gap of this size in the flood runs cannot be attributed to flooding.
+  - Acute (15–18 Aug), flood 25%: OLSR 75.8, AODV 72.3, DSDV 70.2. Uniform 25%: OLSR 75.9, AODV 75.9, DSDV 65.8. OLSR vs AODV not significant in either; OLSR > DSDV significant in both.
+  - Sustained (18–27 Aug): 51–60% for every protocol and both failure models; OLSR above AODV by 5.5–7 points (significant), as in the control.
+  - Packets sent while a path existed (connected): acute flood OLSR 94.1, AODV 89.8, DSDV 87.4; sustained 90–100%. Most of the loss after the onset is therefore to destinations that were flooded or cut off, not to routing.
+  - Flood order vs uniform random (same counts and times, paired by seed): no significant difference in delivery within 1 s for any protocol, window or onset (all Holm p ≥ 0.28). On connected packets in the acute phase (onset 15), DSDV did better under the flood order (87.4 vs 77.4, Holm p = 0.029); not significant for AODV or OLSR, nor for onset 17.
+  - Onset 17 Aug gives the same picture as 15 Aug.
+- Battery-limited runs: every device ran flat within hours of the power cut, so nothing is sent in the sustained phase; during the acute phase within-1 s delivery is 47–67% with heavy seed-to-seed variation. As predicted from the pilot, these runs say little about the protocols.
+- Figures checked by eye; relabelled the flood model "Flood (lowest ground first)" (its order comes from data, its 25% share does not) and made the identical device-count curves visible.

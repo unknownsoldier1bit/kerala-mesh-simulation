@@ -42,7 +42,7 @@ RUN_RE = re.compile(r"^(?P<protocol>aodv|olsr|dsdv)_(?P<tag>control|flood\d+|uni
                     r"(?P<battery>nobatt|batt\d+)_g(?P<gap>[\d.]+)_n(?P<nodes>\d+)_s(?P<seed>\d+)$")
 WINDOWS = {"before_onset": "Before onset (14 Aug - onset)", "acute": "Acute (onset - 18 Aug)",
            "sustained": "Sustained (18 - 27 Aug)"}
-MODEL_LABEL = {"control": "No flooding", "flood": "Flood (real data)", "uniform": "Uniform random"}
+MODEL_LABEL = {"control": "No flooding", "flood": "Flood (lowest ground first)", "uniform": "Uniform random"}
 REAL_VS_ASSUMED = ("Real data: building positions, ground height, Sentinel-1 water, event dates. Assumed: devices "
                    "per building, flooded share, power cut, batteries, traffic, 150 m range, 1 day = 30 s.")
 
@@ -70,7 +70,7 @@ def load_all():
         df = pd.read_csv(p)
         parts = df.run_id.str.extract(RUN_RE)
         assert parts.notna().all().all(), f"unparsed run ids in {exp}"
-        df = df.drop(columns=[c for c in ("protocol", "nodes", "seed") if c in df]).join(parts)
+        df = df.drop(columns=[c for c in ("protocol", "nodes", "seed") if c in df]).join(parts).copy()
         df["experiment"] = exp
         df["model"] = df.tag.str.extract(r"^([a-z]+)")[0]
         df["share"] = pd.to_numeric(df.tag.str.extract(r"(\d+)$")[0]).fillna(0).astype(int)
@@ -423,7 +423,9 @@ def fig_over_time(df):
                 if q.empty:
                     continue
                 g = q.groupby("t_start_s")
-                axes[0, j].plot(g.alive_nodes.mean().index, g.alive_nodes.mean().values, color=A.COLOR[p])
+                # widths decrease so identical curves (same failures for every protocol) stay visible
+                axes[0, j].plot(g.alive_nodes.mean().index, g.alive_nodes.mean().values, color=A.COLOR[p],
+                                lw={"aodv": 4.5, "olsr": 3.0, "dsdv": 1.5}[p])
                 tot = g[["sent", "delivered_within_1s"]].sum()
                 share = 100 * tot.delivered_within_1s / tot.sent.replace(0, np.nan)
                 axes[1, j].plot(share.index, share.values, color=A.COLOR[p], marker=A.MARKER[p], ms=3, lw=1.5)
