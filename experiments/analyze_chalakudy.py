@@ -322,6 +322,38 @@ def fig_study_area():
               "Real: buildings, radar water, ground-height order. Assumed: which buildings have devices, 25% lost.")
 
 
+def fig_qa_geolocation():
+    """Whole-town check of the radar processing: the Chalakudy River on the Sentinel-1 water maps should run
+    along the municipality's southern edge, which follows the river."""
+    import rasterio.transform
+    transform, perm, flood = C.flood_masks()
+    rows, cols = perm.shape
+    xs, ys = rasterio.transform.xy(transform, [0, rows - 1], [0, cols - 1])
+    extent = (xs[0] - 5, xs[1] + 5, ys[1] - 5, ys[0] + 5)
+    water = np.zeros(perm.shape + (4,))
+    water[flood["2018-08-21T0040_des"] | flood["2018-08-21T1306_asc"]] = matplotlib_rgba(WATER)
+    water[perm] = matplotlib_rgba(RIVER)
+    town = C.town_polygon_utm()
+    area = json.load(open(os.path.join(C.DATA, "study_area.json")))
+    fig, ax = plt.subplots(figsize=(6.4, 6.4))
+    ax.imshow(water, extent=extent, origin="upper", interpolation="nearest")
+    bx, by = town.exterior.xy
+    ax.plot(bx, by, color=A.INK, lw=1.2)
+    x0, y0 = area["x0"], area["y0"]
+    ax.plot([x0, x0 + 1000, x0 + 1000, x0, x0], [y0, y0, y0 + 1000, y0 + 1000, y0], color=A.INK2, lw=1, ls="--")
+    ax.set_aspect("equal")
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.grid(False)
+    handles = [plt.Line2D([], [], ls="", marker="s", color=RIVER, ms=8, label="Permanent water (Sentinel-1, Jan-May)"),
+               plt.Line2D([], [], ls="", marker="s", color=WATER, ms=8, label="Flood water still visible 21 Aug"),
+               plt.Line2D([], [], color=A.INK, lw=1.2, label="Municipality boundary (DataMeet)"),
+               plt.Line2D([], [], color=A.INK2, lw=1, ls="--", label="Study square")]
+    ax.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, -0.01), ncol=2, fontsize=7.5)
+    ax.set_title("Geolocation check: radar water vs municipality boundary (10 m grid, 1 km margin)")
+    A.savefig(fig, "chalakudy_qa_geolocation", "All layers are real data or derived from it (Sentinel-1 2018).")
+
+
 def matplotlib_rgba(hexcol):
     import matplotlib.colors
     return matplotlib.colors.to_rgba(hexcol)
@@ -560,6 +592,7 @@ def main():
     fig_sensitivity(df)
     fig_network_density()
     fig_study_area()
+    fig_qa_geolocation()
     findings_md(agg, ptests, mtests, check_lines, scen)
     print(f"{len(df)} runs analysed;", "; ".join(check_lines))
 
