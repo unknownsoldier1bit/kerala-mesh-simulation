@@ -1,0 +1,16 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+dsdv_control_on15_batt25_g15_n100_s2,91.0,fail,1,False,False,,,357.0,448.0,0,0
+dsdv_control_on15_batt25_g15_n100_s2,91.0,fail,3,False,False,,,357.0,448.0,0,0
+dsdv_control_on15_batt25_g15_n100_s2,91.0,fail,8,True,False,,,357.0,448.0,0,0
+dsdv_control_on15_batt25_g15_n100_s2,91.0,fail,11,True,False,,,357.0,448.0,5,0
+dsdv_control_on15_batt25_g15_n100_s2,91.0,fail,12,True,False,,,357.0,448.0,0,0
+dsdv_control_on15_batt25_g15_n100_s2,91.0,fail,16,True,False,,,357.0,448.0,0,0
+dsdv_control_on15_batt25_g15_n100_s2,91.0,fail,17,True,False,,,357.0,448.0,0,0
+dsdv_control_on15_batt25_g15_n100_s2,92.0,fail,8,False,False,,,356.0,448.0,0,0
+dsdv_control_on15_batt25_g15_n100_s2,92.0,fail,10,True,False,,,356.0,448.0,0,0
+dsdv_control_on15_batt25_g15_n100_s2,92.0,fail,12,True,False,,,356.0,448.0,0,0
+dsdv_control_on15_batt25_g15_n100_s2,92.0,fail,13,True,False,,,356.0,448.0,2,0
+dsdv_control_on15_batt25_g15_n100_s2,92.0,fail,19,True,False,,,356.0,448.0,0,0
+dsdv_control_on15_batt25_g15_n100_s2,93.0,fail,8,False,False,,,355.0,448.0,0,0
+dsdv_control_on15_batt25_g15_n100_s2,93.0,fail,13,False,False,,,355.0,448.0,0,0
+dsdv_control_on15_batt25_g15_n100_s2,93.0,fail,19,False,False,,,355.0,448.0,0,0
