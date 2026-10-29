@@ -47,9 +47,10 @@ UTM = "EPSG:32643"
 
 PARAMS = {
     "study_side_m": dict(value=1000.0, kind="assumed", sweep=None,
-                         why="NS-3 can run about 50-150 nodes here; a 1 km square at 50-150 participating "
-                             "devices gives mean degrees similar to the main grid. The whole 24.8 km2 town "
-                             "would need ~2,800 nodes to be connected at 150 m range."),
+                         why="ns-3 runs take minutes at 50-150 devices (pilot). In a 1 km square, 50, 100 and "
+                             "150 devices at 150 m have mean degree 3.75, 7.2 and 10.8 "
+                             "(data/chalakudy/network_structure.csv), within the range of the main grid's 25-50 "
+                             "nodes (5.2-10.5). A larger area would need more devices than ns-3 can run here."),
     "study_area_rule": dict(value="1 km square, >= 99% inside the municipality, holding the most buildings "
                                   "among the municipality's lowest 25% by ground estimate", kind="assumed",
                             sweep="alternative rule reported (most buildings within 300 m of 21-Aug flood water)",
@@ -61,15 +62,23 @@ PARAMS = {
                       "rate, not the simulation inputs."),
     "placement": dict(value="uniform over building footprints in the square (one device per sampled "
                             "building, at its centroid)", kind="assumed",
-                      sweep="area-weighted sampling compared on network structure only",
-                      why="No data on which households would run the app."),
+                      sweep="area-weighted sampling, compared on network structure only "
+                            "(network_structure.csv)",
+                      why="No data on which households would run the app. Drawing buildings in proportion to "
+                          "footprint area instead changes the network little: mean degree 3.5/7.0/10.7 vs "
+                          "3.75/7.2/10.8 and largest connected part 62/94/99% vs 61/97/99% at 50/100/150 devices "
+                          "(150 m, seeds 1-10)."),
     "ground_estimate": dict(value="5th percentile of Copernicus DSM within 50 m of the building centroid",
                             kind="derived", sweep=None,
                             why="The DSM includes roofs and trees; the lowest nearby cell is the best "
                                 "ground proxy available. Used only to rank buildings."),
-    "observed_flood_buffer_m": dict(value=20.0, kind="assumed", sweep=[10.0, 20.0],
+    "observed_flood_buffer_m": dict(value=20.0, kind="assumed", sweep=None,
                                     why="A building counts as observed-flooded if Sentinel-1 flood water "
-                                        "(21 Aug, patches >= 10 cells) lies within this distance."),
+                                        "(21 Aug, patches >= 10 cells) lies within this distance. In the study "
+                                        "square no building does (nearest 132 m on the 21 Aug descending pass, "
+                                        "58 m ascending), so 10 m and 20 m give identical inputs (checked for "
+                                        "50/100/150 devices, seeds 1-10) and no sweep is run. The failure order "
+                                        "in the square therefore comes from ground height alone."),
     "peak_flooded_share": dict(value=0.25, kind="assumed", sweep=[0.10, 0.25, 0.50],
                                why="No building-level record of the peak. Sentinel-1 missed the peak "
                                    "(no image 10-20 Aug); the DEM is too canopy-biased for absolute levels."),
@@ -96,16 +105,69 @@ PARAMS = {
                                        "uses (screen, calls). No data."),
     "charge_at_power_cut": dict(value="uniform 20-100%", kind="assumed", sweep=None,
                                 why="No data on charge levels when the power went."),
-    "radio_power_model": dict(value="NS-3 WifiRadioEnergyModel defaults (idle 0.273 A at 3 V)",
-                              kind="measured", sweep=None,
-                              why="Checked in the ns-3.47 source (docs/ns3-defaults.md). These currents are not "
-                                  "from a 2018 phone; only the Wi-Fi radio is modelled."),
+    "radio_power_model": dict(value="ns-3 WifiRadioEnergyModel default currents (idle 0.273 A at 3 V = 0.82 W)",
+                              kind="assumed", sweep=None,
+                              why="The brief asks for ns-3 defaults; the values were checked in the ns-3.47 source "
+                                  "(docs/ns3-defaults.md). They are not measurements of a 2018 phone, and only the "
+                                  "Wi-Fi radio is modelled (no screen, processor or cellular radio). With them, "
+                                  "every device runs flat within 1-9 simulated s (1-7.5 real hours) of the power cut "
+                                  "(pilot), whatever the protocol."),
     "day_s": dict(value=30.0, kind="assumed", sweep=None,
                   why="Time compression as in the kerala experiment (1 day = 30 simulated s), for "
                       "comparability; protocol timers are not compressed."),
     "flows": dict(value=20, kind="assumed", sweep=None, why="As in the kerala experiment."),
     "burst_mean_gap_s": dict(value=15.0, kind="assumed", sweep=[7.5, 15.0, 30.0],
                              why="Disaster message traffic is not documented (data/sources.md: missing)."),
+    # Sentinel-1 flood mapping (experiments/chalakudy_flood.py)
+    "s1_scenes": dict(value="24 Sentinel-1 IW GRDH scenes, VV, 5 Jan - 26 Sep 2018: 22 descending (relative "
+                            "orbit 165; 21 from Sentinel-1A, 27 Aug from 1B) and 2 ascending (orbit 173; 21 Aug "
+                            "1A, 27 Aug 1B)", kind="measured", sweep=None,
+                      why="Every scene in the AWS archive covering the town in Jan-May and Jul-Sep 2018 "
+                          "(data/chalakudy/sentinel1_scenes.csv). No image exists between 10 and 20 Aug, so the "
+                          "flood peak was not observed."),
+    "grid_cell_m": dict(value=10.0, kind="assumed", sweep=None,
+                        why="The GRDH pixel spacing; grid = municipality plus 1 km margin, UTM 43N."),
+    "speckle_window": dict(value="5 x 5 boxcar", kind="assumed", sweep=None,
+                           why="A common, simple speckle filter; keeps 50 m-scale detail."),
+    "geoid_offset_m": dict(value=-96.0, kind="derived", sweep=None,
+                           why="Needed to place the radar image on the DEM (the geoid grid could not be "
+                               "downloaded). Chosen as the offset, from -160 to -20 m in 4 m steps, that makes "
+                               "mapped rivers and ponds darkest against their surroundings, averaged over 6 "
+                               "descending scenes (flood/geoid_offset_scan.csv)."),
+    "water_threshold_db": dict(value="Otsu threshold per scene: -10.6 to -12.9 dB (flood/scenes_processed.csv)",
+                               kind="derived", sweep=None,
+                               why="Computed on a balanced sample: reference water cells plus an equal number "
+                                   "of land cells >= 150 m from mapped water (random seed 2018)."),
+    "reference_water": dict(value="OSM water polygons >= 2,000 m2, shrunk by 15 m; comparison ring 60 m wide",
+                            kind="assumed", sweep=None,
+                            why="Large, permanent water bodies whose interior is surely water at 10 m cells."),
+    "permanent_water": dict(value="water in >= 50% of the Jan-May 2018 descending scenes", kind="assumed",
+                            sweep=None, why="Dry-season water is not flood water."),
+    "pre_event_scene": dict(value="28 Jul 2018 (descending)", kind="assumed", sweep=None,
+                            why="Last image before the August event; water already present then is not "
+                                "counted as flood water."),
+    "flood_patch_min_cells": dict(value=10, kind="assumed", sweep=None,
+                                  why="Smallest flood patch kept: 10 cells (0.1 ha), to drop isolated dark "
+                                      "pixels. An exploratory check of 1-25 cells (WORKLOG 07:12, not a "
+                                      "committed script) found 8-31 of the town's 21,355 buildings within "
+                                      "10-20 m of 21 Aug flood water, depending on this value."),
+    # Simulation settings shared with the earlier experiments
+    "warmup_s": dict(value=60.0, kind="assumed", sweep=None,
+                     why="As in every experiment. Pilot check (rule 7): OLSR tables complete from 20 s; DSDV "
+                         "reaches its steady level (96-99.7% of connected pairs routable) by 40-60 s and stays "
+                         "there, so a longer warm-up would not change it."),
+    "protocols": dict(value="AODV, OLSR, DSDV with ns-3.47 defaults", kind="assumed", sweep=None,
+                      why="As in every experiment (docs/ns3-defaults.md)."),
+    "wifi": dict(value="802.11b ad hoc, 11 Mbps data, 1 Mbps control, 16.0206 dBm, no RTS/CTS", kind="assumed",
+                 sweep=None, why="As in every experiment; transmit power is the ns-3 default."),
+    "payload_bytes": dict(value=512, kind="assumed", sweep=None, why="As in every experiment."),
+    "burst": dict(value="5 packets, 0.2 s apart", kind="assumed", sweep=None, why="As in the kerala experiment."),
+    "deadline_s": dict(value=1.0, kind="assumed", sweep=None,
+                       why="The deadline T is still a placeholder in the project (CLAUDE.md); same as the "
+                           "other experiments."),
+    "seeds": dict(value="1-10, paired", kind="assumed", sweep=None,
+                  why="Same seed = same devices, flows, failure times and batteries across protocols and "
+                      "scenarios."),
     "range_m": dict(value=150.0, kind="assumed", sweep="log-distance propagation as sensitivity",
                     why="Same unit-disk radio as every other experiment, for comparability."),
     # Propagation sensitivity: a published path-loss formula instead of the unit disk, nothing tuned.
@@ -519,17 +581,27 @@ def network_table():
                 xy = np.array([[r["x"] - origin[0], r["y"] - origin[1]] for r in picked])
                 st = network_stats(xy, rng_m) if n <= 300 else dict(network_stats_fast(xy, rng_m))
                 out.append(dict(source="chalakudy" if n < len(sq) else "chalakudy_all_buildings",
-                                range_m=rng_m, seed=seed, **st))
+                                placement="uniform", range_m=rng_m, seed=seed, **st))
+    # placement sensitivity: buildings drawn with probability proportional to footprint area
+    area = np.array([r["footprint_m2"] for r in sq], dtype=float)
+    for n in (50, 100, 150):
+        for seed in SEEDS:
+            rng = np.random.default_rng(740_000 + 1000 * n + seed)
+            idx = np.sort(rng.choice(len(sq), size=n, replace=False, p=area / area.sum()))
+            xy = np.array([[sq[i]["x"] - origin[0], sq[i]["y"] - origin[1]] for i in idx])
+            out.append(dict(source="chalakudy", placement="area_weighted", range_m=P("range_m"), seed=seed,
+                            **network_stats(xy)))
     for path in sorted(glob.glob(os.path.join(REPO, "results", "main", "inputs", "n*_s*", "topology.csv"))):
         with open(path) as fh:
             xy = np.array([[float(r["x"]), float(r["y"])] for r in csv.DictReader(fh)])
         seed = int(os.path.basename(os.path.dirname(path)).split("_s")[1])
-        out.append(dict(source="main_grid", range_m=P("range_m"), seed=seed, **network_stats(xy)))
+        out.append(dict(source="main_grid", placement="uniform random in a 500 m square, redrawn until connected", range_m=P("range_m"), seed=seed,
+                        **network_stats(xy)))
     write_csv(os.path.join(DATA, "network_structure.csv"), out)
     df = {}
     for r in out:
-        df.setdefault((r["source"], r["range_m"], r["nodes"]), []).append(r)
-    print("source, range_m, nodes: mean degree, largest connected part (mean, min), components")
+        df.setdefault((r["source"], r["placement"], r["range_m"], r["nodes"]), []).append(r)
+    print("source, placement, range_m, nodes: mean degree, largest connected part (mean, min), components")
     for k, v in sorted(df.items()):
         print(k, round(np.mean([r["mean_degree"] for r in v]), 2),
               round(np.mean([r["largest_component_share"] for r in v]), 3),

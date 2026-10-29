@@ -295,9 +295,22 @@ def s1_scan(start, end):
         print(r["start_utc"], r["mission"], "rel. orbit", r["relative_orbit"], r["pass_direction"], r["polarisation"])
 
 
+def town_boundary():
+    """Cuts the Chalakudy municipality polygon (census 2001 code 3207000540727000) out of DataMeet's
+    Kerala village and town boundaries (ODbL) and writes data/chalakudy/chalakudy_town_boundary.geojson."""
+    with open(os.path.join(RAW, "datameet", "kl.geojson")) as fh:
+        kerala = json.load(fh)
+    town = [f for f in kerala["features"] if f["properties"].get("CEN_2001") == "3207000540727000"]
+    assert len(town) == 1 and town[0]["properties"]["NAME"] == "Chalakudy"
+    with open(os.path.join(DATA, "chalakudy_town_boundary.geojson"), "w") as fh:
+        json.dump({"type": "FeatureCollection", "features": town}, fh)
+
+
 if __name__ == "__main__":
     cmd = sys.argv[1]
-    if cmd == "gfd-events":
+    if cmd == "boundary":
+        town_boundary()
+    elif cmd == "gfd-events":
         gfd_events()
     elif cmd == "s1-scan":
         s1_scan(sys.argv[2], sys.argv[3])
