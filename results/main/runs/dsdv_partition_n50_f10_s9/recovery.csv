@@ -1,0 +1,13 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+dsdv_partition_n50_f10_s9,120.0,fail,2,False,False,,,90.0,210.0,40,0
+dsdv_partition_n50_f10_s9,120.0,fail,3,False,False,,,90.0,210.0,40,0
+dsdv_partition_n50_f10_s9,120.0,fail,4,False,False,,,90.0,210.0,40,0
+dsdv_partition_n50_f10_s9,120.0,fail,5,False,False,,,90.0,210.0,40,0
+dsdv_partition_n50_f10_s9,120.0,fail,6,False,False,,,90.0,210.0,40,0
+dsdv_partition_n50_f10_s9,120.0,fail,7,False,False,,,90.0,210.0,40,0
+dsdv_partition_n50_f10_s9,210.0,restore,2,True,True,0.5288889999999924,0.35426999999998543,0.5288889999999924,290.0,40,35
+dsdv_partition_n50_f10_s9,210.0,restore,3,True,True,0.42154500000000894,0.24140800000000695,0.42154500000000894,290.0,40,40
+dsdv_partition_n50_f10_s9,210.0,restore,4,True,True,0.3859390000000076,0.23306900000000041,0.3859390000000076,290.0,40,40
+dsdv_partition_n50_f10_s9,210.0,restore,5,True,True,0.40943999999998937,0.2337739999999826,0.40943999999998937,290.0,40,40
+dsdv_partition_n50_f10_s9,210.0,restore,6,True,True,0.3174820000000125,0.07398400000002425,0.3174820000000125,290.0,40,40
+dsdv_partition_n50_f10_s9,210.0,restore,7,True,True,4.903629999999993,4.753285000000005,4.903629999999993,290.0,40,21

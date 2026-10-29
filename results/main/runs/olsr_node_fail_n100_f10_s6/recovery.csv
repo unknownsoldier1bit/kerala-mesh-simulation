@@ -1,0 +1,5 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+olsr_node_fail_n100_f10_s6,120.0,fail,1,True,True,4.434759999999997,4.2515360000000015,4.434759999999997,290.0,40,23
+olsr_node_fail_n100_f10_s6,120.0,fail,2,True,True,4.537458000000001,4.503285000000005,4.537458000000001,290.0,40,22
+olsr_node_fail_n100_f10_s6,120.0,fail,4,True,True,4.313603999999998,4.252409999999998,4.313603999999998,290.0,40,23
+olsr_node_fail_n100_f10_s6,120.0,fail,6,True,True,4.387047999999993,4.254158999999987,4.387047999999993,290.0,40,22

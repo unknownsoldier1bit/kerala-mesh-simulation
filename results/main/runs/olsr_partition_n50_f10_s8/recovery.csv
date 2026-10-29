@@ -1,0 +1,14 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+olsr_partition_n50_f10_s8,120.0,fail,2,False,False,,,90.0,210.0,40,0
+olsr_partition_n50_f10_s8,120.0,fail,3,False,False,,,90.0,210.0,40,0
+olsr_partition_n50_f10_s8,120.0,fail,4,False,False,,,90.0,210.0,40,0
+olsr_partition_n50_f10_s8,120.0,fail,5,True,True,4.264842999999999,4.254159000000001,4.264842999999999,210.0,40,23
+olsr_partition_n50_f10_s8,120.0,fail,6,False,False,,,90.0,210.0,40,0
+olsr_partition_n50_f10_s8,120.0,fail,7,False,False,,,90.0,210.0,40,0
+olsr_partition_n50_f10_s8,120.0,fail,9,False,False,,,90.0,210.0,40,0
+olsr_partition_n50_f10_s8,210.0,restore,2,True,True,5.579106999999993,5.504158999999987,5.579106999999993,290.0,40,18
+olsr_partition_n50_f10_s8,210.0,restore,3,True,True,4.592306000000008,4.501536000000016,4.592306000000008,290.0,40,22
+olsr_partition_n50_f10_s8,210.0,restore,4,True,True,5.773862000000008,5.753284000000008,5.773862000000008,290.0,40,17
+olsr_partition_n50_f10_s8,210.0,restore,6,True,True,5.904109000000005,5.754159000000016,5.904109000000005,290.0,40,17
+olsr_partition_n50_f10_s8,210.0,restore,7,True,True,5.792862000000014,5.753285000000005,5.792862000000014,290.0,40,17
+olsr_partition_n50_f10_s8,210.0,restore,9,True,True,4.271114000000011,4.251536000000016,4.271114000000011,290.0,40,23

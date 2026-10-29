@@ -1,0 +1,1 @@
+ns3.47-manet --protocol=dsdv --topo=results/kerala/inputs/n50_s2/topology.csv --flows=results/kerala/inputs/n50_s2/flows_bursts.csv --outDir=results/kerala/runs/dsdv_kerala_50_n50_s2 --run=2 --simTime=450.0 --range=150.0 --energyJ=0 --events=results/kerala/inputs/n50_s2/events_kerala_50.csv --energyFile=results/kerala/inputs/n50_s2/battery.csv

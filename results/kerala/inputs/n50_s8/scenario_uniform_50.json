@@ -1,0 +1,165 @@
+{
+ "scenario": "uniform_50",
+ "selection": "uniformly random (seeded)",
+ "assumption": "same number of node failures at the same times, but nodes picked uniformly at random instead of lowest first",
+ "failure_start_s": 64.0,
+ "failure_end_s": null,
+ "failed_nodes": [
+  {
+   "node": 6,
+   "time_s": 64.0,
+   "x": 341.02,
+   "y": 220.28
+  },
+  {
+   "node": 44,
+   "time_s": 72.0,
+   "x": 330.56,
+   "y": 439.97
+  },
+  {
+   "node": 31,
+   "time_s": 80.0,
+   "x": 326.36,
+   "y": 389.57
+  },
+  {
+   "node": 3,
+   "time_s": 88.0,
+   "x": 222.86,
+   "y": 446.29
+  },
+  {
+   "node": 16,
+   "time_s": 92.0,
+   "x": 143.23,
+   "y": 413.45
+  },
+  {
+   "node": 2,
+   "time_s": 94.667,
+   "x": 134.55,
+   "y": 38.38
+  },
+  {
+   "node": 33,
+   "time_s": 97.333,
+   "x": 148.69,
+   "y": 454.11
+  },
+  {
+   "node": 38,
+   "time_s": 100.0,
+   "x": 262.16,
+   "y": 83.31
+  },
+  {
+   "node": 41,
+   "time_s": 102.667,
+   "x": 19.52,
+   "y": 33.82
+  },
+  {
+   "node": 23,
+   "time_s": 105.333,
+   "x": 346.01,
+   "y": 487.94
+  },
+  {
+   "node": 20,
+   "time_s": 108.0,
+   "x": 359.2,
+   "y": 328.63
+  },
+  {
+   "node": 25,
+   "time_s": 110.667,
+   "x": 396.01,
+   "y": 138.7
+  },
+  {
+   "node": 48,
+   "time_s": 113.333,
+   "x": 498.72,
+   "y": 2.94
+  },
+  {
+   "node": 26,
+   "time_s": 116.0,
+   "x": 401.23,
+   "y": 202.68
+  },
+  {
+   "node": 11,
+   "time_s": 118.667,
+   "x": 76.78,
+   "y": 366.98
+  },
+  {
+   "node": 39,
+   "time_s": 122.0,
+   "x": 3.31,
+   "y": 273.9
+  },
+  {
+   "node": 30,
+   "time_s": 126.0,
+   "x": 351.46,
+   "y": 291.05
+  },
+  {
+   "node": 37,
+   "time_s": 130.0,
+   "x": 308.78,
+   "y": 193.03
+  },
+  {
+   "node": 19,
+   "time_s": 134.0,
+   "x": 8.23,
+   "y": 356.79
+  },
+  {
+   "node": 7,
+   "time_s": 138.0,
+   "x": 25.97,
+   "y": 206.31
+  },
+  {
+   "node": 24,
+   "time_s": 142.0,
+   "x": 386.88,
+   "y": 69.09
+  },
+  {
+   "node": 28,
+   "time_s": 146.0,
+   "x": 362.07,
+   "y": 293.37
+  },
+  {
+   "node": 29,
+   "time_s": 150.0,
+   "x": 490.01,
+   "y": 434.91
+  },
+  {
+   "node": 34,
+   "time_s": 162.0,
+   "x": 441.77,
+   "y": 69.22
+  },
+  {
+   "node": 46,
+   "time_s": 174.0,
+   "x": 191.58,
+   "y": 145.39
+  }
+ ],
+ "n_failed_nodes": 25,
+ "pct_failed_nodes": 50.0,
+ "n_failed_links": 0,
+ "pct_failed_links": 0.0,
+ "components_at_peak_flood": 3,
+ "battery_depletion": "yes (see battery.csv; no recharging)"
+}

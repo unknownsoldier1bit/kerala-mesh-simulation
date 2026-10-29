@@ -1,0 +1,271 @@
+{
+ "scenario": "multi_fail",
+ "severity_param": null,
+ "selection": "random",
+ "assumption": "Damage spreads over time: three waves of randomly chosen relay failures and link failures, 15 s apart, as more devices and paths are lost while water rises. Random selection (seeded), so it is not aimed at the busiest paths.",
+ "failure_start_s": 120.0,
+ "failure_end_s": null,
+ "failed_nodes": [
+  {
+   "node": 4,
+   "x": 34.15,
+   "y": 53.03
+  },
+  {
+   "node": 26,
+   "x": 165.17,
+   "y": 461.09
+  },
+  {
+   "node": 18,
+   "x": 168.39,
+   "y": 141.3
+  },
+  {
+   "node": 41,
+   "x": 369.6,
+   "y": 257.78
+  },
+  {
+   "node": 8,
+   "x": 370.56,
+   "y": 11.74
+  },
+  {
+   "node": 32,
+   "x": 46.7,
+   "y": 163.36
+  }
+ ],
+ "failed_links": [
+  {
+   "a": 1,
+   "b": 24,
+   "mid_x": 261.03,
+   "mid_y": 30.68
+  },
+  {
+   "a": 1,
+   "b": 37,
+   "mid_x": 305.04,
+   "mid_y": 48.64
+  },
+  {
+   "a": 3,
+   "b": 17,
+   "mid_x": 414.09,
+   "mid_y": 415.97
+  },
+  {
+   "a": 7,
+   "b": 23,
+   "mid_x": 300.57,
+   "mid_y": 244.39
+  },
+  {
+   "a": 7,
+   "b": 48,
+   "mid_x": 274.66,
+   "mid_y": 243.15
+  },
+  {
+   "a": 11,
+   "b": 23,
+   "mid_x": 237.62,
+   "mid_y": 316.39
+  },
+  {
+   "a": 19,
+   "b": 39,
+   "mid_x": 370.39,
+   "mid_y": 183.67
+  },
+  {
+   "a": 28,
+   "b": 30,
+   "mid_x": 148.9,
+   "mid_y": 423.37
+  },
+  {
+   "a": 32,
+   "b": 36,
+   "mid_x": 28.83,
+   "mid_y": 205.18
+  },
+  {
+   "a": 35,
+   "b": 48,
+   "mid_x": 235.8,
+   "mid_y": 252.1
+  },
+  {
+   "a": 0,
+   "b": 47,
+   "mid_x": 49.85,
+   "mid_y": 303.76
+  },
+  {
+   "a": 1,
+   "b": 39,
+   "mid_x": 283.82,
+   "mid_y": 86.14
+  },
+  {
+   "a": 2,
+   "b": 22,
+   "mid_x": 380.69,
+   "mid_y": 249.48
+  },
+  {
+   "a": 5,
+   "b": 34,
+   "mid_x": 72.6,
+   "mid_y": 494.89
+  },
+  {
+   "a": 6,
+   "b": 29,
+   "mid_x": 445.89,
+   "mid_y": 482.68
+  },
+  {
+   "a": 12,
+   "b": 20,
+   "mid_x": 408.1,
+   "mid_y": 379.1
+  },
+  {
+   "a": 14,
+   "b": 25,
+   "mid_x": 209.0,
+   "mid_y": 485.54
+  },
+  {
+   "a": 14,
+   "b": 49,
+   "mid_x": 287.12,
+   "mid_y": 483.35
+  },
+  {
+   "a": 23,
+   "b": 48,
+   "mid_x": 250.44,
+   "mid_y": 268.29
+  },
+  {
+   "a": 33,
+   "b": 46,
+   "mid_x": 422.93,
+   "mid_y": 15.28
+  },
+  {
+   "a": 3,
+   "b": 6,
+   "mid_x": 443.99,
+   "mid_y": 456.32
+  },
+  {
+   "a": 5,
+   "b": 10,
+   "mid_x": 76.89,
+   "mid_y": 471.92
+  },
+  {
+   "a": 7,
+   "b": 19,
+   "mid_x": 371.34,
+   "mid_y": 229.66
+  },
+  {
+   "a": 8,
+   "b": 24,
+   "mid_x": 323.93,
+   "mid_y": 14.04
+  },
+  {
+   "a": 9,
+   "b": 32,
+   "mid_x": 63.07,
+   "mid_y": 191.78
+  },
+  {
+   "a": 10,
+   "b": 30,
+   "mid_x": 132.33,
+   "mid_y": 426.38
+  },
+  {
+   "a": 11,
+   "b": 30,
+   "mid_x": 185.3,
+   "mid_y": 384.86
+  },
+  {
+   "a": 14,
+   "b": 26,
+   "mid_x": 202.91,
+   "mid_y": 474.55
+  },
+  {
+   "a": 16,
+   "b": 19,
+   "mid_x": 407.57,
+   "mid_y": 250.05
+  },
+  {
+   "a": 18,
+   "b": 48,
+   "mid_x": 196.46,
+   "mid_y": 204.18
+  }
+ ],
+ "n_failed_nodes": 6,
+ "pct_failed_nodes": 12.0,
+ "n_failed_links": 30,
+ "pct_failed_links": 14.35,
+ "components_after_failure": 1,
+ "flows_with_alternative_route": 10,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": true
+  }
+ ]
+}

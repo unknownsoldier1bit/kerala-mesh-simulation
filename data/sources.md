@@ -36,6 +36,17 @@ Status as of 12 Oct 2026, after opening the documents. Of the 13 things the fail
 - Vishnu et al. 2019: https://doaj.org/article/5e2f8aa52e024de483ec6e800bcc6e10
 - CWC study report listing (PDF link currently dead): https://www.preventionweb.net/publication/study-report-kerala-floods-august-2018
 
+## Leads found on 27 Oct 2026 (search-result snippets only: documents NOT opened)
+
+The session's network policy blocked the news sites, so these were seen only as search-engine summaries. Treat them as leads, not sources: open the original before using any figure.
+
+- **Restoration progress.** Press reports of the Telecom Secretary's late-August 2018 review: about 98% of the affected base stations were back by roughly 24–26 Aug; the rest were waiting for water to recede in Kuttanad; 400+ sites were still on diesel. Reports disagree on whether 22,217 is the number disrupted or the number restored (vs 23,552 disrupted). Leads: TelecomTalk (link above), Converge Digest (https://convergedigest.com/?p=20062, citing the Times of India).
+- **Intra-circle roaming.** The Department of Telecom enabled intra-circle roaming (subscribers could use other operators' towers), and operators offered free calls and data. Lead: Gulf News, "All mobile operators offer free data and SMS facility". Date not confirmed.
+- **Tower power.** Indus Towers said more than 2,500 of its towers in flood-hit areas ran on diesel generators because of the power cut. Lead: Voice&Data, "Indus Restores Mobile Connection in Record Time During Kerala's Devastation".
+- **No day-by-day outage timeline** turned up in this search either; that gap remains.
+
+None of these were used to set simulation parameters. The Kerala experiment uses only the dates in the Verified table above.
+
 ## Don't cite (no source found)
 
 ~300 Kerala towers down, 4–8 h tower batteries, Nepal ~90%, Maria ~95%, Haiti ~60%. Death tolls vary by source (339 / 433 / 474 / 483); pick one and name it.

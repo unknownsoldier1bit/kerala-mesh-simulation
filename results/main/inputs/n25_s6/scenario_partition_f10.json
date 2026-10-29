@@ -1,0 +1,108 @@
+{
+ "scenario": "partition",
+ "severity_param": null,
+ "selection": "deterministic",
+ "assumption": "The area is split in two: every link crossing the vertical midline stops working, then all come back. This abstracts losing every device or path that bridged two neighbourhoods (for example both sides of a flooded channel). It is not a physical propagation model; it guarantees a clean partition so protocol behaviour during and after a split can be measured.",
+ "failure_start_s": 120.0,
+ "failure_end_s": 210.0,
+ "failed_nodes": [],
+ "failed_links": [
+  {
+   "a": 1,
+   "b": 7,
+   "mid_x": 281.37,
+   "mid_y": 344.41
+  },
+  {
+   "a": 1,
+   "b": 14,
+   "mid_x": 256.39,
+   "mid_y": 377.37
+  },
+  {
+   "a": 1,
+   "b": 20,
+   "mid_x": 277.74,
+   "mid_y": 426.72
+  },
+  {
+   "a": 3,
+   "b": 21,
+   "mid_x": 276.57,
+   "mid_y": 119.51
+  },
+  {
+   "a": 5,
+   "b": 14,
+   "mid_x": 224.19,
+   "mid_y": 379.7
+  },
+  {
+   "a": 14,
+   "b": 19,
+   "mid_x": 250.43,
+   "mid_y": 426.19
+  },
+  {
+   "a": 14,
+   "b": 23,
+   "mid_x": 224.73,
+   "mid_y": 387.68
+  },
+  {
+   "a": 19,
+   "b": 20,
+   "mid_x": 271.77,
+   "mid_y": 475.53
+  }
+ ],
+ "n_failed_nodes": 0,
+ "pct_failed_nodes": 0.0,
+ "n_failed_links": 8,
+ "pct_failed_links": 11.27,
+ "components_after_failure": 2,
+ "flows_with_alternative_route": 6,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": true
+  }
+ ]
+}

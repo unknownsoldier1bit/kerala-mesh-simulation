@@ -1,0 +1,17 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+dsdv_uniform_50_n50_s1,100.0,fail,5,True,False,,,348.0,448.0,5,0
+dsdv_uniform_50_n50_s1,108.0,fail,19,True,True,5.221253000000004,0.0015360000000015361,5.221253000000004,448.0,5,5
+dsdv_uniform_50_n50_s1,116.0,fail,12,True,True,21.315938999999986,0.004158999999987145,21.315938999999986,448.0,0,0
+dsdv_uniform_50_n50_s1,116.0,fail,16,True,True,50.51321300000001,44.15787700000001,50.51321300000001,448.0,10,0
+dsdv_uniform_50_n50_s1,138.0,fail,19,True,True,17.815966000000003,8.586239000000006,17.815966000000003,448.0,4,0
+dsdv_uniform_50_n50_s1,142.0,fail,12,True,True,47.16767200000001,40.894158000000004,47.16767200000001,448.0,5,0
+dsdv_uniform_50_n50_s1,174.0,fail,16,True,True,39.87079299999999,31.760998,39.87079299999999,448.0,5,0
+dsdv_uniform_50_n50_s1,333.0,fail,2,True,True,18.478880000000004,0.0015359999999873253,18.478880000000004,448.0,0,0
+dsdv_uniform_50_n50_s1,380.0,fail,12,False,False,,,68.0,448.0,0,0
+dsdv_uniform_50_n50_s1,380.0,fail,16,False,False,,,68.0,448.0,10,0
+dsdv_uniform_50_n50_s1,400.0,fail,2,True,True,2.6994020000000205,0.0024099999999975807,2.6994020000000205,448.0,15,15
+dsdv_uniform_50_n50_s1,400.0,fail,12,False,False,,,48.0,448.0,0,0
+dsdv_uniform_50_n50_s1,400.0,fail,16,False,False,,,48.0,448.0,5,0
+dsdv_uniform_50_n50_s1,412.0,fail,2,False,False,,,36.0,448.0,5,0
+dsdv_uniform_50_n50_s1,412.0,fail,16,False,False,,,36.0,448.0,0,0
+dsdv_uniform_50_n50_s1,423.0,fail,12,False,False,,,25.0,448.0,0,0

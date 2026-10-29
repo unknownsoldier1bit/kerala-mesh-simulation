@@ -1,0 +1,99 @@
+{
+ "scenario": "kerala_27",
+ "selection": "spatially correlated (lowest ground first)",
+ "assumption": "a river runs along the west edge (x = 0). Ground height = x / 500 m + Gaussian noise (sd 0.1). Nodes flood in order of height, lowest first. Flooded nodes stay down (submerged, abandoned or evacuated).",
+ "failure_start_s": 67.143,
+ "failure_end_s": null,
+ "failed_nodes": [
+  {
+   "node": 17,
+   "time_s": 67.143,
+   "x": 36.64,
+   "y": 324.15
+  },
+  {
+   "node": 11,
+   "time_s": 81.429,
+   "x": 25.65,
+   "y": 342.6
+  },
+  {
+   "node": 29,
+   "time_s": 91.905,
+   "x": 25.27,
+   "y": 251.96
+  },
+  {
+   "node": 31,
+   "time_s": 96.667,
+   "x": 41.04,
+   "y": 495.94
+  },
+  {
+   "node": 5,
+   "time_s": 101.429,
+   "x": 119.15,
+   "y": 22.56
+  },
+  {
+   "node": 30,
+   "time_s": 106.19,
+   "x": 166.06,
+   "y": 278.64
+  },
+  {
+   "node": 44,
+   "time_s": 110.952,
+   "x": 60.4,
+   "y": 22.85
+  },
+  {
+   "node": 12,
+   "time_s": 115.714,
+   "x": 50.49,
+   "y": 236.26
+  },
+  {
+   "node": 18,
+   "time_s": 120.714,
+   "x": 125.73,
+   "y": 164.48
+  },
+  {
+   "node": 24,
+   "time_s": 127.857,
+   "x": 36.16,
+   "y": 386.06
+  },
+  {
+   "node": 41,
+   "time_s": 135.0,
+   "x": 164.09,
+   "y": 73.12
+  },
+  {
+   "node": 9,
+   "time_s": 142.143,
+   "x": 154.57,
+   "y": 291.58
+  },
+  {
+   "node": 14,
+   "time_s": 149.286,
+   "x": 61.65,
+   "y": 177.47
+  },
+  {
+   "node": 21,
+   "time_s": 169.286,
+   "x": 179.2,
+   "y": 203.35
+  }
+ ],
+ "n_failed_nodes": 14,
+ "pct_failed_nodes": 28.0,
+ "n_failed_links": 0,
+ "pct_failed_links": 0.0,
+ "components_at_peak_flood": 1,
+ "battery_depletion": "yes (see battery.csv; no recharging)"
+}

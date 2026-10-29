@@ -1,0 +1,2 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+olsr_random_links_0.1_n50_f10_s1,120.0,fail,1,True,True,4.549960999999996,4.503283999999994,4.549960999999996,290.0,40,22

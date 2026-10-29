@@ -1,0 +1,135 @@
+{
+ "scenario": "random_nodes",
+ "severity_param": 0.3,
+ "selection": "random",
+ "assumption": "",
+ "failure_start_s": 120.0,
+ "failure_end_s": null,
+ "failed_nodes": [
+  {
+   "node": 0,
+   "x": 48.34,
+   "y": 285.16
+  },
+  {
+   "node": 1,
+   "x": 211.13,
+   "y": 300.15
+  },
+  {
+   "node": 2,
+   "x": 332.19,
+   "y": 86.23
+  },
+  {
+   "node": 7,
+   "x": 221.54,
+   "y": 245.5
+  },
+  {
+   "node": 20,
+   "x": 92.43,
+   "y": 123.26
+  },
+  {
+   "node": 22,
+   "x": 252.13,
+   "y": 112.92
+  },
+  {
+   "node": 29,
+   "x": 5.82,
+   "y": 209.85
+  },
+  {
+   "node": 31,
+   "x": 432.82,
+   "y": 249.55
+  },
+  {
+   "node": 38,
+   "x": 104.64,
+   "y": 486.7
+  },
+  {
+   "node": 40,
+   "x": 388.56,
+   "y": 452.96
+  },
+  {
+   "node": 43,
+   "x": 286.87,
+   "y": 104.43
+  },
+  {
+   "node": 44,
+   "x": 99.7,
+   "y": 321.76
+  },
+  {
+   "node": 45,
+   "x": 353.75,
+   "y": 121.36
+  },
+  {
+   "node": 48,
+   "x": 233.13,
+   "y": 353.18
+  },
+  {
+   "node": 49,
+   "x": 423.93,
+   "y": 400.97
+  }
+ ],
+ "failed_links": [],
+ "n_failed_nodes": 15,
+ "pct_failed_nodes": 30.0,
+ "n_failed_links": 0,
+ "pct_failed_links": 0.0,
+ "components_after_failure": 1,
+ "flows_with_alternative_route": 10,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": true
+  }
+ ]
+}

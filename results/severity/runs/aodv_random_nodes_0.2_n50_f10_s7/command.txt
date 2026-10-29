@@ -1,0 +1,1 @@
+ns3.47-manet --protocol=aodv --topo=results/severity/inputs/n50_s7/topology.csv --flows=results/severity/inputs/n50_s7/flows_f10.csv --outDir=results/severity/runs/aodv_random_nodes_0.2_n50_f10_s7 --run=7 --simTime=300.0 --range=150.0 --energyJ=0 --events=results/severity/inputs/n50_s7/events_random_nodes_0.2_f10.csv

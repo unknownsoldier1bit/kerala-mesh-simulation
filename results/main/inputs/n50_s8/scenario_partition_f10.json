@@ -1,0 +1,270 @@
+{
+ "scenario": "partition",
+ "severity_param": null,
+ "selection": "deterministic",
+ "assumption": "The area is split in two: every link crossing the vertical midline stops working, then all come back. This abstracts losing every device or path that bridged two neighbourhoods (for example both sides of a flooded channel). It is not a physical propagation model; it guarantees a clean partition so protocol behaviour during and after a split can be measured.",
+ "failure_start_s": 120.0,
+ "failure_end_s": 210.0,
+ "failed_nodes": [],
+ "failed_links": [
+  {
+   "a": 2,
+   "b": 38,
+   "mid_x": 198.36,
+   "mid_y": 60.85
+  },
+  {
+   "a": 3,
+   "b": 12,
+   "mid_x": 250.81,
+   "mid_y": 450.75
+  },
+  {
+   "a": 3,
+   "b": 14,
+   "mid_x": 282.17,
+   "mid_y": 430.97
+  },
+  {
+   "a": 3,
+   "b": 17,
+   "mid_x": 290.27,
+   "mid_y": 436.25
+  },
+  {
+   "a": 3,
+   "b": 23,
+   "mid_x": 284.44,
+   "mid_y": 467.12
+  },
+  {
+   "a": 3,
+   "b": 31,
+   "mid_x": 274.61,
+   "mid_y": 417.93
+  },
+  {
+   "a": 3,
+   "b": 35,
+   "mid_x": 238.14,
+   "mid_y": 394.6
+  },
+  {
+   "a": 3,
+   "b": 44,
+   "mid_x": 276.71,
+   "mid_y": 443.13
+  },
+  {
+   "a": 4,
+   "b": 45,
+   "mid_x": 270.73,
+   "mid_y": 210.99
+  },
+  {
+   "a": 4,
+   "b": 46,
+   "mid_x": 247.84,
+   "mid_y": 150.04
+  },
+  {
+   "a": 6,
+   "b": 45,
+   "mid_x": 289.2,
+   "mid_y": 243.78
+  },
+  {
+   "a": 12,
+   "b": 16,
+   "mid_x": 210.99,
+   "mid_y": 434.33
+  },
+  {
+   "a": 12,
+   "b": 18,
+   "mid_x": 216.19,
+   "mid_y": 427.46
+  },
+  {
+   "a": 12,
+   "b": 33,
+   "mid_x": 213.72,
+   "mid_y": 454.66
+  },
+  {
+   "a": 12,
+   "b": 47,
+   "mid_x": 252.49,
+   "mid_y": 419.75
+  },
+  {
+   "a": 14,
+   "b": 47,
+   "mid_x": 283.85,
+   "mid_y": 399.97
+  },
+  {
+   "a": 15,
+   "b": 45,
+   "mid_x": 305.94,
+   "mid_y": 243.66
+  },
+  {
+   "a": 16,
+   "b": 35,
+   "mid_x": 198.32,
+   "mid_y": 378.18
+  },
+  {
+   "a": 17,
+   "b": 47,
+   "mid_x": 291.95,
+   "mid_y": 405.25
+  },
+  {
+   "a": 18,
+   "b": 35,
+   "mid_x": 203.52,
+   "mid_y": 371.31
+  },
+  {
+   "a": 20,
+   "b": 45,
+   "mid_x": 298.28,
+   "mid_y": 297.95
+  },
+  {
+   "a": 20,
+   "b": 47,
+   "mid_x": 292.71,
+   "mid_y": 356.46
+  },
+  {
+   "a": 22,
+   "b": 45,
+   "mid_x": 291.15,
+   "mid_y": 299.05
+  },
+  {
+   "a": 22,
+   "b": 47,
+   "mid_x": 285.58,
+   "mid_y": 357.55
+  },
+  {
+   "a": 27,
+   "b": 38,
+   "mid_x": 203.53,
+   "mid_y": 106.32
+  },
+  {
+   "a": 28,
+   "b": 45,
+   "mid_x": 299.72,
+   "mid_y": 280.33
+  },
+  {
+   "a": 30,
+   "b": 45,
+   "mid_x": 294.41,
+   "mid_y": 279.16
+  },
+  {
+   "a": 31,
+   "b": 47,
+   "mid_x": 276.29,
+   "mid_y": 386.93
+  },
+  {
+   "a": 35,
+   "b": 45,
+   "mid_x": 245.39,
+   "mid_y": 305.1
+  },
+  {
+   "a": 35,
+   "b": 47,
+   "mid_x": 239.82,
+   "mid_y": 363.6
+  },
+  {
+   "a": 36,
+   "b": 45,
+   "mid_x": 296.81,
+   "mid_y": 282.49
+  },
+  {
+   "a": 37,
+   "b": 45,
+   "mid_x": 273.07,
+   "mid_y": 230.15
+  },
+  {
+   "a": 37,
+   "b": 46,
+   "mid_x": 250.18,
+   "mid_y": 169.21
+  },
+  {
+   "a": 38,
+   "b": 46,
+   "mid_x": 226.87,
+   "mid_y": 114.35
+  },
+  {
+   "a": 44,
+   "b": 47,
+   "mid_x": 278.39,
+   "mid_y": 412.13
+  }
+ ],
+ "n_failed_nodes": 0,
+ "pct_failed_nodes": 0.0,
+ "n_failed_links": 35,
+ "pct_failed_links": 13.67,
+ "components_after_failure": 2,
+ "flows_with_alternative_route": 4,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": false
+  }
+ ]
+}

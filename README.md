@@ -6,6 +6,11 @@ NS-3 simulations for a research paper comparing two mesh routing protocols, AODV
 
 ```
 sim/diamond/diamond.cc   sanity sim: 4 nodes, two paths, the relay in use dies mid-run
+sim/manet/manet.cc       main sim: AODV/OLSR/DSDV on a static mesh with scheduled node/link failures
+experiments/             input generation, experiment grids, metrics, analysis (see its README)
+results/                 experiment outputs, tables and figures (see its README)
+docs/deliverables.md     the data and outputs the paper needs
+STATUS.md                what has been run so far
 scripts/setup.sh         finds or installs NS-3, links sim/ into NS-3, builds
 scripts/run.sh           runs one sim, writes CSVs to results/
 PREDICTIONS.md           your predictions, written before running
@@ -35,6 +40,15 @@ Useful flags: `--deadline` (T, in seconds), `--killTime`, `--interval`, `--aodvH
 - `results/diamond-summary.csv`, one row per run
 
 For 10 runs: `for r in $(seq 1 10); do scripts/run.sh diamond --protocol=olsr --run=$r; done`
+
+## Experiments
+
+```bash
+python3 experiments/run_experiment.py main    # or severity, load, energy, kerala, kerala100
+python3 experiments/analyze.py
+```
+
+How each experiment is set up, every metric definition and the known limitations are in `experiments/README.md`.
 
 ## Before you run anything
 

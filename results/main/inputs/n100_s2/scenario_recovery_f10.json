@@ -1,0 +1,110 @@
+{
+ "scenario": "recovery",
+ "severity_param": null,
+ "selection": "deterministic",
+ "assumption": "Same relay failures as node_fail, but the devices come back later (power or equipment restored). Measures how each protocol recovers when connectivity returns.",
+ "failure_start_s": 120.0,
+ "failure_end_s": 210.0,
+ "failed_nodes": [
+  {
+   "node": 12,
+   "x": 271.85,
+   "y": 312.35
+  },
+  {
+   "node": 21,
+   "x": 208.67,
+   "y": 130.18
+  },
+  {
+   "node": 6,
+   "x": 209.06,
+   "y": 183.08
+  },
+  {
+   "node": 83,
+   "x": 158.54,
+   "y": 370.31
+  },
+  {
+   "node": 42,
+   "x": 147.64,
+   "y": 381.31
+  },
+  {
+   "node": 7,
+   "x": 386.45,
+   "y": 232.32
+  },
+  {
+   "node": 27,
+   "x": 381.5,
+   "y": 239.47
+  },
+  {
+   "node": 62,
+   "x": 309.4,
+   "y": 180.05
+  },
+  {
+   "node": 58,
+   "x": 166.56,
+   "y": 303.48
+  },
+  {
+   "node": 97,
+   "x": 119.56,
+   "y": 340.74
+  }
+ ],
+ "failed_links": [],
+ "n_failed_nodes": 10,
+ "pct_failed_nodes": 10.0,
+ "n_failed_links": 0,
+ "pct_failed_links": 0.0,
+ "components_after_failure": 1,
+ "flows_with_alternative_route": 10,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": true
+  }
+ ]
+}

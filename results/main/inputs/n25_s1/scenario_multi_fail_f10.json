@@ -1,0 +1,112 @@
+{
+ "scenario": "multi_fail",
+ "severity_param": null,
+ "selection": "random",
+ "assumption": "Damage spreads over time: three waves of randomly chosen relay failures and link failures, 15 s apart, as more devices and paths are lost while water rises. Random selection (seeded), so it is not aimed at the busiest paths.",
+ "failure_start_s": 120.0,
+ "failure_end_s": null,
+ "failed_nodes": [
+  {
+   "node": 0,
+   "x": 326.9,
+   "y": 63.63
+  },
+  {
+   "node": 12,
+   "x": 160.17,
+   "y": 146.63
+  },
+  {
+   "node": 1,
+   "x": 210.54,
+   "y": 362.81
+  }
+ ],
+ "failed_links": [
+  {
+   "a": 6,
+   "b": 20,
+   "mid_x": 424.06,
+   "mid_y": 443.25
+  },
+  {
+   "a": 7,
+   "b": 20,
+   "mid_x": 460.08,
+   "mid_y": 445.7
+  },
+  {
+   "a": 3,
+   "b": 15,
+   "mid_x": 64.22,
+   "mid_y": 88.04
+  },
+  {
+   "a": 21,
+   "b": 24,
+   "mid_x": 82.28,
+   "mid_y": 394.05
+  },
+  {
+   "a": 11,
+   "b": 17,
+   "mid_x": 377.78,
+   "mid_y": 55.28
+  },
+  {
+   "a": 12,
+   "b": 19,
+   "mid_x": 172.01,
+   "mid_y": 157.45
+  }
+ ],
+ "n_failed_nodes": 3,
+ "pct_failed_nodes": 12.0,
+ "n_failed_links": 6,
+ "pct_failed_links": 12.5,
+ "components_after_failure": 1,
+ "flows_with_alternative_route": 10,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": true
+  }
+ ]
+}

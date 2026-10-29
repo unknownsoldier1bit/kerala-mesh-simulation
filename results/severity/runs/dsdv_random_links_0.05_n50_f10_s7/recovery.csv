@@ -1,0 +1,3 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+dsdv_random_links_0.05_n50_f10_s7,120.0,fail,3,True,True,0.23806700000000092,0.055338000000006105,0.23806700000000092,290.0,40,40
+dsdv_random_links_0.05_n50_f10_s7,120.0,fail,9,True,True,0.4131840000000011,0.2524099999999976,0.4131840000000011,290.0,40,39

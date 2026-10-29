@@ -1,0 +1,179 @@
+{
+ "experiment": "energy",
+ "run_id": "dsdv_low_idle_radio_n50_f10_s6",
+ "protocol": "dsdv",
+ "scenario": "low_idle_radio",
+ "nodes": 50,
+ "seed": 6,
+ "rng_run": 6,
+ "n_flows": 10,
+ "severity": null,
+ "severity_label": "battery depletion only",
+ "topo": "results/energy/inputs/n50_s6/topology.csv",
+ "flows_file": "results/energy/inputs/n50_s6/flows_f10.csv",
+ "events_file": "",
+ "energy_file": "results/energy/inputs/n50_s6/battery_low_idle_radio.csv",
+ "idle_current_a": 0.033,
+ "energy_j": 0,
+ "energy_model": "states",
+ "fail_time_s": null,
+ "restore_time_s": null,
+ "traffic_start_s": 60.0,
+ "traffic_stop_s": 595.0,
+ "sim_time_s": 600.0,
+ "payload_bytes": 512,
+ "range_m": 150.0,
+ "deadline_s": 1.0,
+ "windows": {
+  "first_100s": [
+   60,
+   160
+  ],
+  "160_300s": [
+   160,
+   300
+  ],
+  "300_450s": [
+   300,
+   450
+  ],
+  "450_595s": [
+   450,
+   595
+  ]
+ },
+ "timeseries": true,
+ "connectivity": true,
+ "flows": [
+  {
+   "flow": 0,
+   "src": 5,
+   "dst": 10,
+   "hops": 3,
+   "segments": [
+    [
+     60.18903172082716,
+     595.0,
+     0.25
+    ]
+   ]
+  },
+  {
+   "flow": 1,
+   "src": 18,
+   "dst": 5,
+   "hops": 3,
+   "segments": [
+    [
+     60.119457535948435,
+     595.0,
+     0.25
+    ]
+   ]
+  },
+  {
+   "flow": 2,
+   "src": 31,
+   "dst": 21,
+   "hops": 2,
+   "segments": [
+    [
+     60.20994092452262,
+     595.0,
+     0.25
+    ]
+   ]
+  },
+  {
+   "flow": 3,
+   "src": 27,
+   "dst": 21,
+   "hops": 3,
+   "segments": [
+    [
+     60.23119422701894,
+     595.0,
+     0.25
+    ]
+   ]
+  },
+  {
+   "flow": 4,
+   "src": 5,
+   "dst": 26,
+   "hops": 2,
+   "segments": [
+    [
+     60.07074263273735,
+     595.0,
+     0.25
+    ]
+   ]
+  },
+  {
+   "flow": 5,
+   "src": 7,
+   "dst": 47,
+   "hops": 4,
+   "segments": [
+    [
+     60.236299797183186,
+     595.0,
+     0.25
+    ]
+   ]
+  },
+  {
+   "flow": 6,
+   "src": 5,
+   "dst": 13,
+   "hops": 4,
+   "segments": [
+    [
+     60.12569999118227,
+     595.0,
+     0.25
+    ]
+   ]
+  },
+  {
+   "flow": 7,
+   "src": 32,
+   "dst": 19,
+   "hops": 2,
+   "segments": [
+    [
+     60.125129456656694,
+     595.0,
+     0.25
+    ]
+   ]
+  },
+  {
+   "flow": 8,
+   "src": 3,
+   "dst": 15,
+   "hops": 2,
+   "segments": [
+    [
+     60.15422086487953,
+     595.0,
+     0.25
+    ]
+   ]
+  },
+  {
+   "flow": 9,
+   "src": 3,
+   "dst": 25,
+   "hops": 2,
+   "segments": [
+    [
+     60.24512771524075,
+     595.0,
+     0.25
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,5 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+dsdv_default_radio_n50_f10_s10,233.0,fail,3,True,True,7.594493999999997,7.45531299999999,7.594493999999997,595.0,40,11
+dsdv_default_radio_n50_f10_s10,233.0,fail,8,True,True,7.612283999999988,7.531682999999987,7.612283999999988,595.0,40,10
+dsdv_default_radio_n50_f10_s10,265.0,fail,7,True,True,5.495537000000013,5.255033000000026,5.495537000000013,595.0,40,19
+dsdv_default_radio_n50_f10_s10,321.0,fail,7,True,True,9.606280000000027,9.36577600000004,9.606280000000027,595.0,40,3

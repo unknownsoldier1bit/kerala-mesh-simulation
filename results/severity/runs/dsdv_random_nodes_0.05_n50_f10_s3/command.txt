@@ -1,0 +1,1 @@
+ns3.47-manet --protocol=dsdv --topo=results/severity/inputs/n50_s3/topology.csv --flows=results/severity/inputs/n50_s3/flows_f10.csv --outDir=results/severity/runs/dsdv_random_nodes_0.05_n50_f10_s3 --run=3 --simTime=300.0 --range=150.0 --energyJ=0 --events=results/severity/inputs/n50_s3/events_random_nodes_0.05_f10.csv

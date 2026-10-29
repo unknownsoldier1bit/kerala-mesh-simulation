@@ -1,0 +1,2 @@
+protocol,nodes,flows,suppressed_sends,socket_errors,duplicate_receptions,wall_s
+olsr,50,10,0,21,0,22.0825

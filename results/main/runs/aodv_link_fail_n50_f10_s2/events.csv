@@ -1,0 +1,6 @@
+time_s,action,kind,a,b,group
+120,fail,link,3,46,links
+120,fail,link,14,33,links
+120,fail,link,15,21,links
+120,fail,link,20,46,links
+120,fail,link,21,33,links

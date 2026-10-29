@@ -1,0 +1,307 @@
+{
+ "scenario": "multi_fail",
+ "severity_param": null,
+ "selection": "random",
+ "assumption": "Damage spreads over time: three waves of randomly chosen relay failures and link failures, 15 s apart, as more devices and paths are lost while water rises. Random selection (seeded), so it is not aimed at the busiest paths.",
+ "failure_start_s": 120.0,
+ "failure_end_s": null,
+ "failed_nodes": [
+  {
+   "node": 35,
+   "x": 233.91,
+   "y": 234.46
+  },
+  {
+   "node": 40,
+   "x": 388.56,
+   "y": 452.96
+  },
+  {
+   "node": 4,
+   "x": 74.28,
+   "y": 371.2
+  },
+  {
+   "node": 22,
+   "x": 252.13,
+   "y": 112.92
+  },
+  {
+   "node": 15,
+   "x": 33.36,
+   "y": 92.56
+  },
+  {
+   "node": 20,
+   "x": 92.43,
+   "y": 123.26
+  }
+ ],
+ "failed_links": [
+  {
+   "a": 1,
+   "b": 14,
+   "mid_x": 207.3,
+   "mid_y": 301.36
+  },
+  {
+   "a": 7,
+   "b": 35,
+   "mid_x": 227.73,
+   "mid_y": 239.98
+  },
+  {
+   "a": 8,
+   "b": 22,
+   "mid_x": 302.53,
+   "mid_y": 77.53
+  },
+  {
+   "a": 10,
+   "b": 13,
+   "mid_x": 338.99,
+   "mid_y": 441.63
+  },
+  {
+   "a": 10,
+   "b": 32,
+   "mid_x": 347.47,
+   "mid_y": 404.33
+  },
+  {
+   "a": 11,
+   "b": 17,
+   "mid_x": 44.82,
+   "mid_y": 122.12
+  },
+  {
+   "a": 17,
+   "b": 20,
+   "mid_x": 75.28,
+   "mid_y": 90.92
+  },
+  {
+   "a": 20,
+   "b": 29,
+   "mid_x": 49.12,
+   "mid_y": 166.55
+  },
+  {
+   "a": 30,
+   "b": 46,
+   "mid_x": 246.4,
+   "mid_y": 76.05
+  },
+  {
+   "a": 36,
+   "b": 45,
+   "mid_x": 405.36,
+   "mid_y": 74.28
+  },
+  {
+   "a": 37,
+   "b": 48,
+   "mid_x": 243.14,
+   "mid_y": 335.5
+  },
+  {
+   "a": 43,
+   "b": 45,
+   "mid_x": 320.31,
+   "mid_y": 112.89
+  },
+  {
+   "a": 3,
+   "b": 20,
+   "mid_x": 137.32,
+   "mid_y": 98.55
+  },
+  {
+   "a": 7,
+   "b": 48,
+   "mid_x": 227.33,
+   "mid_y": 299.34
+  },
+  {
+   "a": 10,
+   "b": 49,
+   "mid_x": 371.04,
+   "mid_y": 426.29
+  },
+  {
+   "a": 14,
+   "b": 26,
+   "mid_x": 206.96,
+   "mid_y": 275.68
+  },
+  {
+   "a": 15,
+   "b": 17,
+   "mid_x": 45.75,
+   "mid_y": 75.57
+  },
+  {
+   "a": 17,
+   "b": 21,
+   "mid_x": 104.14,
+   "mid_y": 56.66
+  },
+  {
+   "a": 25,
+   "b": 35,
+   "mid_x": 176.5,
+   "mid_y": 202.36
+  },
+  {
+   "a": 28,
+   "b": 38,
+   "mid_x": 140.65,
+   "mid_y": 468.47
+  },
+  {
+   "a": 36,
+   "b": 39,
+   "mid_x": 478.42,
+   "mid_y": 48.15
+  },
+  {
+   "a": 40,
+   "b": 47,
+   "mid_x": 402.47,
+   "mid_y": 471.54
+  },
+  {
+   "a": 40,
+   "b": 49,
+   "mid_x": 406.25,
+   "mid_y": 426.97
+  },
+  {
+   "a": 47,
+   "b": 49,
+   "mid_x": 420.15,
+   "mid_y": 445.55
+  },
+  {
+   "a": 2,
+   "b": 45,
+   "mid_x": 342.97,
+   "mid_y": 103.79
+  },
+  {
+   "a": 4,
+   "b": 38,
+   "mid_x": 89.46,
+   "mid_y": 428.95
+  },
+  {
+   "a": 5,
+   "b": 26,
+   "mid_x": 149.48,
+   "mid_y": 260.11
+  },
+  {
+   "a": 6,
+   "b": 11,
+   "mid_x": 38.93,
+   "mid_y": 164.43
+  },
+  {
+   "a": 10,
+   "b": 27,
+   "mid_x": 311.32,
+   "mid_y": 461.92
+  },
+  {
+   "a": 10,
+   "b": 37,
+   "mid_x": 285.66,
+   "mid_y": 384.72
+  },
+  {
+   "a": 12,
+   "b": 45,
+   "mid_x": 328.96,
+   "mid_y": 181.19
+  },
+  {
+   "a": 15,
+   "b": 20,
+   "mid_x": 62.89,
+   "mid_y": 107.91
+  },
+  {
+   "a": 23,
+   "b": 25,
+   "mid_x": 147.78,
+   "mid_y": 181.98
+  },
+  {
+   "a": 24,
+   "b": 37,
+   "mid_x": 251.88,
+   "mid_y": 304.95
+  },
+  {
+   "a": 26,
+   "b": 35,
+   "mid_x": 222.18,
+   "mid_y": 241.62
+  },
+  {
+   "a": 32,
+   "b": 48,
+   "mid_x": 304.95,
+   "mid_y": 355.12
+  }
+ ],
+ "n_failed_nodes": 6,
+ "pct_failed_nodes": 12.0,
+ "n_failed_links": 36,
+ "pct_failed_links": 14.46,
+ "components_after_failure": 2,
+ "flows_with_alternative_route": 10,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": true
+  }
+ ]
+}

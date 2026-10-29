@@ -1,0 +1,309 @@
+{
+ "experiment": "load",
+ "run_id": "dsdv_node_fail_n50_f20_s3",
+ "protocol": "dsdv",
+ "scenario": "node_fail",
+ "nodes": 50,
+ "seed": 3,
+ "rng_run": 3,
+ "n_flows": 20,
+ "severity": null,
+ "severity_label": "5 nodes (10.0%)",
+ "topo": "results/load/inputs/n50_s3/topology.csv",
+ "flows_file": "results/load/inputs/n50_s3/flows_f20.csv",
+ "events_file": "results/load/inputs/n50_s3/events_node_fail_f20.csv",
+ "fail_time_s": 120.0,
+ "restore_time_s": null,
+ "traffic_start_s": 60.0,
+ "traffic_stop_s": 290.0,
+ "sim_time_s": 300.0,
+ "payload_bytes": 512,
+ "range_m": 150.0,
+ "energy_j": 0,
+ "deadline_s": 1.0,
+ "energy_model": "states",
+ "flowmon": false,
+ "rt_dump": "",
+ "flows": [
+  {
+   "flow": 0,
+   "src": 43,
+   "dst": 23,
+   "hops": 4,
+   "segments": [
+    [
+     60.03880566229999,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "src": 11,
+   "dst": 33,
+   "hops": 3,
+   "segments": [
+    [
+     60.13631458686004,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "src": 49,
+   "dst": 48,
+   "hops": 4,
+   "segments": [
+    [
+     60.10316476072151,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "src": 43,
+   "dst": 3,
+   "hops": 3,
+   "segments": [
+    [
+     60.04780110375161,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 4,
+   "src": 22,
+   "dst": 8,
+   "hops": 3,
+   "segments": [
+    [
+     60.05990733663163,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 5,
+   "src": 6,
+   "dst": 37,
+   "hops": 2,
+   "segments": [
+    [
+     60.141659108090025,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "src": 17,
+   "dst": 21,
+   "hops": 4,
+   "segments": [
+    [
+     60.246495910447194,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 7,
+   "src": 23,
+   "dst": 31,
+   "hops": 2,
+   "segments": [
+    [
+     60.15307365057249,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "src": 3,
+   "dst": 22,
+   "hops": 3,
+   "segments": [
+    [
+     60.18318255580595,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "src": 34,
+   "dst": 16,
+   "hops": 2,
+   "segments": [
+    [
+     60.203093794679305,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 10,
+   "src": 30,
+   "dst": 49,
+   "hops": 4,
+   "segments": [
+    [
+     60.177930631172096,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 11,
+   "src": 14,
+   "dst": 13,
+   "hops": 4,
+   "segments": [
+    [
+     60.096639736051735,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 12,
+   "src": 13,
+   "dst": 25,
+   "hops": 3,
+   "segments": [
+    [
+     60.08493490753892,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 13,
+   "src": 14,
+   "dst": 25,
+   "hops": 3,
+   "segments": [
+    [
+     60.06691098249106,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 14,
+   "src": 23,
+   "dst": 6,
+   "hops": 3,
+   "segments": [
+    [
+     60.15491702105426,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 15,
+   "src": 14,
+   "dst": 32,
+   "hops": 2,
+   "segments": [
+    [
+     60.16012066623591,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 16,
+   "src": 42,
+   "dst": 48,
+   "hops": 4,
+   "segments": [
+    [
+     60.246801748633054,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 17,
+   "src": 7,
+   "dst": 35,
+   "hops": 2,
+   "segments": [
+    [
+     60.000518450281675,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 18,
+   "src": 19,
+   "dst": 49,
+   "hops": 3,
+   "segments": [
+    [
+     60.213544110003475,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 19,
+   "src": 31,
+   "dst": 38,
+   "hops": 2,
+   "segments": [
+    [
+     60.03556855326747,
+     290.0,
+     0.25
+    ]
+   ],
+   "alternative_route_exists": true
+  }
+ ]
+}

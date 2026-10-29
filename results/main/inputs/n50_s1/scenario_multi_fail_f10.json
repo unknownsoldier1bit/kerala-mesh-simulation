@@ -1,0 +1,343 @@
+{
+ "scenario": "multi_fail",
+ "severity_param": null,
+ "selection": "random",
+ "assumption": "Damage spreads over time: three waves of randomly chosen relay failures and link failures, 15 s apart, as more devices and paths are lost while water rises. Random selection (seeded), so it is not aimed at the busiest paths.",
+ "failure_start_s": 120.0,
+ "failure_end_s": null,
+ "failed_nodes": [
+  {
+   "node": 26,
+   "x": 486.4,
+   "y": 163.01
+  },
+  {
+   "node": 34,
+   "x": 240.06,
+   "y": 355.68
+  },
+  {
+   "node": 29,
+   "x": 497.45,
+   "y": 494.55
+  },
+  {
+   "node": 37,
+   "x": 410.75,
+   "y": 247.78
+  },
+  {
+   "node": 12,
+   "x": 55.48,
+   "y": 388.29
+  },
+  {
+   "node": 22,
+   "x": 414.72,
+   "y": 423.9
+  }
+ ],
+ "failed_links": [
+  {
+   "a": 0,
+   "b": 15,
+   "mid_x": 455.84,
+   "mid_y": 251.84
+  },
+  {
+   "a": 0,
+   "b": 27,
+   "mid_x": 459.46,
+   "mid_y": 205.8
+  },
+  {
+   "a": 1,
+   "b": 44,
+   "mid_x": 93.35,
+   "mid_y": 142.08
+  },
+  {
+   "a": 4,
+   "b": 34,
+   "mid_x": 250.65,
+   "mid_y": 296.36
+  },
+  {
+   "a": 4,
+   "b": 37,
+   "mid_x": 336.0,
+   "mid_y": 242.41
+  },
+  {
+   "a": 8,
+   "b": 45,
+   "mid_x": 343.84,
+   "mid_y": 359.64
+  },
+  {
+   "a": 10,
+   "b": 38,
+   "mid_x": 157.56,
+   "mid_y": 361.14
+  },
+  {
+   "a": 11,
+   "b": 34,
+   "mid_x": 287.59,
+   "mid_y": 356.58
+  },
+  {
+   "a": 13,
+   "b": 43,
+   "mid_x": 75.83,
+   "mid_y": 454.74
+  },
+  {
+   "a": 15,
+   "b": 40,
+   "mid_x": 407.16,
+   "mid_y": 293.63
+  },
+  {
+   "a": 21,
+   "b": 24,
+   "mid_x": 318.26,
+   "mid_y": 86.71
+  },
+  {
+   "a": 21,
+   "b": 39,
+   "mid_x": 304.36,
+   "mid_y": 131.5
+  },
+  {
+   "a": 27,
+   "b": 40,
+   "mid_x": 410.78,
+   "mid_y": 247.6
+  },
+  {
+   "a": 38,
+   "b": 43,
+   "mid_x": 119.91,
+   "mid_y": 417.27
+  },
+  {
+   "a": 4,
+   "b": 44,
+   "mid_x": 209.92,
+   "mid_y": 202.82
+  },
+  {
+   "a": 5,
+   "b": 40,
+   "mid_x": 313.48,
+   "mid_y": 204.31
+  },
+  {
+   "a": 6,
+   "b": 39,
+   "mid_x": 332.37,
+   "mid_y": 127.74
+  },
+  {
+   "a": 12,
+   "b": 41,
+   "mid_x": 82.18,
+   "mid_y": 412.77
+  },
+  {
+   "a": 15,
+   "b": 36,
+   "mid_x": 459.44,
+   "mid_y": 289.72
+  },
+  {
+   "a": 17,
+   "b": 25,
+   "mid_x": 201.42,
+   "mid_y": 133.99
+  },
+  {
+   "a": 18,
+   "b": 29,
+   "mid_x": 473.85,
+   "mid_y": 448.9
+  },
+  {
+   "a": 18,
+   "b": 30,
+   "mid_x": 426.98,
+   "mid_y": 440.99
+  },
+  {
+   "a": 20,
+   "b": 32,
+   "mid_x": 267.23,
+   "mid_y": 148.07
+  },
+  {
+   "a": 23,
+   "b": 34,
+   "mid_x": 292.55,
+   "mid_y": 360.92
+  },
+  {
+   "a": 25,
+   "b": 44,
+   "mid_x": 160.1,
+   "mid_y": 175.16
+  },
+  {
+   "a": 25,
+   "b": 46,
+   "mid_x": 177.24,
+   "mid_y": 124.84
+  },
+  {
+   "a": 25,
+   "b": 49,
+   "mid_x": 179.71,
+   "mid_y": 224.44
+  },
+  {
+   "a": 29,
+   "b": 35,
+   "mid_x": 486.45,
+   "mid_y": 458.22
+  },
+  {
+   "a": 1,
+   "b": 19,
+   "mid_x": 32.64,
+   "mid_y": 119.74
+  },
+  {
+   "a": 2,
+   "b": 22,
+   "mid_x": 361.28,
+   "mid_y": 441.27
+  },
+  {
+   "a": 4,
+   "b": 33,
+   "mid_x": 234.38,
+   "mid_y": 236.87
+  },
+  {
+   "a": 10,
+   "b": 23,
+   "mid_x": 280.45,
+   "mid_y": 367.08
+  },
+  {
+   "a": 10,
+   "b": 34,
+   "mid_x": 227.95,
+   "mid_y": 361.84
+  },
+  {
+   "a": 10,
+   "b": 41,
+   "mid_x": 162.36,
+   "mid_y": 402.62
+  },
+  {
+   "a": 13,
+   "b": 28,
+   "mid_x": 17.44,
+   "mid_y": 361.96
+  },
+  {
+   "a": 15,
+   "b": 27,
+   "mid_x": 466.63,
+   "mid_y": 277.69
+  },
+  {
+   "a": 18,
+   "b": 23,
+   "mid_x": 397.65,
+   "mid_y": 384.71
+  },
+  {
+   "a": 25,
+   "b": 32,
+   "mid_x": 196.88,
+   "mid_y": 197.6
+  },
+  {
+   "a": 31,
+   "b": 41,
+   "mid_x": 80.41,
+   "mid_y": 464.75
+  },
+  {
+   "a": 32,
+   "b": 40,
+   "mid_x": 291.72,
+   "mid_y": 238.5
+  },
+  {
+   "a": 33,
+   "b": 39,
+   "mid_x": 271.6,
+   "mid_y": 204.5
+  },
+  {
+   "a": 36,
+   "b": 39,
+   "mid_x": 395.77,
+   "mid_y": 214.01
+  }
+ ],
+ "n_failed_nodes": 6,
+ "pct_failed_nodes": 12.0,
+ "n_failed_links": 42,
+ "pct_failed_links": 15.56,
+ "components_after_failure": 1,
+ "flows_with_alternative_route": 10,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": true
+  }
+ ]
+}

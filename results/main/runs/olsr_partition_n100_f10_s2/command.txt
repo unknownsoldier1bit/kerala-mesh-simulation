@@ -1,0 +1,1 @@
+ns3.47-manet --protocol=olsr --topo=results/main/inputs/n100_s2/topology.csv --flows=results/main/inputs/n100_s2/flows_f10.csv --outDir=results/main/runs/olsr_partition_n100_f10_s2 --run=2 --simTime=300.0 --range=150.0 --energyJ=0 --events=results/main/inputs/n100_s2/events_partition_f10.csv

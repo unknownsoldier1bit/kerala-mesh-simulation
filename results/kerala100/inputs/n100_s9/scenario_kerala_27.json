@@ -1,0 +1,177 @@
+{
+ "scenario": "kerala_27",
+ "selection": "spatially correlated (lowest ground first)",
+ "assumption": "a river runs along the west edge (x = 0). Ground height = x / 500 m + Gaussian noise (sd 0.1). Nodes flood in order of height, lowest first. Flooded nodes stay down (submerged, abandoned or evacuated).",
+ "failure_start_s": 63.704,
+ "failure_end_s": null,
+ "failed_nodes": [
+  {
+   "node": 52,
+   "time_s": 63.704,
+   "x": 7.69,
+   "y": 3.18
+  },
+  {
+   "node": 63,
+   "time_s": 71.111,
+   "x": 50.1,
+   "y": 138.47
+  },
+  {
+   "node": 30,
+   "time_s": 78.519,
+   "x": 63.66,
+   "y": 247.39
+  },
+  {
+   "node": 6,
+   "time_s": 85.926,
+   "x": 81.61,
+   "y": 89.21
+  },
+  {
+   "node": 60,
+   "time_s": 91.111,
+   "x": 31.41,
+   "y": 430.36
+  },
+  {
+   "node": 71,
+   "time_s": 93.58,
+   "x": 32.29,
+   "y": 92.84
+  },
+  {
+   "node": 81,
+   "time_s": 96.049,
+   "x": 26.7,
+   "y": 371.17
+  },
+  {
+   "node": 45,
+   "time_s": 98.519,
+   "x": 7.82,
+   "y": 335.9
+  },
+  {
+   "node": 7,
+   "time_s": 100.988,
+   "x": 120.13,
+   "y": 339.23
+  },
+  {
+   "node": 35,
+   "time_s": 103.457,
+   "x": 134.18,
+   "y": 140.8
+  },
+  {
+   "node": 92,
+   "time_s": 105.926,
+   "x": 50.16,
+   "y": 296.04
+  },
+  {
+   "node": 93,
+   "time_s": 108.395,
+   "x": 109.65,
+   "y": 377.69
+  },
+  {
+   "node": 68,
+   "time_s": 110.864,
+   "x": 69.48,
+   "y": 312.09
+  },
+  {
+   "node": 85,
+   "time_s": 113.333,
+   "x": 30.91,
+   "y": 264.37
+  },
+  {
+   "node": 55,
+   "time_s": 115.802,
+   "x": 155.55,
+   "y": 387.8
+  },
+  {
+   "node": 90,
+   "time_s": 118.272,
+   "x": 135.16,
+   "y": 296.09
+  },
+  {
+   "node": 48,
+   "time_s": 121.111,
+   "x": 82.9,
+   "y": 396.76
+  },
+  {
+   "node": 15,
+   "time_s": 124.815,
+   "x": 172.61,
+   "y": 26.58
+  },
+  {
+   "node": 84,
+   "time_s": 128.519,
+   "x": 111.07,
+   "y": 265.1
+  },
+  {
+   "node": 36,
+   "time_s": 132.222,
+   "x": 117.57,
+   "y": 118.48
+  },
+  {
+   "node": 59,
+   "time_s": 135.926,
+   "x": 172.43,
+   "y": 189.1
+  },
+  {
+   "node": 87,
+   "time_s": 139.63,
+   "x": 57.4,
+   "y": 144.8
+  },
+  {
+   "node": 78,
+   "time_s": 143.333,
+   "x": 111.07,
+   "y": 406.68
+  },
+  {
+   "node": 8,
+   "time_s": 147.037,
+   "x": 93.53,
+   "y": 101.44
+  },
+  {
+   "node": 61,
+   "time_s": 152.222,
+   "x": 167.67,
+   "y": 184.84
+  },
+  {
+   "node": 22,
+   "time_s": 163.333,
+   "x": 121.15,
+   "y": 392.66
+  },
+  {
+   "node": 56,
+   "time_s": 174.444,
+   "x": 183.27,
+   "y": 483.17
+  }
+ ],
+ "n_failed_nodes": 27,
+ "pct_failed_nodes": 27.0,
+ "n_failed_links": 0,
+ "pct_failed_links": 0.0,
+ "components_at_peak_flood": 1,
+ "battery_depletion": "yes (see battery.csv; no recharging)"
+}

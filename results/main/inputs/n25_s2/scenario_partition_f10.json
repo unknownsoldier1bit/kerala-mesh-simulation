@@ -1,0 +1,120 @@
+{
+ "scenario": "partition",
+ "severity_param": null,
+ "selection": "deterministic",
+ "assumption": "The area is split in two: every link crossing the vertical midline stops working, then all come back. This abstracts losing every device or path that bridged two neighbourhoods (for example both sides of a flooded channel). It is not a physical propagation model; it guarantees a clean partition so protocol behaviour during and after a split can be measured.",
+ "failure_start_s": 120.0,
+ "failure_end_s": 210.0,
+ "failed_nodes": [],
+ "failed_links": [
+  {
+   "a": 1,
+   "b": 15,
+   "mid_x": 218.3,
+   "mid_y": 246.56
+  },
+  {
+   "a": 1,
+   "b": 16,
+   "mid_x": 240.1,
+   "mid_y": 190.05
+  },
+  {
+   "a": 2,
+   "b": 18,
+   "mid_x": 251.98,
+   "mid_y": 358.88
+  },
+  {
+   "a": 2,
+   "b": 20,
+   "mid_x": 258.05,
+   "mid_y": 379.67
+  },
+  {
+   "a": 4,
+   "b": 20,
+   "mid_x": 253.5,
+   "mid_y": 408.87
+  },
+  {
+   "a": 7,
+   "b": 15,
+   "mid_x": 185.71,
+   "mid_y": 234.18
+  },
+  {
+   "a": 15,
+   "b": 18,
+   "mid_x": 229.46,
+   "mid_y": 287.58
+  },
+  {
+   "a": 15,
+   "b": 20,
+   "mid_x": 235.53,
+   "mid_y": 308.37
+  },
+  {
+   "a": 15,
+   "b": 24,
+   "mid_x": 203.92,
+   "mid_y": 296.3
+  },
+  {
+   "a": 16,
+   "b": 19,
+   "mid_x": 232.13,
+   "mid_y": 116.52
+  }
+ ],
+ "n_failed_nodes": 0,
+ "pct_failed_nodes": 0.0,
+ "n_failed_links": 10,
+ "pct_failed_links": 15.62,
+ "components_after_failure": 2,
+ "flows_with_alternative_route": 3,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": false
+  }
+ ]
+}

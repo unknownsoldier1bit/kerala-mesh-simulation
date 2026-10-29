@@ -1,0 +1,99 @@
+{
+ "scenario": "uniform_27",
+ "selection": "uniformly random (seeded)",
+ "assumption": "same number of node failures at the same times, but nodes picked uniformly at random instead of lowest first",
+ "failure_start_s": 67.143,
+ "failure_end_s": null,
+ "failed_nodes": [
+  {
+   "node": 43,
+   "time_s": 67.143,
+   "x": 97.6,
+   "y": 384.92
+  },
+  {
+   "node": 37,
+   "time_s": 81.429,
+   "x": 308.78,
+   "y": 193.03
+  },
+  {
+   "node": 31,
+   "time_s": 91.905,
+   "x": 326.36,
+   "y": 389.57
+  },
+  {
+   "node": 11,
+   "time_s": 96.667,
+   "x": 76.78,
+   "y": 366.98
+  },
+  {
+   "node": 25,
+   "time_s": 101.429,
+   "x": 396.01,
+   "y": 138.7
+  },
+  {
+   "node": 15,
+   "time_s": 106.19,
+   "x": 374.52,
+   "y": 220.04
+  },
+  {
+   "node": 0,
+   "time_s": 110.952,
+   "x": 440.86,
+   "y": 238.73
+  },
+  {
+   "node": 45,
+   "time_s": 115.714,
+   "x": 237.37,
+   "y": 267.28
+  },
+  {
+   "node": 20,
+   "time_s": 120.714,
+   "x": 359.2,
+   "y": 328.63
+  },
+  {
+   "node": 47,
+   "time_s": 127.857,
+   "x": 226.22,
+   "y": 384.29
+  },
+  {
+   "node": 41,
+   "time_s": 135.0,
+   "x": 19.52,
+   "y": 33.82
+  },
+  {
+   "node": 6,
+   "time_s": 142.143,
+   "x": 341.02,
+   "y": 220.28
+  },
+  {
+   "node": 10,
+   "time_s": 149.286,
+   "x": 35.84,
+   "y": 233.87
+  },
+  {
+   "node": 30,
+   "time_s": 169.286,
+   "x": 351.46,
+   "y": 291.05
+  }
+ ],
+ "n_failed_nodes": 14,
+ "pct_failed_nodes": 28.0,
+ "n_failed_links": 0,
+ "pct_failed_links": 0.0,
+ "components_at_peak_flood": 1,
+ "battery_depletion": "yes (see battery.csv; no recharging)"
+}

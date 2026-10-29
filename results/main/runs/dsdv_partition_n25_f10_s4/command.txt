@@ -1,0 +1,1 @@
+ns3.47-manet --protocol=dsdv --topo=results/main/inputs/n25_s4/topology.csv --flows=results/main/inputs/n25_s4/flows_f10.csv --outDir=results/main/runs/dsdv_partition_n25_f10_s4 --run=4 --simTime=300.0 --range=150.0 --energyJ=0 --events=results/main/inputs/n25_s4/events_partition_f10.csv

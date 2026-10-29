@@ -1,0 +1,144 @@
+{
+ "scenario": "random_links",
+ "severity_param": 0.05,
+ "selection": "random",
+ "assumption": "",
+ "failure_start_s": 120.0,
+ "failure_end_s": null,
+ "failed_nodes": [],
+ "failed_links": [
+  {
+   "a": 4,
+   "b": 40,
+   "mid_x": 306.28,
+   "mid_y": 250.29
+  },
+  {
+   "a": 4,
+   "b": 49,
+   "mid_x": 229.52,
+   "mid_y": 252.09
+  },
+  {
+   "a": 5,
+   "b": 6,
+   "mid_x": 302.35,
+   "mid_y": 114.13
+  },
+  {
+   "a": 5,
+   "b": 16,
+   "mid_x": 332.9,
+   "mid_y": 104.21
+  },
+  {
+   "a": 5,
+   "b": 49,
+   "mid_x": 236.72,
+   "mid_y": 206.12
+  },
+  {
+   "a": 8,
+   "b": 30,
+   "mid_x": 376.33,
+   "mid_y": 437.56
+  },
+  {
+   "a": 11,
+   "b": 15,
+   "mid_x": 399.07,
+   "mid_y": 340.6
+  },
+  {
+   "a": 14,
+   "b": 49,
+   "mid_x": 249.53,
+   "mid_y": 226.07
+  },
+  {
+   "a": 15,
+   "b": 45,
+   "mid_x": 400.86,
+   "mid_y": 323.31
+  },
+  {
+   "a": 28,
+   "b": 38,
+   "mid_x": 61.52,
+   "mid_y": 324.49
+  },
+  {
+   "a": 31,
+   "b": 38,
+   "mid_x": 75.6,
+   "mid_y": 423.27
+  },
+  {
+   "a": 32,
+   "b": 34,
+   "mid_x": 236.1,
+   "mid_y": 284.57
+  },
+  {
+   "a": 36,
+   "b": 37,
+   "mid_x": 433.31,
+   "mid_y": 251.75
+  },
+  {
+   "a": 36,
+   "b": 39,
+   "mid_x": 395.77,
+   "mid_y": 214.01
+  }
+ ],
+ "n_failed_nodes": 0,
+ "pct_failed_nodes": 0.0,
+ "n_failed_links": 14,
+ "pct_failed_links": 5.19,
+ "components_after_failure": 1,
+ "flows_with_alternative_route": 10,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": true
+  }
+ ]
+}

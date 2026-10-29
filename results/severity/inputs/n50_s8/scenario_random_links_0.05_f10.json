@@ -1,0 +1,138 @@
+{
+ "scenario": "random_links",
+ "severity_param": 0.05,
+ "selection": "random",
+ "assumption": "",
+ "failure_start_s": 120.0,
+ "failure_end_s": null,
+ "failed_nodes": [],
+ "failed_links": [
+  {
+   "a": 0,
+   "b": 26,
+   "mid_x": 421.05,
+   "mid_y": 220.7
+  },
+  {
+   "a": 3,
+   "b": 33,
+   "mid_x": 185.78,
+   "mid_y": 450.2
+  },
+  {
+   "a": 3,
+   "b": 43,
+   "mid_x": 160.23,
+   "mid_y": 415.6
+  },
+  {
+   "a": 6,
+   "b": 36,
+   "mid_x": 348.64,
+   "mid_y": 258.99
+  },
+  {
+   "a": 9,
+   "b": 23,
+   "mid_x": 366.67,
+   "mid_y": 475.52
+  },
+  {
+   "a": 11,
+   "b": 40,
+   "mid_x": 43.47,
+   "mid_y": 396.42
+  },
+  {
+   "a": 14,
+   "b": 31,
+   "mid_x": 333.92,
+   "mid_y": 402.61
+  },
+  {
+   "a": 15,
+   "b": 20,
+   "mid_x": 366.86,
+   "mid_y": 274.33
+  },
+  {
+   "a": 17,
+   "b": 28,
+   "mid_x": 359.87,
+   "mid_y": 359.79
+  },
+  {
+   "a": 24,
+   "b": 38,
+   "mid_x": 324.52,
+   "mid_y": 76.2
+  },
+  {
+   "a": 25,
+   "b": 42,
+   "mid_x": 422.07,
+   "mid_y": 99.65
+  },
+  {
+   "a": 30,
+   "b": 31,
+   "mid_x": 338.91,
+   "mid_y": 340.31
+  },
+  {
+   "a": 31,
+   "b": 32,
+   "mid_x": 351.15,
+   "mid_y": 419.98
+  }
+ ],
+ "n_failed_nodes": 0,
+ "pct_failed_nodes": 0.0,
+ "n_failed_links": 13,
+ "pct_failed_links": 5.08,
+ "components_after_failure": 1,
+ "flows_with_alternative_route": 10,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": true
+  }
+ ]
+}

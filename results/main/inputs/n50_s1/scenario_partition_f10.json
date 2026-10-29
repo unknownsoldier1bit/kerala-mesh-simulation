@@ -1,0 +1,420 @@
+{
+ "scenario": "partition",
+ "severity_param": null,
+ "selection": "deterministic",
+ "assumption": "The area is split in two: every link crossing the vertical midline stops working, then all come back. This abstracts losing every device or path that bridged two neighbourhoods (for example both sides of a flooded channel). It is not a physical propagation model; it guarantees a clean partition so protocol behaviour during and after a split can be measured.",
+ "failure_start_s": 120.0,
+ "failure_end_s": 210.0,
+ "failed_nodes": [],
+ "failed_links": [
+  {
+   "a": 2,
+   "b": 10,
+   "mid_x": 261.85,
+   "mid_y": 413.32
+  },
+  {
+   "a": 2,
+   "b": 34,
+   "mid_x": 273.95,
+   "mid_y": 407.16
+  },
+  {
+   "a": 2,
+   "b": 47,
+   "mid_x": 275.2,
+   "mid_y": 436.83
+  },
+  {
+   "a": 3,
+   "b": 5,
+   "mid_x": 235.69,
+   "mid_y": 112.13
+  },
+  {
+   "a": 3,
+   "b": 6,
+   "mid_x": 262.39,
+   "mid_y": 81.17
+  },
+  {
+   "a": 3,
+   "b": 14,
+   "mid_x": 248.5,
+   "mid_y": 132.09
+  },
+  {
+   "a": 3,
+   "b": 20,
+   "mid_x": 249.03,
+   "mid_y": 80.92
+  },
+  {
+   "a": 3,
+   "b": 21,
+   "mid_x": 234.38,
+   "mid_y": 84.93
+  },
+  {
+   "a": 4,
+   "b": 10,
+   "mid_x": 238.55,
+   "mid_y": 302.52
+  },
+  {
+   "a": 4,
+   "b": 25,
+   "mid_x": 211.44,
+   "mid_y": 209.39
+  },
+  {
+   "a": 4,
+   "b": 32,
+   "mid_x": 246.7,
+   "mid_y": 225.26
+  },
+  {
+   "a": 4,
+   "b": 33,
+   "mid_x": 234.38,
+   "mid_y": 236.87
+  },
+  {
+   "a": 4,
+   "b": 34,
+   "mid_x": 250.65,
+   "mid_y": 296.36
+  },
+  {
+   "a": 4,
+   "b": 42,
+   "mid_x": 201.67,
+   "mid_y": 205.75
+  },
+  {
+   "a": 4,
+   "b": 44,
+   "mid_x": 209.92,
+   "mid_y": 202.82
+  },
+  {
+   "a": 4,
+   "b": 49,
+   "mid_x": 229.52,
+   "mid_y": 252.09
+  },
+  {
+   "a": 5,
+   "b": 17,
+   "mid_x": 258.43,
+   "mid_y": 115.67
+  },
+  {
+   "a": 5,
+   "b": 25,
+   "mid_x": 218.64,
+   "mid_y": 163.41
+  },
+  {
+   "a": 5,
+   "b": 32,
+   "mid_x": 253.89,
+   "mid_y": 179.28
+  },
+  {
+   "a": 5,
+   "b": 33,
+   "mid_x": 241.58,
+   "mid_y": 190.89
+  },
+  {
+   "a": 5,
+   "b": 42,
+   "mid_x": 208.86,
+   "mid_y": 159.77
+  },
+  {
+   "a": 5,
+   "b": 44,
+   "mid_x": 217.11,
+   "mid_y": 156.84
+  },
+  {
+   "a": 5,
+   "b": 46,
+   "mid_x": 234.25,
+   "mid_y": 106.52
+  },
+  {
+   "a": 5,
+   "b": 49,
+   "mid_x": 236.72,
+   "mid_y": 206.12
+  },
+  {
+   "a": 6,
+   "b": 17,
+   "mid_x": 285.13,
+   "mid_y": 84.72
+  },
+  {
+   "a": 6,
+   "b": 46,
+   "mid_x": 260.95,
+   "mid_y": 75.57
+  },
+  {
+   "a": 7,
+   "b": 21,
+   "mid_x": 210.18,
+   "mid_y": 59.34
+  },
+  {
+   "a": 8,
+   "b": 10,
+   "mid_x": 282.4,
+   "mid_y": 382.19
+  },
+  {
+   "a": 8,
+   "b": 34,
+   "mid_x": 294.51,
+   "mid_y": 376.04
+  },
+  {
+   "a": 8,
+   "b": 47,
+   "mid_x": 295.76,
+   "mid_y": 405.7
+  },
+  {
+   "a": 10,
+   "b": 11,
+   "mid_x": 275.49,
+   "mid_y": 362.74
+  },
+  {
+   "a": 10,
+   "b": 23,
+   "mid_x": 280.45,
+   "mid_y": 367.08
+  },
+  {
+   "a": 10,
+   "b": 45,
+   "mid_x": 277.28,
+   "mid_y": 345.44
+  },
+  {
+   "a": 11,
+   "b": 34,
+   "mid_x": 287.59,
+   "mid_y": 356.58
+  },
+  {
+   "a": 11,
+   "b": 47,
+   "mid_x": 288.85,
+   "mid_y": 386.25
+  },
+  {
+   "a": 14,
+   "b": 17,
+   "mid_x": 271.24,
+   "mid_y": 135.63
+  },
+  {
+   "a": 14,
+   "b": 25,
+   "mid_x": 231.45,
+   "mid_y": 183.37
+  },
+  {
+   "a": 14,
+   "b": 32,
+   "mid_x": 266.7,
+   "mid_y": 199.24
+  },
+  {
+   "a": 14,
+   "b": 33,
+   "mid_x": 254.39,
+   "mid_y": 210.85
+  },
+  {
+   "a": 14,
+   "b": 44,
+   "mid_x": 229.93,
+   "mid_y": 176.8
+  },
+  {
+   "a": 14,
+   "b": 49,
+   "mid_x": 249.53,
+   "mid_y": 226.07
+  },
+  {
+   "a": 17,
+   "b": 20,
+   "mid_x": 271.77,
+   "mid_y": 84.46
+  },
+  {
+   "a": 17,
+   "b": 21,
+   "mid_x": 257.13,
+   "mid_y": 88.48
+  },
+  {
+   "a": 17,
+   "b": 24,
+   "mid_x": 302.35,
+   "mid_y": 84.49
+  },
+  {
+   "a": 17,
+   "b": 39,
+   "mid_x": 288.45,
+   "mid_y": 129.28
+  },
+  {
+   "a": 20,
+   "b": 32,
+   "mid_x": 267.23,
+   "mid_y": 148.07
+  },
+  {
+   "a": 20,
+   "b": 46,
+   "mid_x": 247.59,
+   "mid_y": 75.31
+  },
+  {
+   "a": 21,
+   "b": 25,
+   "mid_x": 217.33,
+   "mid_y": 136.21
+  },
+  {
+   "a": 21,
+   "b": 32,
+   "mid_x": 252.59,
+   "mid_y": 152.08
+  },
+  {
+   "a": 21,
+   "b": 44,
+   "mid_x": 215.81,
+   "mid_y": 129.65
+  },
+  {
+   "a": 21,
+   "b": 46,
+   "mid_x": 232.94,
+   "mid_y": 79.33
+  },
+  {
+   "a": 23,
+   "b": 34,
+   "mid_x": 292.55,
+   "mid_y": 360.92
+  },
+  {
+   "a": 23,
+   "b": 47,
+   "mid_x": 293.81,
+   "mid_y": 390.59
+  },
+  {
+   "a": 32,
+   "b": 39,
+   "mid_x": 283.91,
+   "mid_y": 192.88
+  },
+  {
+   "a": 32,
+   "b": 40,
+   "mid_x": 291.72,
+   "mid_y": 238.5
+  },
+  {
+   "a": 33,
+   "b": 39,
+   "mid_x": 271.6,
+   "mid_y": 204.5
+  },
+  {
+   "a": 33,
+   "b": 40,
+   "mid_x": 279.41,
+   "mid_y": 250.11
+  },
+  {
+   "a": 34,
+   "b": 40,
+   "mid_x": 295.68,
+   "mid_y": 309.61
+  },
+  {
+   "a": 34,
+   "b": 45,
+   "mid_x": 289.38,
+   "mid_y": 339.29
+  },
+  {
+   "a": 45,
+   "b": 47,
+   "mid_x": 290.64,
+   "mid_y": 368.95
+  }
+ ],
+ "n_failed_nodes": 0,
+ "pct_failed_nodes": 0.0,
+ "n_failed_links": 60,
+ "pct_failed_links": 22.22,
+ "components_after_failure": 2,
+ "flows_with_alternative_route": 5,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": false
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": true
+  }
+ ]
+}

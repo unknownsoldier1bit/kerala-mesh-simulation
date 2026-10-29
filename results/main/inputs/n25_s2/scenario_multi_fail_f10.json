@@ -1,0 +1,130 @@
+{
+ "scenario": "multi_fail",
+ "severity_param": null,
+ "selection": "random",
+ "assumption": "Damage spreads over time: three waves of randomly chosen relay failures and link failures, 15 s apart, as more devices and paths are lost while water rises. Random selection (seeded), so it is not aimed at the busiest paths.",
+ "failure_start_s": 120.0,
+ "failure_end_s": null,
+ "failed_nodes": [
+  {
+   "node": 10,
+   "x": 393.34,
+   "y": 149.71
+  },
+  {
+   "node": 5,
+   "x": 23.97,
+   "y": 124.05
+  },
+  {
+   "node": 14,
+   "x": 411.14,
+   "y": 388.9
+  }
+ ],
+ "failed_links": [
+  {
+   "a": 4,
+   "b": 20,
+   "mid_x": 253.5,
+   "mid_y": 408.87
+  },
+  {
+   "a": 15,
+   "b": 16,
+   "mid_x": 272.3,
+   "mid_y": 211.76
+  },
+  {
+   "a": 18,
+   "b": 24,
+   "mid_x": 182.87,
+   "mid_y": 315.61
+  },
+  {
+   "a": 6,
+   "b": 24,
+   "mid_x": 110.57,
+   "mid_y": 339.73
+  },
+  {
+   "a": 15,
+   "b": 18,
+   "mid_x": 229.46,
+   "mid_y": 287.58
+  },
+  {
+   "a": 20,
+   "b": 24,
+   "mid_x": 188.95,
+   "mid_y": 336.4
+  },
+  {
+   "a": 3,
+   "b": 14,
+   "mid_x": 448.81,
+   "mid_y": 362.18
+  },
+  {
+   "a": 11,
+   "b": 12,
+   "mid_x": 400.52,
+   "mid_y": 56.28
+  },
+  {
+   "a": 18,
+   "b": 20,
+   "mid_x": 214.48,
+   "mid_y": 327.68
+  }
+ ],
+ "n_failed_nodes": 3,
+ "pct_failed_nodes": 12.0,
+ "n_failed_links": 9,
+ "pct_failed_links": 14.06,
+ "components_after_failure": 1,
+ "flows_with_alternative_route": 10,
+ "flows_total": 10,
+ "per_flow": [
+  {
+   "flow": 0,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 1,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 2,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 3,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 4,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 5,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 6,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 7,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 8,
+   "alternative_route_exists": true
+  },
+  {
+   "flow": 9,
+   "alternative_route_exists": true
+  }
+ ]
+}

@@ -58,7 +58,7 @@ done
 cd "$NS3_DIR"
 if [ "$FRESH_INSTALL" = 1 ]; then
   ./ns3 configure --build-profile=optimized --disable-examples --disable-tests \
-    --enable-modules="core;network;internet;wifi;mobility;propagation;applications;aodv;olsr;flow-monitor;energy"
+    --enable-modules="core;network;internet;wifi;mobility;propagation;applications;aodv;olsr;dsdv;flow-monitor;energy"
 fi
 # On an existing install its options are left untouched; the build re-scans scratch/ by itself.
 for sim in "$REPO"/sim/*/; do
