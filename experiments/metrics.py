@@ -13,7 +13,7 @@ Definitions (also in experiments/README.md):
 - Recovery time (per failure event and affected flow): time from the event until the
   destination first receives a packet that the source sent at or after the event.
   A flow is affected by a failure if the last packet it delivered before the failure
-  went through a node or link that failed. After a restore event, a flow is affected
+  (the last one received before it) went through a node or link that failed. After a restore event, a flow is affected
   if it delivered nothing in the 5 s before the restore.
 - Within-T: share of sent packets delivered with delay <= T.
 """
@@ -45,6 +45,18 @@ AODV_TYPES = ["rreq_originated", "rreq_forwarded", "rrep", "rerr", "hello", "rre
 OLSR_TYPES = ["hello_msgs", "tc_msgs", "mid_msgs", "hna_msgs", "unused4", "unused5"]
 
 DEADLINES_S = (0.5, 1.0, 2.0, 5.0)
+
+# Longest a single AODV route discovery can last before ns-3.47 AODV gives up, with its default
+# timers (src/aodv/model/aodv-routing-protocol.cc, SendRequest and ScheduleRreqRetry): an expanding
+# ring at TTL 1, 3, 5 and 7, each waiting 2 x NodeTraversalTime x (TTL + TimeoutBuffer) =
+# 0.24 + 0.40 + 0.56 + 0.72 s, then RreqRetries = 2 requests at NetDiameter waiting NetTraversalTime
+# x 1 and x 2 = 2.8 + 5.6 s. Plus 1 s for send jitter, RREQ rate limiting and the RREP's way back.
+# sim/manet closes a discovery only when an RREP reaches its originator. It cannot see AODV give up,
+# or find the route another way (a reverse route from the destination's own RREQ, a HELLO), so such
+# a discovery stays open and absorbs the next discovery, or late RREP, for the same destination. A
+# record longer than this cannot be one discovery: it is excluded from the discovery times and
+# counted in route_discoveries_failed_then_retried. (2.2% of completed records, 29 Oct 2026 audit.)
+AODV_MAX_DISCOVERY_S = 0.24 + 0.40 + 0.56 + 0.72 + 2.8 + 5.6 + 1.0
 
 
 def _read(run_dir, name):
@@ -135,10 +147,12 @@ def recovery_analysis(pk, cfg, events, traffic_stop, window_s=10.0):
                 continue  # an endpoint is gone: nothing to recover
             delivered = grp[grp.rx_s.notna()]
             if action == "fail":
-                before = delivered[delivered.tx_s < t]
+                # The route in use is known only from packets that arrived before the event; a
+                # packet sent before but received after it may have taken a route found later.
+                before = delivered[delivered.rx_s < t]
                 if before.empty:
                     continue
-                last = before.iloc[-1]
+                last = before.loc[before.rx_s.idxmax()]
                 hops = [fl["src"]] + _path_nodes(last.path) + [fl["dst"]]
                 hit_node = any(v in nodes for v in hops)
                 hit_link = any(tuple(sorted((a, b))) in links for a, b in zip(hops, hops[1:]))
@@ -299,6 +313,11 @@ def compute(run_dir, cfg):
     s["throughput_kbps"] = recv * payload_bits / period / 1000
     s["throughput_interval_s"] = f"{t0:g}-{t1:g}"
     s["suppressed_sends"] = int(stats.suppressed_sends.iloc[0]) if stats is not None else np.nan
+    # Whole run only: sends suppressed at a dead source are counted, but not when they were due.
+    sched = sent + s["suppressed_sends"]
+    s["scheduled_sends"] = sched
+    s["delivered_of_scheduled_pct"] = 100 * recv / sched if sched else np.nan
+    s["within_1s_of_scheduled_pct"] = 100 * float((delay_ms <= 1000.0).sum()) / sched if sched else np.nan
     s["duplicate_receptions"] = (
         int(stats.duplicate_receptions.iloc[0]) if stats is not None and "duplicate_receptions" in stats else np.nan
     )
@@ -331,17 +350,20 @@ def compute(run_dir, cfg):
     s["route_errors_rerr_tx"] = int(ctrl.type3.sum()) if proto == "aodv" else np.nan
     if proto == "aodv" and disc is not None:
         dd = disc[(disc.start_s >= t0) & (disc.start_s < t1)]
-        done = dd[dd.end_s.notna()]
+        merged = (dd.end_s - dd.start_s) > AODV_MAX_DISCOVERY_S
+        done = dd[dd.end_s.notna() & ~merged]
         s["route_discoveries"] = len(dd)
         s["route_discoveries_completed"] = len(done)
+        s["route_discoveries_failed_then_retried"] = int(merged.sum())
         s["route_discovery_attempts"] = int(dd.attempts.sum())
         dt = (done.end_s - done.start_s).values * 1000
         s["route_discovery_mean_ms"] = float(dt.mean()) if len(dt) else np.nan
         s["route_discovery_median_ms"] = float(np.median(dt)) if len(dt) else np.nan
         s["route_discovery_p95_ms"] = float(np.percentile(dt, 95)) if len(dt) else np.nan
     else:
-        for k in ("route_discoveries", "route_discoveries_completed", "route_discovery_attempts",
-                  "route_discovery_mean_ms", "route_discovery_median_ms", "route_discovery_p95_ms"):
+        for k in ("route_discoveries", "route_discoveries_completed", "route_discoveries_failed_then_retried",
+                  "route_discovery_attempts", "route_discovery_mean_ms", "route_discovery_median_ms",
+                  "route_discovery_p95_ms"):
             s[k] = np.nan
 
     # ---- Windows: before / during / after failure ----
