@@ -61,7 +61,7 @@ All 2,316 runs (1,350 earlier + 930 Chalakudy + 36 cross-checks) were checked ag
 
 ## Chalakudy experiment (29 Oct 2026)
 
-For the paper's data section, start with `docs/paper-data-guide.md`.
+For the paper's data section, start with `docs/paper-data-guide.md`. Paper draft (scaffold, Google Doc): https://docs.google.com/document/d/1PqsR5OQxMfMtT-nGxe8PoZd-Hlh3FBsZOP1EtlEhwhI/edit (source: `docs/paper-scaffold.html`).
 
 Read `data/chalakudy/WORKLOG.md` (what was done, in order, and every problem found), `data/chalakudy/PROVENANCE.md` (every number: measured, derived or assumed), `experiments/README.md` section 8 (method) and `results/analysis_chalakudy/FINDINGS.md` (numbers). Found along the way:
 
