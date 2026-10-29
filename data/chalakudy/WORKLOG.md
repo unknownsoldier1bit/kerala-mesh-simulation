@@ -22,8 +22,8 @@ A running log of the `chalakudy` experiment, newest entry at the bottom. Times a
 | Pilot (run time, start-up, errors) | done; found and fixed an OLSR crash in `manet.cc` (fragmented routing packets) |
 | Propagation sensitivity (log-distance, TR 37.885 NLOS) | built and checked; 62.8 m effective range |
 | Owner's decisions (08:06) | predictions skipped (logged in experiments/README.md §7); compute: main + propagation + peak-share + battery + traffic sweeps (~3.5 h), not the 50/150-device sweep |
-| Runs | running since 08:07 UTC; each experiment's results are committed and pushed when it finishes |
-| Checks, analysis, docs, report | not started |
+| Runs | done: 930 runs + 36 cross-check runs, no failures (08:07–10:34 UTC) |
+| Checks, analysis, docs | done (`results/analysis_chalakudy/`, `experiments/README.md` §8, `STATUS.md`, `DELIVERABLES-HANDOFF.md`, `data/sources.md`) |
 
 ## Log
 
@@ -190,3 +190,12 @@ Pilot `chalakudy_pilot` (no-flood control only; 100 and 150 devices; batteries l
 - **Flooded share** (onset 15 Aug, no battery limit), delivered within 1 s: at 10% flooded, OLSR leads AODV by 6–9 points (significant in both phases, about the gap seen without flooding); at 50%, AODV and OLSR are level in the acute phase (57.5 and 57.0 flood; 58.8 and 56.1 uniform), both ahead of DSDV, and all three fall to 16–23% in the sustained phase with no significant protocol difference. Flood order vs uniform random: no significant difference on all packets; on connected packets, OLSR did better under the flood order at 50% in the acute phase (88.9 vs 84.0, Holm p = 0.041), nothing else significant.
 - **Battery share** (25/50/100% of the battery for the radio): half the devices are flat 3, 6 and 11 simulated seconds after the 15 Aug power cut (93.0, 95.6 and 101.0 s; about 2.4, 4.5 and 8.8 real hours), with the same timing under all three protocols (within 0.3 s). Nothing is sent in the sustained phase.
 - `chalakudy_traffic` (180 runs) started at 09:46.
+
+### 2026-10-29 10:40 UTC: all runs done; analysis final and reproducible
+
+- `chalakudy_traffic`: 180/180 runs, 0 failed, empty stderr, committed (b0e298d); recomputed identically. Whole queue finished at 10:34 UTC.
+- Final completeness check: every experiment has all its runs (930 + 36 cross-check runs), 10 seeds per configuration (2 in the cross-checks), no duplicates, all raw files present, no failed runs, no output on stderr, no fragmented routing packets at 100 devices.
+- `experiments/analyze_chalakudy.py` run twice: all 30 output files (tables, FINDINGS.md, PNG, PDF) byte-identical between the two runs, after fixing the PDF timestamps (`SOURCE_DATE_EPOCH`). Committed (2ed9c2d).
+- Traffic sweep: in the no-flood control, OLSR's lead over AODV in delivery within 1 s grows with the gap between bursts (about 4, 9 and 12–15 points at 7.5, 15 and 30 s), as do AODV's route discoveries per burst (1.6, 2.3, 3.0) and its 95th-percentile discovery time (0.5, 1.0, 1.3 s), while AODV's PDR stays at 97–98%. Consistent with AODV routes expiring between bursts; not tested directly.
+- Results summary with caveats: `experiments/README.md`, end of section 8. While writing it, several of my first statements were too broad and were corrected against the tables: the number of flood-vs-uniform comparisons (87 on all packets, none significant; 78 on connected packets, 2 significant), the protocol-test counts across configurations, and the battery lifetimes (the last device runs flat 4, 7 and 14 real hours after the cut for 25/50/100% of the battery).
+- Also replaced the hand-made QA map mentioned in the 07:12 entry (it showed wrong building points) with a scripted one, `results/analysis_chalakudy/figures/chalakudy_qa_geolocation`.

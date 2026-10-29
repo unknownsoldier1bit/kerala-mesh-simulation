@@ -19,9 +19,9 @@ Updated on every push. The full list of requested outputs is in `docs/deliverabl
 | **Chalakudy experiment (29 Oct, branch `chalakudy-buildings`)**: real building positions, real-data flood order | see below |
 | Data: buildings, boundary, elevation, rivers, 24 Sentinel-1 images; provenance of every number | done (`data/chalakudy/PROVENANCE.md`); some sources blocked here (`data/chalakudy/MANUAL_DOWNLOADS.md`) |
 | `chalakudy` (360), `chalakudy_prop` (90), `chalakudy_share` (120), `chalakudy_battery` (180), cross-checks (36) | done, committed, recomputed identically |
-| `chalakudy_traffic` (180) | running |
+| `chalakudy_traffic` (180) | done, committed, recomputed identically |
 | `chalakudy_nodes` (50/150 devices, 180) | not run (owner's compute decision); covered at graph level by `network_structure.csv` |
-| Chalakudy analysis (`results/analysis_chalakudy/`) | in progress |
+| Chalakudy analysis (`results/analysis_chalakudy/`) | done for all 930 runs; reproduces byte for byte on a second run |
 
 All finished runs completed without failures in their final pass. Four 100-node runs failed in earlier attempts and were redone (`results/main/failed_runs_history.csv`).
 

@@ -207,6 +207,7 @@ A further experiment: mesh devices at real building positions in a 1 km square o
 | What is real data, what is assumed, with sources, licences and checksums | `data/chalakudy/PROVENANCE.md`, `data/chalakudy/downloads.csv`, `data/chalakudy/derived_files.csv` |
 | Files this session could not download (please fetch) | `data/chalakudy/MANUAL_DOWNLOADS.md` |
 | Method | `experiments/README.md`, section 8 (limitations in section 7) |
+| Results in brief, with the caveats | `experiments/README.md`, end of section 8 |
 | Numbers: means ± 95% CI, tests, checks | `results/analysis_chalakudy/FINDINGS.md` |
 | Tables | `results/analysis_chalakudy/tables/` (`chalakudy_by_config.csv`, `chalakudy_protocol_tests.csv`, `chalakudy_flood_vs_uniform_tests.csv`, `summary_table_chalakudy.csv`, `scenario_properties.csv`, `check_*.csv`) |
 | Figures (PDF and PNG; every caption says what is real and what is assumed) | `results/analysis_chalakudy/figures/` |
