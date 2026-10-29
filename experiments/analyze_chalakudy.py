@@ -20,6 +20,7 @@ import re
 import sys
 import textwrap
 
+os.environ.setdefault("SOURCE_DATE_EPOCH", "0")  # fixed PDF timestamps, so reruns give identical files
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import analyze as A  # noqa: E402  (shared style, statistics and plotting helpers)
 import chalakudy as C  # noqa: E402
@@ -273,7 +274,8 @@ def checks(df):
         d.to_csv(os.path.join(TAB, "check_battery_depletion.csv"), index=False)
         lines.append(f"state-based batteries ({len(d)} runs, {int(d.depleted.sum())} depletions): energy used beyond "
                      f"90% of the battery when the radio switched off = {d.overshoot_s_min.min():.2f} to "
-                     f"{d.overshoot_s_max.max():.2f} s of idling (expected 0 to 1 s: the check runs once a second)")
+                     f"{d.overshoot_s_max.max():.2f} s of idling (expected about 0 to 1 s: the check runs once a second, and "
+                     f"sending or receiving in that second costs a little more than idling)")
     return lines
 
 
