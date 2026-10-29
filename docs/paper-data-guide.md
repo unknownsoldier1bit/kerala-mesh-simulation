@@ -135,7 +135,7 @@ All numbers are from `data/chalakudy/data_summary.json` unless another file is n
 | 14–18 Aug | Dam releases (Idukki shutters opened 10 Aug) | Water rises until 18 Aug 00:00 (peak) | CAG Report No. 6 of 2021, Chapter III | OK |
 | 15–17 Aug | IMD "red" heavy rain in Thrissur district | Same | Kerala Additional Memorandum, Table 3, pp. 11–12 | OK |
 | 15 Aug (early) or 17 Aug | Chalakudy floods | Onset of device failures; both dates are run | Deccan Herald (15 Aug); Scroll, quoting an MP (17 Aug); the sources disagree | NEEDS URL |
-| 16 Aug | Total communications failure in Chalakudy and Idukki taluks; Poringalkuthu dam station down | Context only (not a parameter) | CAG §3.5.2 | OK |
+| 16 Aug (dam station); taluk-wide date not given | Total communications failure in Chalakudy and Idukki taluks; Poringalkuthu dam station down on 16 Aug, restored about a week later | Context only (not a parameter) | CAG §3.5.2 | OK |
 | 27 Aug | Last Thrissur substation back on | End of the run (power, so recharging, returns) | KSEB, "How KSEBL survived flood 2018" | NEEDS URL |
 
 - Power cut: ASSUMED at 00:00 on the onset day (the KSEB cut-off date for Chalakudy was not found).
@@ -156,7 +156,7 @@ All numbers are from `data/chalakudy/data_summary.json` unless another file is n
 - The energy is scaled by the same time compression (× 30/86,400), so a battery that would last 10 real hours lasts about 12.5 simulated seconds. The radio switches off at 10% charge left (the ns-3 default).
 - Energy use comes from ns-3's default radio currents (idle 0.273 A at 3 V = 0.82 W, no power saving). Only the Wi-Fi radio is modelled (no screen, processor or cellular radio), and these are not measurements of a 2018 phone.
 - Result to report as a property of these assumptions: the last device runs flat 4, 7 and 14 real hours after the power cut (25, 50, 100% share), at the same time under every protocol, so nothing is sent in the sustained phase. The unlimited-battery runs isolate the flood effect.
-- In battery-limited runs, compare protocols on delivered-of-scheduled messages (`delivered_of_scheduled_pct`), not whole-run PDR: a flat device sends nothing, so PDR (85–97%) hides that only 6–26% of scheduled messages arrive.
+- In battery-limited runs, compare protocols on delivered-of-scheduled messages (`delivered_of_scheduled_pct`), not whole-run PDR: a flat device sends nothing, so PDR (85–97% as configuration means) hides that only 8–24% of scheduled messages arrive (6–26% in single runs).
 
 ### 4.8 Message traffic (ASSUMED: no data exists on disaster message traffic)
 
