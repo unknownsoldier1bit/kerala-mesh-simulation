@@ -108,11 +108,38 @@ PARAMS = {
                              why="Disaster message traffic is not documented (data/sources.md: missing)."),
     "range_m": dict(value=150.0, kind="assumed", sweep="log-distance propagation as sensitivity",
                     why="Same unit-disk radio as every other experiment, for comparability."),
+    # Propagation sensitivity: a published path-loss formula instead of the unit disk, nothing tuned.
+    "prop_formula": dict(value="PL = 36.85 + 30 log10(d) + 18.9 log10(f_GHz) dB", kind="measured",
+                         sweep=None,
+                         why="Cited empirical model, not a Chalakudy measurement: 3GPP TR 37.885 Table 6.2.1-1, "
+                             "V2V Urban, NLOS (link blocked by buildings), as implemented in ns-3.47 "
+                             "ThreeGppV2vUrbanPropagationLossModel::GetLossNlos. It is the 3GPP model for radios "
+                             "near street level at both ends; it was made for vehicles, not houses."),
+    "prop_condition": dict(value="NLOS for every link", kind="assumed", sweep=None,
+                           why="Devices are at building positions in a town under dense tree cover, so most "
+                               "links between them are blocked. The LOS formula of the same table would give "
+                               "about 1.35 km and the walls of the houses (not modelled) would cut it further; "
+                               "per-link line of sight would need tree and wall data that are not available."),
+    "frequency_mhz": dict(value=2412.0, kind="derived", sweep=None,
+                          why="ns-3 default operating channel for 802.11b: channel 1, 2412 MHz "
+                              "(wifi-phy-operating-channel.cc)."),
+    "log_exponent": dict(value=3.0, kind="derived", sweep=None, why="30 log10(d) in prop_formula."),
+    "log_ref_loss_db": dict(value=36.85 + 18.9 * np.log10(2.412), kind="derived", sweep=None,
+                            why="prop_formula at d = 1 m and 2412 MHz."),
+    "effective_range_m": dict(value=round(10 ** ((16.0206 - (36.85 + 18.9 * np.log10(2.412)) + 82.0) / 30.0), 1),
+                              kind="derived", sweep=None,
+                              why="Distance at which received power falls to -82 dBm, the minimum RSSI of ns-3's "
+                                  "default ThresholdPreambleDetectionModel, with the default 16.0206 dBm transmit "
+                                  "power. A two-node sweep in sim/manet confirmed it: 100/100 packets at 62.5 m, "
+                                  "0/100 at 63 m. Used as the link distance for the connectivity metrics."),
 }
 
 
 def P(name):
     return PARAMS[name]["value"]
+
+
+SEEDS = range(1, 11)  # as in run_experiment.py
 
 
 # ---------------------------------------------------------------------------
@@ -449,7 +476,10 @@ def chalakudy_runs(exp, protocols, seeds, onsets=(15,), batteries=("unlimited",)
                                             fail_time_s=meta["failure_start_s"], restore_time_s=None,
                                             traffic_start_s=DAY0_S, traffic_stop_s=SIM_END_S - 2,
                                             sim_time_s=SIM_END_S, payload_bytes=gen.PAYLOAD_B,
-                                            range_m=P("range_m"), deadline_s=1.0,
+                                            range_m=(P("range_m") if loss_model == "range"
+                                                     else P("effective_range_m")),
+                                            log_exponent=P("log_exponent"), log_ref_loss_db=P("log_ref_loss_db"),
+                                            deadline_s=1.0,
                                             windows={"before_onset": [day(14), day(onset)],
                                                      "acute": [day(onset), day(18)],
                                                      "sustained": [day(18), SIM_END_S - 2]},
@@ -464,6 +494,8 @@ VARIANTS = {
     "chalakudy_nodes": dict(onsets=(15,), nodes=(50, 150)),
     "chalakudy_traffic": dict(onsets=(15,), gaps=(7.5, 30.0)),
     "chalakudy_battery": dict(onsets=(15,), batteries=("limited",), radio_shares=(0.25, 1.0)),
+    # propagation sensitivity: same devices, flows and failures as the main runs, log-distance radio
+    "chalakudy_prop": dict(onsets=(15,), loss_model="logdistance"),
     # feasibility pilot (run time, routing start-up): no flooding, seed 1 only; not part of the results
     "chalakudy_pilot": dict(onsets=(15,), batteries=("limited", "unlimited"), models=("control",), nodes=(100, 150)),
 }
@@ -473,6 +505,49 @@ def runs_for(exp, protocols, seeds):
     return chalakudy_runs(exp, protocols, seeds, **VARIANTS[exp])
 
 
+def network_table():
+    """Network structure (unit-disk graph) of the sampled Chalakudy devices at the main range and at the
+    log-distance effective range, for more device counts than can be simulated, plus the main grid's
+    topologies for comparison. Writes data/chalakudy/network_structure.csv."""
+    rows = read_buildings()
+    sq, origin = square_buildings(rows)
+    out = []
+    for rng_m in (P("range_m"), P("effective_range_m")):
+        for n in (50, 100, 150, 300, 500, 800, 1000, len(sq)):
+            for seed in (SEEDS if n < len(sq) else (1,)):
+                picked = sample_nodes(sq, n, seed) if n < len(sq) else sq
+                xy = np.array([[r["x"] - origin[0], r["y"] - origin[1]] for r in picked])
+                st = network_stats(xy, rng_m) if n <= 300 else dict(network_stats_fast(xy, rng_m))
+                out.append(dict(source="chalakudy" if n < len(sq) else "chalakudy_all_buildings",
+                                range_m=rng_m, seed=seed, **st))
+    for path in sorted(glob.glob(os.path.join(REPO, "results", "main", "inputs", "n*_s*", "topology.csv"))):
+        with open(path) as fh:
+            xy = np.array([[float(r["x"]), float(r["y"])] for r in csv.DictReader(fh)])
+        seed = int(os.path.basename(os.path.dirname(path)).split("_s")[1])
+        out.append(dict(source="main_grid", range_m=P("range_m"), seed=seed, **network_stats(xy)))
+    write_csv(os.path.join(DATA, "network_structure.csv"), out)
+    df = {}
+    for r in out:
+        df.setdefault((r["source"], r["range_m"], r["nodes"]), []).append(r)
+    print("source, range_m, nodes: mean degree, largest connected part (mean, min), components")
+    for k, v in sorted(df.items()):
+        print(k, round(np.mean([r["mean_degree"] for r in v]), 2),
+              round(np.mean([r["largest_component_share"] for r in v]), 3),
+              round(min(r["largest_component_share"] for r in v), 3),
+              round(np.mean([r["components"] for r in v]), 1))
+
+
+def network_stats_fast(xy, rng_m):
+    """network_stats without the diameter, which is too slow to compute for large graphs."""
+    g = gen.unit_disk_graph(xy, rng_m)
+    comps = sorted(nx.connected_components(g), key=len, reverse=True)
+    return dict(nodes=len(xy), links=g.number_of_edges(), mean_degree=round(2 * g.number_of_edges() / len(xy), 2),
+                components=len(comps), largest_component_share=round(len(comps[0]) / len(xy), 3),
+                isolated_nodes=sum(1 for c in comps if len(c) == 1), diameter_largest_component=None)
+
+
 if __name__ == "__main__":
     if sys.argv[1] == "prepare":
         prepare()
+    elif sys.argv[1] == "network":
+        network_table()

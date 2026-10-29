@@ -217,7 +217,7 @@ LinkUp(uint32_t a, uint32_t b)
 
 // ---------------------------------------------------------------------------
 // Link failures: a propagation-loss stage that silences chosen node pairs.
-// It sits after RangePropagationLossModel in the loss chain, so a failed link
+// It sits after the distance-loss model in the loss chain, so a failed link
 // behaves exactly like two nodes that are out of range of each other.
 // ---------------------------------------------------------------------------
 class LinkBlockLossModel : public PropagationLossModel
@@ -900,6 +900,9 @@ main(int argc, char* argv[])
     bool rtsCts = false;
     double idleCurrentA = STATE_CURRENT_A[0];
     double txPowerDbm = 16.0206; // ns-3 WifiPhy default
+    std::string lossModel = "range";
+    double logExponent = 3.0;   // ns-3 LogDistancePropagationLossModel default
+    double logRefLoss = 46.6777; // ns-3 default: Friis loss at 1 m and 5.15 GHz
 
     CommandLine cmd(__FILE__);
     cmd.AddValue("protocol", "Routing protocol: aodv, olsr or dsdv", g_protocol);
@@ -911,6 +914,12 @@ main(int argc, char* argv[])
     cmd.AddValue("simTime", "Simulation length (s)", g_simTime);
     cmd.AddValue("range", "Radio range (m): RangePropagationLossModel MaxRange", g_range);
     cmd.AddValue("txPower", "Transmit power (dBm)", txPowerDbm);
+    cmd.AddValue("lossModel",
+                 "range (unit disk, default) or logdistance (then --range is only the link distance "
+                 "the connectivity metrics use)",
+                 lossModel);
+    cmd.AddValue("logExponent", "Path-loss exponent for --lossModel=logdistance", logExponent);
+    cmd.AddValue("logRefLoss", "Path loss (dB) at 1 m for --lossModel=logdistance", logRefLoss);
     cmd.AddValue("energyJ", "Initial battery energy per node (J); 0 = unlimited (energy still measured)", energyJ);
     cmd.AddValue("rtsCts", "Use RTS/CTS for every unicast frame (default: off, as in ns-3)", rtsCts);
     cmd.AddValue("energyModel", "states (fast, default) or ns3 (also run BasicEnergySource + WifiRadioEnergyModel)", energyModel);
@@ -924,6 +933,10 @@ main(int argc, char* argv[])
     if (g_protocol != "aodv" && g_protocol != "olsr" && g_protocol != "dsdv")
     {
         NS_FATAL_ERROR("--protocol must be aodv, olsr or dsdv");
+    }
+    if (lossModel != "range" && lossModel != "logdistance")
+    {
+        NS_FATAL_ERROR("--lossModel must be range or logdistance");
     }
     STATE_CURRENT_A[0] = idleCurrentA;
     STATE_CURRENT_A[1] = idleCurrentA;
@@ -956,11 +969,24 @@ main(int argc, char* argv[])
     g_depletionTime.assign(g_n, -1);
 
     // ---- Radio: ad-hoc 802.11b, unit-disk range, failed links silenced ----
+    // With --lossModel=logdistance, received power falls with distance instead, and the
+    // ns-3 PHY defaults (preamble detection, error model) decide which frames get through.
     Ptr<YansWifiChannel> channel = CreateObject<YansWifiChannel>();
-    Ptr<RangePropagationLossModel> rangeLoss = CreateObject<RangePropagationLossModel>();
-    rangeLoss->SetAttribute("MaxRange", DoubleValue(g_range));
-    rangeLoss->SetNext(CreateObject<LinkBlockLossModel>());
-    channel->SetPropagationLossModel(rangeLoss);
+    Ptr<PropagationLossModel> distanceLoss;
+    if (lossModel == "range")
+    {
+        distanceLoss = CreateObject<RangePropagationLossModel>();
+        distanceLoss->SetAttribute("MaxRange", DoubleValue(g_range));
+    }
+    else
+    {
+        distanceLoss = CreateObject<LogDistancePropagationLossModel>();
+        distanceLoss->SetAttribute("Exponent", DoubleValue(logExponent));
+        distanceLoss->SetAttribute("ReferenceDistance", DoubleValue(1.0));
+        distanceLoss->SetAttribute("ReferenceLoss", DoubleValue(logRefLoss));
+    }
+    distanceLoss->SetNext(CreateObject<LinkBlockLossModel>());
+    channel->SetPropagationLossModel(distanceLoss);
     channel->SetPropagationDelayModel(CreateObject<ConstantSpeedPropagationDelayModel>());
     YansWifiPhyHelper phy;
     phy.SetChannel(channel);

@@ -179,6 +179,9 @@ def command(cfg, out_dir):
         args.append(f"--energyModel={cfg['energy_model']}")
     if cfg.get("rts_cts"):
         args.append("--rtsCts=true")
+    if cfg.get("loss_model", "range") == "logdistance":
+        args += ["--lossModel=logdistance", f"--logExponent={cfg['log_exponent']}",
+                 f"--logRefLoss={cfg['log_ref_loss_db']}"]
     if cfg.get("idle_current_a") is not None:
         args.append(f"--idleCurrentA={cfg['idle_current_a']}")
     if cfg.get("energy_file"):

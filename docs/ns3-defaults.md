@@ -24,6 +24,16 @@ All of these were checked in the NS-3.47 source code, not taken from tutorials.
 | WifiPhy TxPowerStart/End | 16.0206 dBm | `src/wifi/model/wifi-phy.cc` |
 | WifiPhy RxSensitivity | -101 dBm | same file |
 | WifiMacQueue MaxSize / MaxDelay | 500 packets / 500 ms | `src/wifi/model/wifi-mac-queue.cc` |
+| WifiPhy CcaSensitivity / CcaEdThreshold | -82 dBm (Wi-Fi signals) / -62 dBm (any energy) | `src/wifi/model/wifi-phy.cc` |
+| WifiPhy RxNoiseFigure | 7 dB | same file |
+| Preamble detection | `ThresholdPreambleDetectionModel`, installed by every `WifiPhyHelper` (`src/wifi/helper/wifi-helper.cc`): a frame is dropped if its RSSI is below -82 dBm (`MinimumRssi`) or its SNR below 4 dB (`Threshold`) | `src/wifi/model/threshold-preamble-detection-model.cc` |
+| 802.11b operating channel | channel 1, 2412 MHz, 22 MHz wide (first DSSS entry in the channel table) | `src/wifi/model/wifi-phy-operating-channel.cc` |
+| WifiNetDevice Mtu | 2296 bytes (`MAX_MSDU_SIZE` 2304 − LLC/SNAP 8) | `src/wifi/model/wifi-net-device.cc` |
+| OLSR messages per packet | up to 64 (`OLSR_MAX_MSGS`) | `src/olsr/model/olsr-routing-protocol.cc` |
+| LogDistancePropagationLossModel | Exponent 3.0, ReferenceDistance 1 m, ReferenceLoss 46.6777 dB (Friis at 5.15 GHz) | `src/propagation/model/propagation-loss-model.cc` |
+| 3GPP TR 37.885 V2V-Urban path loss (d in m, f in GHz) | LOS: 38.77 + 16.7 log10(d) + 18.2 log10(f); NLOS: 36.85 + 30 log10(d) + 18.9 log10(f); shadowing std 3 dB (LOS) / 4 dB (NLOS); ns-3 accepts 0.5–100 GHz | `src/propagation/model/three-gpp-v2v-propagation-loss-model.cc`, `three-gpp-propagation-loss-model.cc` |
+
+With a distance-based loss model and these defaults, the preamble-detection limit (-82 dBm) decides the range: at 16.0206 dBm transmit power and the TR 37.885 NLOS formula at 2412 MHz (44.08 dB at 1 m, exponent 3), frames get through up to 62.8 m and not beyond (two-node check in `sim/manet`, 29 Oct 2026: 100/100 packets at 62.5 m, 0/100 at 63 m). With the unit-disk model used in the main experiments, received power inside the range equals the transmit power, so none of these thresholds matter there.
 
 AODV is not silent when idle by default: it sends a HELLO every second. That matters for the sustained-phase (battery) half of the premise.
 
