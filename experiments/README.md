@@ -146,6 +146,7 @@ Only the failure process is compressed. Routing timers and packets run at real s
 Read these before writing the methods and discussion sections.
 
 - **Predictions were not written first.** `PREDICTIONS.md` was empty when these runs were made (owner's decision, 27 Oct 2026, to save time). Any prediction written now is not a blind prediction.
+- **Chalakudy predictions were not written first either.** Before the `chalakudy` runs the owner was asked whether to record predictions in `PREDICTIONS.md` and chose to skip (29 Oct 2026). Two design findings from no-flood pilot checks were already in `data/chalakudy/WORKLOG.md` by then: with the assumed batteries and ns-3's radio currents every device runs flat within hours of the power cut under all three protocols, and with the cited log-distance model the 100-device network falls apart. Predictions written now about the Chalakudy results are not blind.
 - **DSDV** was included because the deliverables list requires it, although `CLAUDE.md` lists it among parked ideas. Its results are separate columns and can be dropped.
 - **Unit-disk radio.** Full signal within 150 m, nothing beyond: no fading, no gradual loss, no obstacles except the deliberate link failures. This keeps "is there a route?" exact, but real links are less clear-cut.
 - **Static nodes.** No mobility. Fine for people sheltering in place; it doesn't cover rescue boats or people moving.
