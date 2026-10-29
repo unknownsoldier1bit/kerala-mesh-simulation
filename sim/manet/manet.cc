@@ -138,7 +138,10 @@ struct Discovery
 };
 
 std::vector<Discovery> g_discoveries;
-std::map<std::pair<uint32_t, uint32_t>, size_t> g_pendingDiscovery; // (origin, dst) -> index
+// (origin, dst) -> index. Closed only by an RREP reaching the origin: a discovery that AODV abandons,
+// or resolves another way (reverse route, HELLO), stays open and absorbs the next one for the same
+// destination. experiments/metrics.py drops records longer than AODV's give-up time.
+std::map<std::pair<uint32_t, uint32_t>, size_t> g_pendingDiscovery;
 
 // ---- Events ----
 struct FailureEvent

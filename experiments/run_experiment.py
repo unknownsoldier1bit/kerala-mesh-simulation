@@ -47,7 +47,16 @@ def ns3_dir():
 
 
 def binary():
-    return os.path.join(ns3_dir(), "build", "scratch", "manet", f"ns{NS3_VERSION}-manet-optimized")
+    """MANET_BIN if set, else the manet build of NS3_DIR (optimized or default profile)."""
+    if os.environ.get("MANET_BIN"):
+        candidates = [os.environ["MANET_BIN"]]
+    else:
+        d = os.path.join(ns3_dir(), "build", "scratch", "manet")
+        candidates = [os.path.join(d, f"ns{NS3_VERSION}-manet-{p}") for p in ("optimized", "default")]
+    for c in candidates:
+        if os.access(c, os.X_OK):
+            return c
+    sys.exit(f"no manet executable found (tried {', '.join(candidates)}); build it or set MANET_BIN")
 
 
 # ---------------------------------------------------------------------------
@@ -291,7 +300,7 @@ def collect(exp, runs):
     if tss:
         pd.concat(tss).to_csv(os.path.join(base, "timeseries.csv"), index=False)
     with open(os.path.join(base, "commands.txt"), "w") as f:
-        f.write("# Run from the repo root. ns3.47-manet = <NS-3 dir>/build/scratch/manet/ns3.47-manet-optimized\n")
+        f.write("# Run from the repo root. ns3.47-manet = <NS-3 dir>/build/scratch/manet/ns3.47-manet-optimized (or -default)\n")
         f.write("# (equivalently: ./ns3 run \"manet <args>\" from the NS-3 dir, with absolute paths)\n")
         for cfg in runs:
             out_dir = os.path.join("results", exp, "runs", cfg["run_id"])
@@ -323,6 +332,7 @@ def main():
         print(f"recomputed {len(res) - len(bad)} runs; not recomputed: {bad[:10]}", flush=True)
         collect(a.experiment, runs)
         return
+    print(f"simulator: {binary()}", flush=True)  # fails here, before any run, if there is none
     base = os.path.join(REPO, "results", a.experiment)
     failed_path = os.path.join(base, "failed_runs.csv")
     failed = []
