@@ -1,0 +1,14 @@
+{
+ "scenario": "control",
+ "onset_day": 15,
+ "selection": "none",
+ "failure_start_s": null,
+ "failure_end_s": null,
+ "n_failed_nodes": 0,
+ "pct_failed_nodes": 0.0,
+ "n_observed_flooded_in_sample": 0,
+ "n_failed_links": 0,
+ "pct_failed_links": 0.0,
+ "components_at_peak": 4,
+ "failed_nodes": []
+}
