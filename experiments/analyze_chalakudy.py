@@ -549,7 +549,7 @@ def findings_md(agg, ptests, mtests, check_lines, scen):
         if len(mt):
             t = mt[["share", "onset", "battery", "gap", "metric", "protocol", "mean_a", "mean_b", "median_diff",
                     "holm_p"]].rename(columns={"mean_a": "flood_mean", "mean_b": "uniform_mean"})
-            lines += ["Flood (real-data order) minus uniform-random failures, same counts and times, paired by seed "
+            lines += ["Flood (lowest ground first) minus uniform-random failures, same counts and times, paired by seed "
                       "(Holm over the three protocols):", "", A.md_table(t.round(4)), ""]
     with open(os.path.join(OUT, "FINDINGS.md"), "w") as fh:
         fh.write("\n".join(lines))
@@ -585,11 +585,8 @@ def main():
         if batt(agg).any():
             bars_by_window(agg, batt, "within_1s_pct", "chalakudy_within_T_by_window_battery",
                            "All packets sent; batteries limited (50% for the radio).", onsets)
-    prop = lambda a: a.experiment == "chalakudy_prop"  # noqa: E731
-    if prop(agg).any():
-        bars_by_window(agg, prop, "within_1s_pct", "chalakudy_prop_within_T_by_window",
-                       "Log-distance radio (3GPP TR 37.885 NLOS, 62.8 m); same devices and flows as the main runs.",
-                       sorted(set(agg[prop(agg)].onset)))
+    # chalakudy_prop delivers nothing at all (no flow pair is connected at 62.8 m): reported in FINDINGS.md and
+    # by the network-density figure rather than as a bar chart of zeros
     fig_over_time(df)
     fig_sensitivity(df)
     fig_network_density()
