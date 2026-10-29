@@ -214,7 +214,7 @@ Audited on the owner's Mac (ns-3.47, default-profile build of this branch's `sim
 - Also fixed: summary-table row order (`chalakudy_prop` reuses run ids), the Sentinel-1B count in the 08:04 entry (two scenes, not three), and the runner's simulator lookup (default-profile builds, `MANET_BIN`). Limitations added to `experiments/README.md` section 7: time compression (factor 2,880), building data from 2023–2026, terrain-based flood order, radio coverage, many tests. `data/sources.md` notes which cited documents still need URLs (KSEB page, the two onset reports).
 - Reproducing on another machine: of 482 committed runs replayed on the Mac, 467 matched exactly, including every Chalakudy run checked; the 15 AODV runs at 100 nodes in the dense 500 m grid (`main`, `kerala100`, `rtscts100`) did not, though their 10-seed averages agree (`experiments/README.md` section 6).
 
-### 2026-10-30 15:24 UTC: paper data guide
+### 2026-10-29 15:24 UTC: paper data guide
 
 - Pulled the owner's audit commits (86d09a6 to 82f87d6) first; the guide uses the corrected numbers.
 - New `python3 experiments/chalakudy.py summary` writes `data/chalakudy/data_summary.json`: every descriptive number for the paper's data section (municipality and square figures, distances to radar flood water, Sentinel-1 scene table with thresholds and quality checks, flood-water areas and their DEM heights, network structure, failure clustering). Reproduces byte for byte; registered in `derived_files.csv`.
