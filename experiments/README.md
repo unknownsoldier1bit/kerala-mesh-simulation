@@ -7,6 +7,7 @@ This folder holds everything that turns the simulator (`sim/manet/manet.cc`) int
 - `run_experiment.py` runs a whole experiment grid in parallel and computes the metrics for each run.
 - `metrics.py` turns one run's raw output into the metrics (the definitions are in its docstring and below).
 - `analyze.py` builds the tables, figures and statistical tests in `results/analysis/`.
+- Chalakudy experiment (section 8): `chalakudy_fetch.py` downloads the raw data, `chalakudy_flood.py` maps water on the Sentinel-1 images, `chalakudy.py` turns the data into simulator inputs (every parameter, with its kind and reasoning, is in its `PARAMS`), `chalakudy_provenance.py` writes `data/chalakudy/PROVENANCE.md`, and `analyze_chalakudy.py` writes `results/analysis_chalakudy/`.
 
 ## Reproducing
 
@@ -15,6 +16,20 @@ scripts/setup.sh                                   # NS-3.47 with AODV, OLSR, DS
 pip install numpy pandas scipy matplotlib networkx
 python3 experiments/run_experiment.py main         # also: severity, load, energy, kerala
 python3 experiments/analyze.py
+```
+
+Chalakudy (section 8), after the commands above:
+
+```bash
+pip install pyarrow shapely pyproj rasterio requests
+python3 experiments/chalakudy_fetch.py boundary            # needs data/chalakudy/raw/ (re-fetch: see the script)
+python3 experiments/chalakudy_flood.py                     # Sentinel-1 water maps (reads image windows over HTTP)
+python3 experiments/chalakudy.py prepare                   # buildings.csv, study_area.json
+python3 experiments/chalakudy.py network                   # network_structure.csv
+python3 experiments/chalakudy_provenance.py                # PROVENANCE.md, derived_files.csv
+python3 experiments/run_experiment.py chalakudy            # also: chalakudy_prop, chalakudy_share,
+                                                           #   chalakudy_battery, chalakudy_traffic, chalakudy_check
+python3 experiments/analyze_chalakudy.py
 ```
 
 An interrupted experiment resumes where it stopped: finished runs are skipped. The exact command of every run is in `results/<experiment>/commands.txt` and in each run folder (`command.txt`, plus `run_config.json` with every setting).
@@ -107,6 +122,12 @@ Metrics that don't apply to a protocol are left empty, never set to zero.
 | `kerala` | 3 protocols × {no-flood control, Kerala 27%, random 27%, Kerala 50%, random 50%} × 50 nodes × seeds 1–10 | 150 |
 | `kerala100` | The same as `kerala`, with 100 nodes | 150 |
 | `rtscts100` | Sensitivity check: 3 protocols × baseline × 100 nodes × seeds 1–10 with RTS/CTS switched on (same topologies and traffic as the main grid) | 30 |
+| `chalakudy` | Section 8. 3 protocols × {no-flood control, flood 25% (real-data order), uniform random 25%} × onset 15 or 17 Aug × batteries unlimited or limited × 100 devices at real building positions × seeds 1–10 | 360 |
+| `chalakudy_prop` | As `chalakudy` (onset 15 Aug, batteries unlimited) with a log-distance radio (3GPP TR 37.885 NLOS formula) instead of the 150 m unit disk | 90 |
+| `chalakudy_share` | Flooded share 10% and 50% (flood and uniform), onset 15 Aug, batteries unlimited | 120 |
+| `chalakudy_battery` | Batteries limited with 25% and 100% of the battery left for the radio (main: 50%), onset 15 Aug | 180 |
+| `chalakudy_traffic` | Mean gap between message bursts 7.5 s and 30 s (main: 15 s), onset 15 Aug, batteries unlimited | 180 |
+| `chalakudy_check` | Cross-checks: 50 devices, seeds 1–2, FlowMonitor and NS-3's energy framework on | 36 |
 
 Failed or incomplete runs, with the reason, are listed in `results/<experiment>/failed_runs.csv` (final pass) and `results/analysis/tables/failed_runs_all.csv`. In the final datasets no run failed. Earlier attempts of four 100-node runs failed (three killed for lack of memory, one crash); all were redone, and the history is in `results/main/failed_runs_history.csv`.
 
@@ -139,6 +160,7 @@ Only the failure process is compressed. Routing timers and packets run at real s
 - **FlowMonitor.** Seed 1 of the main grid also ran NS-3's FlowMonitor: `check_tracker_vs_flowmonitor.csv`. Sent counts match except for packets the source refused because it had no route (FlowMonitor never sees them). Received counts match except where packets were delivered more than 10 s after sending: FlowMonitor declares those lost (`MaxPerHopDelay` = 10 s), while this project's tracker counts them as delivered, with their real delay.
 - **Duplicates.** The destination counts each packet once. Extra copies are counted in `duplicate_receptions`.
 - **Switching radios off.** NS-3.47 crashes if a radio is switched off while it is sending a broadcast frame (details in `docs/ns3-defaults.md`). A failing or battery-dead node therefore finishes the frame it is sending before its radio goes off (a few milliseconds at most). All runs with node failures were made with this rule.
+- **Fragmented routing packets (29 Oct 2026).** OLSR puts up to 64 messages into one packet; with 150 devices on the Chalakudy building topologies some packets exceeded the 2,296-byte WiFi MTU and were sent as IP fragments. The IP `Tx` trace fires once per fragment, and `sim/manet`'s control-traffic counter parsed the first fragment as a whole OLSR packet, which crashed 3 of 4 pilot runs (segmentation fault). The counter now joins the fragments of a packet before parsing it, counts the packet once with the bytes of all its fragments, and the data-packet parsers skip later fragments. Seven committed runs from the earlier experiments (including the densest OLSR configurations) were rerun with the old and the fixed binary: all outputs identical to each other and to the committed files, and none had a fragmented routing packet. The diamond sim was rerun as well. Details in `docs/ns3-defaults.md`.
 - **Memory.** Running NS-3's energy framework on 100-node runs exhausted the machine's memory on the first attempt (four runs were killed). Those runs were redone without the framework; see section 6, Energy.
 
 ## 7. Deviations and limitations
@@ -158,3 +180,32 @@ Read these before writing the methods and discussion sections.
 - **Time compression** in the Kerala experiment (see section 5).
 - **Kerala parameters are assumptions** anchored to dates, not measurements: the flood curve shape, failure shares, spatial pattern, battery sizes and traffic.
 - **Failure selection.** Targeted failures (the busiest relays and links) are a worst case; random failures (multi_fail, severity sweep) are a milder case. Real floods sit somewhere in between, and are spatially correlated (as in the Kerala experiment).
+- **Chalakudy: the radar cannot see which buildings flooded.** Sentinel-1 shows flooded fields, but walls and trees make flooded built-up areas look like dry land, and there is no image between 10 and 20 Aug (the peak). In the study square no building lies within 20 m of radar-visible flood water, so devices fail in order of ground height alone. The ground height comes from a surface model (Copernicus DEM: trees and roofs included) and the square is nearly flat (10th–90th percentile of the ground estimate: 10.0–13.5 m), so the flood pattern is only weakly clustered.
+- **Chalakudy: the share of buildings flooded at the peak is assumed** (25%; 10% and 50% swept), as are the devices per building, the power-cut date (pending KSEB), battery size and charge, and the message traffic. `data/chalakudy/PROVENANCE.md` labels every number.
+- **Chalakudy: batteries.** With phone-sized batteries (an assumed 3,000 mAh placeholder) and NS-3's radio currents (0.82 W while idle, no power saving), every device runs flat within hours of the power cut, before most flood failures and under every protocol. The battery-limited runs therefore say little about protocols; the unlimited-battery runs isolate the flood effect.
+- **Chalakudy: radio range.** The 150 m unit disk is kept for comparability. Under the cited 3GPP NLOS path-loss model, the NS-3 default radio reaches only 62.8 m, and 100 devices in the square no longer form a network (`chalakudy_prop`, `data/chalakudy/network_structure.csv`). The 150 m results assume line-of-sight-like links that a town under tree cover may not give.
+
+## 8. Chalakudy experiment: real building positions and 2018 flood data
+
+A 1 km × 1 km square of Chalakudy town (Thrissur district), with mesh devices at real building positions and flood failures ordered by real data. `data/chalakudy/PROVENANCE.md` lists every number in the scenario as MEASURED (cited), DERIVED (by a script here) or ASSUMED (with the reasoning and the range swept); `data/chalakudy/WORKLOG.md` is the step-by-step log, including what went wrong; `data/chalakudy/MANUAL_DOWNLOADS.md` lists the sources this session could not reach.
+
+**Data.** Municipality boundary: DataMeet (ODbL). Buildings: Overture Maps 2026-10-21.0 (Google Open Buildings and OpenStreetMap), 21,355 in the municipality. Ground height: Copernicus DEM GLO-30. Rivers and ponds: OpenStreetMap via Overture. Water: 24 Sentinel-1 radar images from 5 Jan to 26 Sep 2018, mapped on a 10 m grid by `chalakudy_flood.py` (calibration, 5 × 5 speckle filter, terrain correction with a geoid offset estimated from the data, a per-image threshold, and change detection against dry-season water and the 28 Jul image). Event dates: `data/sources.md` (heavy rain 15–17 Aug, dam releases 14–18 Aug, Chalakudy flooded on 15 Aug or 17 Aug depending on the source, last Thrissur substation back on 27 Aug).
+
+**Study square.** The 1 km square, at least 99% inside the municipality, with the most buildings among the town's lowest 25% by ground estimate (1,383 buildings). Ward boundaries were not available.
+
+**Devices.** 100 per run (50 in `chalakudy_check`), each at the centroid of a different building drawn at random from the square (seeded by node count and seed). Static. The same devices for every protocol and scenario of a seed.
+
+**Network structure.** At 150 m, 100 devices have 7.2 neighbours on average and 97% of them are in the largest connected group (`data/chalakudy/network_structure.csv`). The main grid's 25, 50 and 100 nodes sit in a 500 m square (100, 200 and 400 per km², mean degree 5.2, 10.5 and 22.4, always fully connected), so 100 Chalakudy devices per km² match the density of the 25-node main grid. Density effects must not be read as flood effects: compare the flood runs with the no-flood control of the same devices.
+
+**Failure models (same failure counts and times in both flood models).**
+- *Flood (real-data order):* devices fail from the onset day (15 or 17 Aug) until 18 Aug 00:00, evenly spaced in time, until 25% of them are down; devices near radar-visible flood water would fail first (none in this square), then the lowest ground first. Flooded devices do not come back.
+- *Uniform random:* the same number of failures at the same times, at random devices.
+- *No-flood control:* no flood failures.
+
+**Batteries.** Unlimited (isolates the flood effect) or limited: from the power cut (assumed at the onset day) each device has its random charge (20–100%) × a share of an assumed 3,000 mAh, 3.85 V battery left for the radio (50%; 25% and 100% swept), time-compressed like the scenario. No recharging until the end of the run (27 Aug, when power returned).
+
+**Traffic and time.** 20 flows between devices in the same connected group, at least 2 hops apart, chosen on the 150 m graph; bursts of 5 packets 0.2 s apart, exponential gaps (mean 15 s; 7.5 s and 30 s swept). 1 day = 30 simulated seconds, 14 Aug 00:00 at 60 s, end at 450 s (27 Aug 00:00); routing timers are not compressed. Windows: before onset (14 Aug to the onset day), acute (onset to 18 Aug), sustained (18 to 27 Aug).
+
+**Propagation sensitivity (`chalakudy_prop`).** The unit disk is replaced by a log-distance model with the 3GPP TR 37.885 V2V-Urban NLOS formula (36.85 + 30 log10 d + 18.9 log10 f, f = 2.412 GHz: exponent 3, 44.08 dB at 1 m), as implemented in NS-3.47, without adjustment. With NS-3's default transmit power and preamble-detection threshold (-82 dBm) frames get through up to 62.8 m (checked with two devices: 100% at 62.5 m, 0% at 63 m). The same devices, flows and failures as the main runs are used; the connectivity metrics use 62.8 m as the link distance.
+
+**Warm-up.** 60 s as in every experiment. In no-flood pilot runs OLSR's tables were complete within 13 s; DSDV's route validity reached its long-run level (96–99.7% of connected pairs) by 40–60 s and fluctuated around it for the whole run, so a longer warm-up would not have helped. `results/analysis_chalakudy/tables/check_routing_tables_control.csv` gives the values for every run.
