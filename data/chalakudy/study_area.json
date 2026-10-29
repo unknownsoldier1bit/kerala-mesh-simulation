@@ -1,0 +1,14 @@
+{
+ "rule": "1 km square, >= 99% inside the municipality, holding the most buildings among the municipality's lowest 25% by ground estimate",
+ "side_m": 1000.0,
+ "x0": 645297.4693617495,
+ "y0": 1138394.8639157033,
+ "buildings": 1383,
+ "score_lowest25pct_buildings": 869.0,
+ "alternative_rule": "most buildings within 300 m of 21-Aug Sentinel-1 flood water",
+ "alternative_x0": 643597.4693617495,
+ "alternative_y0": 1138844.8639157033,
+ "alternative_buildings": 838,
+ "alternative_score": 763.0,
+ "crs": "EPSG:32643"
+}

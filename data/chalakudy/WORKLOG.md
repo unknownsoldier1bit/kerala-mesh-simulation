@@ -9,14 +9,14 @@ A running log of the `chalakudy` experiment, newest entry at the bottom. Times a
 | Branch `chalakudy-buildings` from `overnight-experiments` (contains audit commits 9e9cd24a, b93ee861, 1c0a13cd) | done |
 | Read CLAUDE.md, STATUS.md, DELIVERABLES-HANDOFF.md, experiments/README.md, docs/ns3-defaults.md, data/sources.md | done |
 | Check which data hosts are reachable | done (see log 06:43) |
-| Study area boundary | municipality polygon found (DataMeet/naveenpf, ODbL); sub-area choice pending |
+| Study area boundary | municipality polygon (DataMeet, ODbL); 1 km study square chosen by elevation rule (`study_area.json`) |
 | Building footprints | done: Overture 2026-10-21.0, 21,355 in the municipality (11,841 Google Open Buildings 2023, 9,514 OSM) |
 | Census (population, households) and device ownership | sources blocked; owner must download (list pending) |
 | Elevation model | done: Copernicus GLO-30 tile N10E076 (surface model, includes trees/roofs) |
 | River and channels | done: Overture base/water (OSM): Chalakudy River, canals, streams, ponds |
 | 2018 flood extent | derived from Sentinel-1 (24 scenes); shows field flooding, cannot see water between buildings |
 | Timeline, power restoration, cell towers, battery capacity | not started |
-| `experiments/chalakudy.py` (raw data → simulator inputs) | not started |
+| `experiments/chalakudy.py` (raw data → simulator inputs) | in progress: building table, study square, network stats done |
 | `data/chalakudy/PROVENANCE.md` | not started |
 | Ask owner about predictions (before any run) | not started |
 | Runs, checks, analysis, docs, report | not started |
@@ -105,3 +105,10 @@ Documents the owner will need to download (sites blocked here): see `data/chalak
 - Buildings: surface height at the centroid median 17.2 m. A "local ground" estimate (5th percentile of the surface model within 50 m) has median 15.0 m, still ~10 m above the flooded fields. Most houses stand among coconut palms and other trees, and the DEM is a surface model, so even the lowest nearby cell is often canopy.
 - Consequence: with this DEM, only 0.5% of buildings lie below the 21-Aug water surface, 4% below +4 m, 28% below +8 m. The absolute numbers are not trustworthy because of canopy bias. The DEM is used only to RANK buildings (lowest first). The share of buildings flooded at the peak is ASSUMED and swept. A bare-earth DEM (FABDEM, item 8 in MANUAL_DOWNLOADS.md) would improve the ranking.
 - Next: `experiments/chalakudy.py` to choose a study area, sample nodes at building centroids, and build flood, battery and traffic schedules.
+
+### 2026-10-29 07:30 UTC: building table, study square, real network structure
+
+- `python3 experiments/chalakudy.py prepare` writes `data/chalakudy/buildings.csv` (21,355 buildings: Overture id, source, UTM centroid, footprint area, DSM at centroid, ground estimate, distance from footprint to Sentinel-1 flood water on 9, 21 (both passes) and 27 Aug) and `data/chalakudy/study_area.json`.
+- Study square (rule: 1 km square ≥ 99% inside the municipality with the most buildings among the town's lowest 25% by ground estimate): SW corner x0 = 645297, y0 = 1138395 (UTM 43N), 1,383 buildings, 869 of them in the lowest 25%. Alternative rule (most buildings within 300 m of 21-Aug flood water) picks x0 = 643597, y0 = 1138845 with 838 buildings; recorded, not used.
+- Network at 150 m range in the main square (10 random samples each): 50 devices: mean degree 3.5, largest connected part 51%, diameter ~9 hops; 100 devices: 7.3, 88%, ~14 hops; 150 devices: 10.8, 99%, ~12 hops. Main grid for comparison: mean degree 5.2/10.5/22.4 at 25/50/100 nodes, diameter 5–11. Real buildings cluster along roads, so routes are long; DSDV start-up needs checking before running (warm-up rule 7).
+- Placement-rule sensitivity (network structure only): sampling buildings by footprint area instead of uniformly changes mean degree by under 2%; at 100 devices it raises the largest connected part from 88% to 98.5%.
