@@ -124,7 +124,7 @@ a(table(["Item", "Source", "Value used", "Kind"], [
     ["Ground height", "Copernicus DEM GLO-30 (surface model)", f"5th percentile within 50 m of each building; square median {sq['ground_estimate_m']['p50']:.1f} m (10th-90th percentile {sq['ground_estimate_m']['p10']:.1f}-{sq['ground_estimate_m']['p90']:.1f} m)", "Derived"],
     ["Water on 24 dates", "Sentinel-1 IW GRDH, Jan-Sep 2018", f"{s1['scenes']} scenes; no image between 9 and 21 Aug; thresholds {s1['threshold_db_range'][0]:.1f} to {s1['threshold_db_range'][1]:.1f} dB", "Measured / derived"],
     ["Flood water in the municipality", "derived from the radar maps", "0.98 km2 on 9 Aug and 21 Aug; 0.25 km2 on 27 Aug", "Derived"],
-    ["Nearest radar-visible flood water to any building in the square", "derived", f"{ds['study_square']['distance_to_radar_flood_water']['2018-08-21_des']['nearest_m']:.0f} m (21 Aug, descending); none within 50 m on any date", "Derived"],
+    ["Nearest radar-visible flood water to any building in the square", "derived", f"{ds['study_square']['distance_to_radar_flood_water']['2018-08-21_des']['nearest_m']:.0f} m (21 Aug, descending); none within 20 m on any date (2 within 50 m, 9 Aug only)", "Derived"],
     ["Devices", "random buildings, seeds 1-10", "100 per run (100 per km2); mean degree 7.2; largest connected group 97%", "Assumed (positions measured)"],
 ]))
 a(yours())
