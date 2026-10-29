@@ -1,6 +1,6 @@
 # Chalakudy experiment: work log
 
-A running log of the `chalakudy` experiment, newest entry at the bottom. Times are commit times (UTC); entries written before 07:12 had estimated times and were corrected from `git log` on 29 Oct. It is committed and pushed to the `chalakudy-buildings` branch after every step, so work can resume from here if a session ends. The task itself is the owner's brief of 29 Oct 2026 (build a `chalakudy` experiment on real building locations and real 2018 data, with every number labelled measured, derived or assumed).
+A running log of the `chalakudy` experiment, newest entry at the bottom. Times are commit times (UTC). Entry times were first written as estimates and later corrected from `git log` (twice on 29 Oct: at 07:13 for entries up to 07:12, and at 08:08 for entries from 07:15 to 08:04). It is committed and pushed to the `chalakudy-buildings` branch after every step, so work can resume from here if a session ends. The task itself is the owner's brief of 29 Oct 2026 (build a `chalakudy` experiment on real building locations and real 2018 data, with every number labelled measured, derived or assumed).
 
 ## Where things stand
 
@@ -21,7 +21,9 @@ A running log of the `chalakudy` experiment, newest entry at the bottom. Times a
 | Ask owner about predictions (before any run) | not started |
 | Pilot (run time, start-up, errors) | done; found and fixed an OLSR crash in `manet.cc` (fragmented routing packets) |
 | Propagation sensitivity (log-distance, TR 37.885 NLOS) | built and checked; 62.8 m effective range |
-| Runs, checks, analysis, docs, report | not started (waiting for the owner: predictions and compute) |
+| Owner's decisions (08:06) | predictions skipped (logged in experiments/README.md §7); compute: main + propagation + peak-share + battery + traffic sweeps (~3.5 h), not the 50/150-device sweep |
+| Runs | running since 08:07 UTC; each experiment's results are committed and pushed when it finishes |
+| Checks, analysis, docs, report | not started |
 
 ## Log
 
@@ -101,27 +103,27 @@ Key finding: with the fix, only 8–31 of 21,355 buildings have radar-visible fl
 
 Documents the owner will need to download (sites blocked here): see `data/chalakudy/MANUAL_DOWNLOADS.md` (being written).
 
-### 2026-10-29 07:20 UTC: elevation can rank buildings but not set absolute flood levels
+### 2026-10-29 07:15 UTC: elevation can rank buildings but not set absolute flood levels
 
 - Copernicus DEM heights (EGM2008): municipality 5–34 m (5th–95th percentile, median 16 m); permanent water near the town 1–3 m; flood patches seen on 21 Aug: median 4.7 m, patch edges median 4.9 m (a consistent water-surface estimate for that morning); 9 Aug similar; 27 Aug patches higher and patchier.
 - Buildings: surface height at the centroid median 17.2 m. A "local ground" estimate (5th percentile of the surface model within 50 m) has median 15.0 m, still ~10 m above the flooded fields. Most houses stand among coconut palms and other trees, and the DEM is a surface model, so even the lowest nearby cell is often canopy.
 - Consequence: with this DEM, only 0.5% of buildings lie below the 21-Aug water surface, 4% below +4 m, 28% below +8 m. The absolute numbers are not trustworthy because of canopy bias. The DEM is used only to RANK buildings (lowest first). The share of buildings flooded at the peak is ASSUMED and swept. A bare-earth DEM (FABDEM, item 8 in MANUAL_DOWNLOADS.md) would improve the ranking.
 - Next: `experiments/chalakudy.py` to choose a study area, sample nodes at building centroids, and build flood, battery and traffic schedules.
 
-### 2026-10-29 07:30 UTC: building table, study square, real network structure
+### 2026-10-29 07:17 UTC: building table, study square, real network structure
 
 - `python3 experiments/chalakudy.py prepare` writes `data/chalakudy/buildings.csv` (21,355 buildings: Overture id, source, UTM centroid, footprint area, DSM at centroid, ground estimate, distance from footprint to Sentinel-1 flood water on 9, 21 (both passes) and 27 Aug) and `data/chalakudy/study_area.json`.
 - Study square (rule: 1 km square ≥ 99% inside the municipality with the most buildings among the town's lowest 25% by ground estimate): SW corner x0 = 645297, y0 = 1138395 (UTM 43N), 1,383 buildings, 869 of them in the lowest 25%. Alternative rule (most buildings within 300 m of 21-Aug flood water) picks x0 = 643597, y0 = 1138845 with 838 buildings; recorded, not used.
 - Network at 150 m range in the main square (10 random samples each): 50 devices: mean degree 3.5, largest connected part 51%, diameter ~9 hops; 100 devices: 7.3, 88%, ~14 hops; 150 devices: 10.8, 99%, ~12 hops. Main grid for comparison: mean degree 5.2/10.5/22.4 at 25/50/100 nodes, diameter 5–11. Real buildings cluster along roads, so routes are long; DSDV start-up needs checking before running (warm-up rule 7).
 - Placement-rule sensitivity (network structure only): sampling buildings by footprint area instead of uniformly changes mean degree by under 2%; at 100 devices it raises the largest connected part from 88% to 98.5%.
 
-### 2026-10-29 07:40 UTC: run generator written; one accidental start, stopped
+### 2026-10-29 07:20 UTC: run generator written; one accidental start, stopped
 
 - `chalakudy.py` now builds simulator inputs per (node count, seed): nodes sampled from the study square's buildings, flows within connected parts, flood schedule (observed-flooded first, then lowest ground), uniform-random baseline with the same failure times, no-flood control, batteries. Variants: `chalakudy` (main: onset 15 and 17 Aug × batteries limited/unlimited, 360 runs), `chalakudy_share` (120), `chalakudy_nodes` (180), `chalakudy_traffic` (180), `chalakudy_battery` (180).
 - Mistake: a command meant as a quick check started the full onset-15 half of the main experiment in the background, before the owner had been asked about predictions or compute. Noticed within about a minute and stopped (`kill` on the run_experiment and simulator processes). No run finished: 4 half-written run folders, no summaries; they were moved out of the repo to the session scratchpad and nothing from them was looked at or committed.
 - Next: a pilot of no-flood control runs only (seed 1; 100 and 150 nodes; batteries limited and unlimited), written to the scratch experiment `chalakudy_pilot`, used only for run time, routing-table start-up and error checks. No delivery results are looked at.
 
-### 2026-10-29 07:50 UTC: pilot done; OLSR crash at 150 devices found and fixed in `manet.cc`
+### 2026-10-29 07:40 UTC: pilot done; OLSR crash at 150 devices found and fixed in `manet.cc`
 
 Pilot `chalakudy_pilot` (no-flood control only; 100 and 150 devices; batteries limited and unlimited; seeds 1 and 10, because the filter `_s1` also matched `_s10`; 24 runs, 13 min on 4 cores). Only run time, routing start-up, battery timing and errors were looked at, no delivery results. Pilot results are scratch and will not be committed.
 
@@ -132,15 +134,15 @@ Pilot `chalakudy_pilot` (no-flood control only; 100 and 150 devices; batteries l
 - **DSDV start-up (rule 7):** `initial_convergence_s` (first second with ≥ 99.9% of connected pairs routable) is 151–165 s for DSDV at 100 devices, but that is not slow start-up: DSDV's route validity reaches its steady level by 40–60 s (mean 0.963 and 0.972 over 40–60 s, against 0.964 and 0.983 over 60–450 s and 0.965 and 0.982 over 300–450 s) and then fluctuates around it for the whole run without any failures. On these long, chain-like real topologies DSDV never holds complete tables. At 150 devices: 0.996 and 0.985 over 40–60 s, 0.997 and 0.995 later. OLSR: 1.000 from 20 s. Decision: keep the 60 s warm-up (a longer one would not raise DSDV's level) and report DSDV's steady validity in the no-flood control.
 - **Run times (no battery limit):** AODV 42–57 s at 100 devices, 153–166 s at 150; OLSR 75–78 s at 100; DSDV 106–107 s at 100, 462–471 s at 150. Battery-limited runs 6–88 s.
 
-### 2026-10-29 08:20 UTC: fix verified; propagation sensitivity built; network structure recomputed
+### 2026-10-29 07:55 UTC: fix verified; propagation sensitivity built; network structure recomputed
 
 - **Fragment fix verified.** Seven committed runs (from `kerala`, `energy`, `main`, `kerala100`, `rtscts100`, including the densest OLSR configurations) rerun with the old and the new binary: every simulator output file is numerically identical between the two binaries and to the committed files, and none of these runs had a fragmented routing packet. The three OLSR pilot runs that crashed now finish (132 and 169 fragmented routing packets in the two no-battery runs; stderr empty). Committed as 40fcab0; documented in `docs/ns3-defaults.md`. (A first comparison script reported a false difference in `packets.csv:path`: the files were byte-identical, but pandas' string dtype compares missing values as unequal. Fixed by comparing with `Series.equals`.)
 - **Propagation sensitivity (ac933b5).** `manet.cc` has a new `--lossModel=logdistance` option; the default is still the unit disk, and four committed runs rerun in the default mode are identical to the committed files. The model is the 3GPP TR 37.885 V2V-Urban NLOS formula, PL = 36.85 + 30 log10(d) + 18.9 log10(f_GHz), read from ns-3.47's implementation (`three-gpp-v2v-propagation-loss-model.cc`), at ns-3's default 802.11b frequency of 2412 MHz: exponent 3, 44.08 dB at 1 m. Nothing was adjusted. With ns-3's default transmit power (16.02 dBm) and preamble-detection limit (-82 dBm), frames get through up to 62.8 m and not beyond: a two-node sweep in `sim/manet` gave 100/100 packets at 62.5 m and 0/100 at 63 m, for both AODV and OLSR. The 3GPP standard itself could not be opened (3gpp.org blocked), so the formula is cited through ns-3's code; the model was designed for vehicles, which is a limitation to state.
 - **Consequence, from the real building positions only (`chalakudy.py network` → `data/chalakudy/network_structure.csv`):** at 62.8 m, 100 devices form ~48 separate groups (largest 10% of devices) and none of the 20 traffic pairs in seeds 1 and 10 is connected; at 150 devices the largest group is 16%. A connected network under this model needs about 500 devices in the square (largest group 92%), i.e. about one device per three buildings (1,383 buildings in the square). At 150 m: 50 devices mean degree 3.75, largest group 61%; 100 devices 7.2, 97%; 150 devices 10.8, 99%. Main grid at 150 m: 5.2, 10.5 and 22.4 at 25, 50 and 100 nodes, always fully connected. So 100 Chalakudy devices are about as dense as 25–50 main-grid nodes, and sparser in places, because buildings cluster along roads.
-- **Correction:** the 07:30 entry gave "50 devices: mean degree 3.5, largest connected part 51%; 100 devices: 7.3, 88%". Those came from an exploratory command that no committed script reproduces. The figures above come from the committed script with the same sampler the runs use (seeds 1–10) and replace them. The 150-device figures agree.
+- **Correction:** the 07:17 entry gave "50 devices: mean degree 3.5, largest connected part 51%; 100 devices: 7.3, 88%". Those came from an exploratory command that no committed script reproduces. The figures above come from the committed script with the same sampler the runs use (seeds 1–10) and replace them. The 150-device figures agree.
 - **Plan for the sensitivity run:** with the same devices, flows and failures as the main runs, every protocol should deliver almost nothing, because no flow pair is connected at 62.8 m. It is cheap and still worth running as a check that the simulator agrees with the graph analysis; the main lesson is the graph result above (the 150 m range is doing a lot of work in every result).
 
-### 2026-10-29 08:45 UTC: PROVENANCE.md written; reproducibility of the data steps checked
+### 2026-10-29 08:04 UTC: PROVENANCE.md written; reproducibility of the data steps checked
 
 - `data/chalakudy/PROVENANCE.md` is generated by `experiments/chalakudy_provenance.py` from `PARAMS` in `chalakudy.py`: 43 parameters (value, MEASURED/DERIVED/ASSUMED, source, script, reasoning, sweep) and 13 sources (title, URL, section, access date, licence). `data/chalakudy/derived_files.csv` holds the SHA-256 of every derived file. Licences were read from the data themselves where possible: Overture records carry ODbL-1.0 (OpenStreetMap) and CC-BY-4.0 (Esri); the Google Open Buildings records have an empty licence field, and Google's own licence page could not be opened (flagged to verify). Copernicus DEM and Sentinel-1 terms come from the AWS Open Data registry entries; DataMeet boundaries are ODbL (repository README and LICENSE).
 - Reproducibility: the town boundary had been cut out by hand; it now has a script step (`chalakudy_fetch.py boundary`), which reproduces the committed file byte for byte. `chalakudy.py prepare` reproduces `buildings.csv` and `study_area.json` byte for byte. `chalakudy.py network` gives an identical table on a second run. (The Sentinel-1 flood maps were not recomputed in this check: that step reads image windows over the network for 24 scenes.)
@@ -148,6 +150,12 @@ Pilot `chalakudy_pilot` (no-flood control only; 100 and 150 devices; batteries l
   - The radio energy model was labelled MEASURED; it is the ns-3 default (now ASSUMED, values cited from the source).
   - The study-square note quoted "~2,800 nodes for the whole town", which no script produces; removed.
   - The Sentinel-1 list includes three Sentinel-1B scenes (27 Aug descending and ascending; the ascending 21 Aug scene is 1A), not "24 Sentinel-1A scenes".
-  - The area-weighted placement check in the 07:30 entry ("raises the largest connected part from 88% to 98.5%") was exploratory and does not reproduce. The committed script (`network_structure.csv`) gives, for area-weighted vs uniform at 150 m: mean degree 3.5/7.0/10.7 vs 3.75/7.2/10.8 and largest connected part 62/94/99% vs 61/97/99% at 50/100/150 devices. Placement makes little difference.
+  - The area-weighted placement check in the 07:17 entry ("raises the largest connected part from 88% to 98.5%") was exploratory and does not reproduce. The committed script (`network_structure.csv`) gives, for area-weighted vs uniform at 150 m: mean degree 3.5/7.0/10.7 vs 3.75/7.2/10.8 and largest connected part 62/94/99% vs 61/97/99% at 50/100/150 devices. Placement makes little difference.
 - **Finding that changes how the flood model should be described:** no building in the study square is within 20 m (or even 50 m) of radar-visible flood water. The nearest is 132 m on 21 Aug (descending), 58 m on the ascending pass, 40 m on 9 Aug. So the observed-flooded-first rule never applies in the square, the 10 m vs 20 m buffer changes no input (checked, no sweep needed), and the failure order there is ground height alone (Copernicus DEM). Sentinel-1 contributes the timing (water still standing on 21 Aug, mostly gone by 27 Aug) and the evidence that the fields around this low-lying part of town flooded, not building-level flooding. The alternative square (most buildings within 300 m of 21 Aug water) has 4 of 838 buildings within 20 m, so switching squares would not change this.
 - Next: ask the owner about predictions and compute before any run.
+
+### 2026-10-29 08:08 UTC: owner's decisions; runs started
+
+- Owner asked (08:06): predictions → **skip** (logged as a deviation in `experiments/README.md` §7, with a note that two design findings were already in this log); compute → **main + cheap sweeps**: `chalakudy` (360 runs), `chalakudy_prop` (90), `chalakudy_share` (120), `chalakudy_battery` (180), `chalakudy_traffic` (180), estimated 3.5 h. The 50/150-device sweep (`chalakudy_nodes`, ~2 h) is not run; `network_structure.csv` covers density at the graph level.
+- Runs started 08:07 UTC with a driver script that runs the five experiments in that order (4 parallel jobs) and commits and pushes each experiment's `results/<exp>/` as soon as it finishes. The first launch was stopped after one minute because background commands here are limited to 2 h; it was relaunched detached. Six half-written run folders from the first launch are simply redone (`run_experiment.py` skips only runs with a `summary.json`).
+- Corrected the times of the six previous entries (they were estimates; see the note at the top).
