@@ -93,12 +93,13 @@ Per run in `results/<experiment>/summary.csv` and in the §7 summary table. Mean
 | Packet loss and reason | `packets_lost`, `loss_pct`, `lost_<reason>` (no route at source, IP route error, MAC retry limit, and so on) |
 | Recovery time | `recovery_time_s` (mean over recovered flows); also `recovery_median_s`, `recovery_max_s`, `recovery_recovered_flows`, `recovery_not_recovered_flows`, `recovery_affected_no_route`; per event and flow in `results/<experiment>/recovery.csv` |
 | Delivered within deadline T (the paper's primary metric) | `within_0.5s_pct`, `within_1s_pct`, `within_2s_pct`, `within_5s_pct` (T is a placeholder until set from Kerala data) |
+| Delivery of all scheduled messages (includes those a dead or flooded source never sent) | `scheduled_sends`, `delivered_of_scheduled_pct`, `within_1s_of_scheduled_pct` (whole run only). Use these next to PDR whenever devices fail or run flat |
 
 ## §4 Additional metrics
 
 | Metric | Columns |
 |---|---|
-| Route discovery time and number (AODV) | `route_discoveries`, `route_discoveries_completed`, `route_discovery_attempts`, `route_discovery_mean_ms`, `route_discovery_median_ms`, `route_discovery_p95_ms` |
+| Route discovery time and number (AODV) | `route_discoveries`, `route_discoveries_completed`, `route_discoveries_failed_then_retried`, `route_discovery_attempts`, `route_discovery_mean_ms`, `route_discovery_median_ms`, `route_discovery_p95_ms` |
 | Route errors (AODV) | `route_errors_rerr_tx` |
 | Routing-table convergence (OLSR, DSDV) | `initial_convergence_s`, `convergence_after_events_s`, `convergence_mean_s`, `route_validity_mean_pct` |
 | Broken routes (link breaks detected) | `mac_link_break_detections` |
@@ -198,9 +199,21 @@ All 1,350 runs were checked: every configuration has 10 seeds, there are no dupl
 
 Any summary or figure taken from the repo before this date should be replaced with the current files.
 
+## Corrections made on 29 October 2026
+
+A second audit covered all 2,316 runs (the 1,350 above plus the Chalakudy experiment below), including an independent review of the Chalakudy code. Three errors were fixed and everything downstream was regenerated; both analyses reproduce byte for byte.
+
+1. **Control-traffic bytes of 29 OLSR runs at 100 nodes (§3).** Large OLSR packets are sent as IP fragments, and the counter only read the first fragment. Replaying all 450 OLSR runs found this in 29 runs at 100 nodes (none at 25 or 50); they were short by at most 0.028% of their control bytes, with everything else identical. The 29 runs were redone with the fixed simulator.
+2. **Which flows a failure affected (§3, §4 recovery).** The route a flow was using was taken from the last packet *sent* before the failure, which may have arrived afterwards over a new route. It is now the last packet *received* before the failure. 102 affected/unaffected decisions changed in 75 runs; recovery numbers moved slightly and a few recovery comparisons changed significance (`FINDINGS.md`).
+3. **AODV route-discovery times (§4).** Discoveries that AODV abandoned, or completed without a reply reaching the requester, were merged with later ones, giving "discoveries" of up to 371 s. Records longer than AODV's own give-up time are now excluded and counted in `route_discoveries_failed_then_retried`. Mean and 95th-percentile discovery times fall a lot (main grid mean about 1.96 s to 0.14 s); medians barely change. Prefer the median.
+
+Reproducibility across machines: every run checked reproduces exactly on another machine except AODV at 100 nodes in the dense 500 m grid, where single runs differ (up to 9 points of PDR) but the 10-seed averages agree (60.0% vs 59.5% PDR); details in `experiments/README.md` §6. Report dense-AODV results as averages over seeds.
+
+Also new: `delivered_of_scheduled_pct` and `within_1s_of_scheduled_pct`, which also count the messages a failed or flat device never sent (use them next to PDR whenever devices fail), and further limitations in `experiments/README.md` §7 (time compression, building data dates, terrain-based flood order, radio coverage, many tests). Replace any number taken from the repo before this date.
+
 ## Chalakudy experiment (added 29 October 2026, branch `chalakudy-buildings`)
 
-A further experiment: mesh devices at real building positions in a 1 km square of Chalakudy town, with flood failures ordered by real data (Sentinel-1 radar, Copernicus elevation) and timed by the dated 2018 events. Nothing in the seven experiments above was changed or rerun. Every number in the scenario is labelled MEASURED, DERIVED or ASSUMED in `data/chalakudy/PROVENANCE.md`; the step-by-step log, including every problem found, is `data/chalakudy/WORKLOG.md`.
+A further experiment: mesh devices at real building positions in a 1 km square of Chalakudy town, with flood failures ordered by real data (Sentinel-1 radar, Copernicus elevation) and timed by the dated 2018 events. Adding it changed nothing in the seven experiments above; the 29 Oct corrections did (see the section above). Every number in the scenario is labelled MEASURED, DERIVED or ASSUMED in `data/chalakudy/PROVENANCE.md`; the step-by-step log, including every problem found, is `data/chalakudy/WORKLOG.md`.
 
 | If you need | Open |
 |---|---|
@@ -229,7 +242,7 @@ Deliverables §1–9 for this experiment:
 |---|---|
 | §1 Configuration | As in §1 above except: 100 devices at building centroids in a 1 km square (coordinates in `results/chalakudy*/inputs/n100_s<seed>/topology.csv`, building ids in `nodes.csv`); 20 burst flows; 450 s with 1 day = 30 s; per-run `run_config.json` and `command.txt` |
 | §2 Scenarios | Flood order, uniform random with the same counts and times, no-flood control; each run's `scenario_*.json` lists every failed device with its time, position, building and ground estimate; averages and clustering in `tables/scenario_properties.csv` |
-| §3 Core metrics | `results/chalakudy*/summary.csv`; per window (before onset, acute, sustained): `<window>_within_1s_pct`, `<window>_pdr_pct`, `<window>_delay_mean_ms`, `<window>_ctrl_pkts_per_node_s` |
+| §3 Core metrics | `results/chalakudy*/summary.csv`; per window (before onset, acute, sustained): `<window>_within_1s_pct`, `<window>_pdr_pct`, `<window>_delay_mean_ms`, `<window>_ctrl_pkts_per_node_s`; whole run, counting messages flat or flooded devices never sent: `delivered_of_scheduled_pct`, `within_1s_of_scheduled_pct` |
 | §4 Additional metrics | As in §4 above; connected PDR (`connected_pdr_pct`, `<window>_connected_within_1s_pct`) for every run; battery lifetime in battery-limited runs |
 | §5 Robustness | Seeds 1–10, paired; sweeps of flooded share, battery share and traffic; onsets 15 and 17 Aug; no failed runs (`tables/check_failed_runs.csv`) |
 | §6 Raw files | Per run as in §6 above; FlowMonitor XML in `chalakudy_check`; raw data downloads re-fetched by `experiments/chalakudy_fetch.py` (not committed, about 170 MB) |

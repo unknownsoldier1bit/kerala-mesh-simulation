@@ -1,6 +1,6 @@
 # Results
 
-Raw and processed output of the experiments described in `experiments/README.md`. Everything here can be regenerated with `experiments/run_experiment.py` and `experiments/analyze.py`.
+Raw and processed output of the experiments described in `experiments/README.md`. Everything here can be regenerated with `experiments/run_experiment.py`, `experiments/analyze.py` and `experiments/analyze_chalakudy.py`.
 
 ## Layout
 
@@ -18,7 +18,10 @@ results/
       check_energy_vs_ns3_model.csv     energy accounting vs NS-3's energy framework
       check_tracker_vs_flowmonitor.csv  packet tracker vs NS-3 FlowMonitor
       failed_runs_all.csv           runs that crashed or timed out, with the reason
-  <experiment>/                 main, severity, load, energy, kerala, kerala100
+  analysis_chalakudy/           the same for the Chalakudy experiments (experiments/README.md section 8)
+  <experiment>/                 main, severity, load, energy, kerala, kerala100, rtscts100,
+                                chalakudy, chalakudy_prop, chalakudy_share, chalakudy_battery,
+                                chalakudy_traffic, chalakudy_check
     summary.csv                 one row per run, every metric (column definitions: experiments/README.md §3)
     per_flow.csv                one row per flow per run
     recovery.csv                one row per (failure event, affected flow) per run
@@ -32,7 +35,9 @@ results/
       events_<scenario>.csv     failure schedule fed to the simulator
       scenario_<scenario>.json  failed nodes/links with coordinates, %, routes left per flow, assumption
       battery*.csv, elevation.csv, kerala_assumptions.json   (energy and Kerala experiments)
-    runs/<run_id>/              run_id = <protocol>_<scenario>_n<nodes>_f<flows>_s<seed>
+      nodes.csv, network.json   (Chalakudy: the building behind each device, network structure)
+    runs/<run_id>/              run_id = <protocol>_<scenario>_..._s<seed> (the same id can occur in two
+                                experiments, e.g. load and main; always use the experiment folder too)
       command.txt, run_config.json   exact command and every setting
       stdout.log, stderr.log
       packets.csv.gz            every data packet: flow, seq, send/receive time, relay path, last drop event
@@ -44,7 +49,9 @@ results/
       rtables-<t>s.txt.gz       every node's routing table at time t (seed 1 of the main grid)
       flowmon.xml.gz            NS-3 FlowMonitor output (seed 1 of the main grid)
       summary.json, per_flow.csv, recovery.csv, timeseries.csv   metrics of this run
-      stats.csv                 run counters (refused sends, duplicates, wall-clock time)
+      stats.csv                 run counters: sends suppressed at a dead source, sends refused for lack of
+                                a route, duplicates (missing in 96 main-grid runs made before that
+                                counter existed), wall-clock time
 ```
 
 Drop codes in `packets.csv.gz` (`drop_code`): 0 none recorded, 1 no route at the source, 11–17 IPv4 drop reasons (12 no route, 15 route error, 11 TTL expired), 20–23 MAC drops (22 retry limit reached). See `DROP_NAMES` in `experiments/metrics.py`.

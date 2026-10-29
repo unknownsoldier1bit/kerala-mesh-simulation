@@ -13,13 +13,14 @@ Updated on every push. The full list of requested outputs is in `docs/deliverabl
 | Kerala time-evolving failure model + baselines, 50 nodes (150 runs) | done, committed |
 | Kerala, 100 nodes (150 runs) | done, committed (extra) |
 | RTS/CTS sensitivity check, 100-node baseline (30 runs) | done, committed (extra: checks whether hidden-terminal collisions explain the 100-node AODV results) |
-| Analysis: tables, figures, statistics | done for all 1,350 runs (`results/analysis/`) |
+| Analysis: tables, figures, statistics | done for all 1,350 runs (`results/analysis/`); regenerated 29 Oct, reproduces byte for byte |
 | Methods README (`experiments/README.md`) | done |
 
 | **Chalakudy experiment (29 Oct, branch `chalakudy-buildings`)**: real building positions, real-data flood order | see below |
+|---|---|
 | Data: buildings, boundary, elevation, rivers, 24 Sentinel-1 images; provenance of every number | done (`data/chalakudy/PROVENANCE.md`); some sources blocked here (`data/chalakudy/MANUAL_DOWNLOADS.md`) |
-| `chalakudy` (360), `chalakudy_prop` (90), `chalakudy_share` (120), `chalakudy_battery` (180), cross-checks (36) | done, committed, recomputed identically |
-| `chalakudy_traffic` (180) | done, committed, recomputed identically |
+| `chalakudy` (360), `chalakudy_prop` (90), `chalakudy_share` (120), `chalakudy_battery` (180), cross-checks (36) | done, committed; metrics recomputed with the 29 Oct corrections |
+| `chalakudy_traffic` (180) | done, committed; metrics recomputed with the 29 Oct corrections |
 | `chalakudy_nodes` (50/150 devices, 180) | not run (owner's compute decision); covered at graph level by `network_structure.csv` |
 | Chalakudy analysis (`results/analysis_chalakudy/`) | done for all 930 runs; reproduces byte for byte on a second run |
 
@@ -39,6 +40,17 @@ All finished runs completed without failures in their final pass. Four 100-node 
 - Fixed tie handling in the paired tests (deliverables §8): exact ties are no longer broken by floating-point noise. 24 Holm-corrected comparisons are no longer significant at 0.05. All tables, figures and `FINDINGS.md` regenerated, and the analysis now reproduces identically.
 - `DELIVERABLES-HANDOFF.md` in the repo root maps every deliverables item to its files.
 
+## Audit and corrections, 29 Oct 2026
+
+All 2,316 runs (1,350 earlier + 930 Chalakudy + 36 cross-checks) were checked again, with an independent audit of the Chalakudy branch. Everything downstream was regenerated; both analyses reproduce byte for byte.
+
+- **Fragmented routing packets.** Replaying all 450 committed OLSR runs of the earlier experiments with the fixed simulator found fragments in 29 runs at 100 nodes (none at 25 or 50). Their control-byte counts were short by at most 0.028%; everything else was identical. The 29 runs were redone.
+- **Recovery (affected flows).** A flow's route before a failure was taken from the last packet *sent* before it, which can have arrived later over a new route; it is now the last packet *received* before it, as documented. 102 affected/unaffected decisions changed in 75 runs; recovery tables and tests regenerated.
+- **AODV route-discovery times.** The simulator keeps a discovery open until an RREP reaches its originator, so discoveries AODV abandoned or resolved another way absorbed later ones (records up to 371 s). Records longer than AODV's own give-up time (11.32 s with margin) are now excluded from discovery times and counted in `route_discoveries_failed_then_retried`. Mean discovery times fall sharply (main grid: about 1.96 s to 0.14 s); medians barely change.
+- **New metrics.** `delivered_of_scheduled_pct` and `within_1s_of_scheduled_pct` count messages that a failed or flat device never sent. In battery-limited Chalakudy runs only 6–26% of scheduled messages arrive, although PDR is 85–97%.
+- **Reproducing on another machine.** 467 of 482 runs replayed on a Mac matched exactly; the 15 AODV runs at 100 nodes in the 500 m grid did not (different floating-point rounding, amplified by congestion), but their 10-seed averages agree (`experiments/README.md` §6).
+- **Other.** The runner finds a default-profile build (or `MANET_BIN`) and checks for it before starting; main-analysis PDFs no longer embed the time of the run; limitations added to `experiments/README.md` §7 (time compression, building data dates, terrain-based flood order, radio coverage, many tests); `data/sources.md` notes which cited documents still need URLs.
+
 ## Found along the way
 
 - AODV's link-break detection was silently disabled by `NeighborCacheHelper` in both sims. Fixed; see `docs/ns3-defaults.md`. Re-run any diamond AODV results made before 27 Oct.
@@ -51,7 +63,7 @@ All finished runs completed without failures in their final pass. Four 100-node 
 
 Read `data/chalakudy/WORKLOG.md` (what was done, in order, and every problem found), `data/chalakudy/PROVENANCE.md` (every number: measured, derived or assumed), `experiments/README.md` section 8 (method) and `results/analysis_chalakudy/FINDINGS.md` (numbers). Found along the way:
 
-- OLSR runs with 150 devices crashed in our control-traffic counter, which did not expect fragmented routing packets. Fixed in `sim/manet/manet.cc`; earlier experiments checked and unaffected (`docs/ns3-defaults.md`).
+- OLSR runs with 150 devices crashed in our control-traffic counter, which did not expect fragmented routing packets. Fixed in `sim/manet/manet.cc`. The earlier experiments were affected slightly, without crashing (29 runs redone; see "Audit and corrections, 29 Oct 2026" below).
 - NS-3's energy framework does not drain finite batteries correctly (its radio model stops counting at about 72% and never reports depletion). The experiments use the state-based battery, which is checked separately (`docs/ns3-defaults.md`).
 - Sentinel-1 cannot see water between houses, so it cannot say which buildings flooded; the failure order comes from ground height.
 - Under a cited path-loss model (3GPP TR 37.885 NLOS) the default radio reaches 62.8 m, and 100 devices in the square no longer form a network: the 150 m range assumption carries every result.

@@ -30,7 +30,9 @@ Status as of 12 Oct 2026, after opening the documents. Of the 13 things the fail
 
 - Memorandum: https://recovery.preventionweb.net/media/101476/download (blocks scripts; open in a browser)
 - CAG report: https://cag.gov.in/ag1/kerala/en/audit-report/details/114526
-- KSEB: search kseb.in for "How KSEBL survived flood 2018"
+- KSEB: search kseb.in for "How KSEBL survived flood 2018". The page was opened on 12 Oct, but its URL, page and the area the 27 Aug date covers were not recorded. Record them before citing the 27 Aug restoration date.
+- Chalakudy onset (Deccan Herald, 15 Aug; Scroll, 17 Aug): article URLs not recorded. Record them before citing either date.
+- CAG Chapter III: use it for the dated events above (communications failure, release dates), not as a measured Chalakudy river level or flood curve.
 - TelecomTalk: https://telecomtalk.info/?p=180759
 - Tiwari et al. 2020: https://doi.org/10.1371/journal.pone.0237324
 - Vishnu et al. 2019: https://doaj.org/article/5e2f8aa52e024de483ec6e800bcc6e10
