@@ -2,7 +2,7 @@
 
 Everything requested in `docs/deliverables.md`, sections 1–9, and where to find it. All of it is final as of 28 October 2026: 1,350 simulation runs, every metric recomputed from the raw files, the analysis regenerated and checked to reproduce exactly.
 
-Paths are relative to the repo root (branch `overnight-experiments`). If you received zips, unzip `kerala-mesh-deliverables.zip` (everything you need to write, about 8 MB) and, only if you need the per-run raw files, `kerala-mesh-raw-runs.zip` (about 93 MB) in the same place. Both unpack into one `kerala-mesh-deliverables/` folder, and the paths below apply inside it.
+Paths are relative to the repo root (branch `chalakudy-buildings`, which includes everything from `overnight-experiments`). If you received zips, unzip `kerala-mesh-deliverables.zip` (everything you need to write, about 24 MB) and, only if you need the per-run raw files, `kerala-mesh-raw-runs.zip` (about 135 MB) in the same place. Both unpack into one `kerala-mesh-deliverables/` folder, and the paths below apply inside it.
 
 ## Start here
 
