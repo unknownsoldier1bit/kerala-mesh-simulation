@@ -280,8 +280,12 @@ def s1_scan(start, end):
         cands = [p for ps in ex.map(products, days) for p in ps]
         print(f"{len(cands)} candidate scenes at Kerala overpass times; checking footprints", flush=True)
         rows = [r for r in ex.map(info, cands) if r]
-    rows.sort(key=lambda r: r["start_utc"])
     out = os.path.join(DATA, "sentinel1_scenes.csv")
+    if os.path.exists(out):  # merge with earlier scans of other date ranges
+        with open(out) as f:
+            seen = {r["id"] for r in rows}
+            rows += [r for r in csv.DictReader(f) if r["id"] not in seen]
+    rows.sort(key=lambda r: r["start_utc"])
     with open(out, "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(rows[0]) if rows else ["id"])
         w.writeheader()
