@@ -133,7 +133,9 @@ PARAMS = {
                            why="Needed to place the radar image on the DEM (the geoid grid could not be "
                                "downloaded). Chosen as the offset, from -160 to -20 m in 4 m steps, that makes "
                                "mapped rivers and ponds darkest against their surroundings, averaged over 6 "
-                               "descending scenes (flood/geoid_offset_scan.csv)."),
+                               "descending scenes (flood/geoid_offset_scan.csv). Checked afterwards (audit, 29 Oct "
+                               "2026): the EGM2008 geoid (NGA grid us_nga_egm08_25.tif, via PROJ 9.8.1) gives "
+                               "N = -95.7 m at the town centre (10.316 N, 76.325 E), within the 4 m scan step."),
     "water_threshold_db": dict(value="Otsu threshold per scene: -10.6 to -12.9 dB (flood/scenes_processed.csv)",
                                kind="derived", sweep=None,
                                why="Computed on a balanced sample: reference water cells plus an equal number "

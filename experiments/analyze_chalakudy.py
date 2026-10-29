@@ -584,7 +584,8 @@ def main():
     mtests.to_csv(os.path.join(TAB, "chalakudy_flood_vs_uniform_tests.csv"), index=False)
     label = df.experiment + ": " + df.tag + ", onset " + df.onset.astype(str) + " Aug, " + df.battery + ", gap " + \
         df.gap.map("{:g} s".format)
-    A.table_deliverable(df.assign(scenario=label).sort_values("run_id")).to_csv(
+    # chalakudy_prop reuses the run ids of chalakudy, so sort by experiment too (stable, for identical reruns)
+    A.table_deliverable(df.assign(scenario=label).sort_values(["experiment", "run_id"], kind="stable")).to_csv(
         os.path.join(TAB, "summary_table_chalakudy.csv"), index=False)
     scen = scenario_table()
     check_lines = checks(df)
