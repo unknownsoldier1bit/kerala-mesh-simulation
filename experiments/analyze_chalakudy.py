@@ -18,6 +18,7 @@ import json
 import os
 import re
 import sys
+import textwrap
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import analyze as A  # noqa: E402  (shared style, statistics and plotting helpers)
@@ -30,7 +31,7 @@ plt = A.plt
 OUT = os.path.join(A.RES, "analysis_chalakudy")
 TAB = os.path.join(OUT, "tables")
 FIG = os.path.join(OUT, "figures")
-A.FIG = FIG  # A.savefig writes here
+A.FIG = FIG  # analyze.savefig writes here
 
 EXPS = ["chalakudy", "chalakudy_prop", "chalakudy_share", "chalakudy_battery", "chalakudy_traffic"]
 PROTOCOLS = A.PROTOCOLS
@@ -54,6 +55,11 @@ METRICS = (["within_1s_pct", "connected_within_1s_pct", "pdr_pct", "connected_pd
                                                     "connected_pdr_pct", "delay_mean_ms",
                                                     "ctrl_pkts_per_node_s")])
 CONFIG = ["experiment", "model", "share", "onset", "battery", "gap", "nodes"]
+
+
+def savefig(fig, name, note=None):
+    """analyze.savefig with the caption wrapped, so long captions don't widen the figure."""
+    A.savefig(fig, name, textwrap.fill(note, 170) if note else None)
 
 
 def ensure_dirs():
@@ -318,7 +324,7 @@ def fig_study_area():
                plt.Line2D([], [], ls="", marker="o", color=FAILED, ms=6, label="Device lost to flooding (lowest ground first)")]
     ax.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, -0.01), ncol=2, fontsize=7.5)
     ax.set_title("Study square (1 km, black outline): 100 devices of seed 1, flood scenario with 25% lost")
-    A.savefig(fig, "chalakudy_study_area",
+    savefig(fig, "chalakudy_study_area",
               "Real: buildings, radar water, ground-height order. Assumed: which buildings have devices, 25% lost.")
 
 
@@ -351,7 +357,7 @@ def fig_qa_geolocation():
                plt.Line2D([], [], color=A.INK2, lw=1, ls="--", label="Study square")]
     ax.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, -0.01), ncol=2, fontsize=7.5)
     ax.set_title("Geolocation check: radar water vs municipality boundary (10 m grid, 1 km margin)")
-    A.savefig(fig, "chalakudy_qa_geolocation", "All layers are real data or derived from it (Sentinel-1 2018).")
+    savefig(fig, "chalakudy_qa_geolocation", "All layers are real data or derived from it (Sentinel-1 2018).")
 
 
 def matplotlib_rgba(hexcol):
@@ -382,7 +388,7 @@ def fig_network_density():
         ax.set_ylabel(lab)
     axes[1].set_ylim(0, 1.05)
     axes[0].legend(fontsize=7.5)
-    A.savefig(fig, "chalakudy_network_density",
+    savefig(fig, "chalakudy_network_density",
               "Graph structure only (no simulation). 62.8 m = range under the cited 3GPP NLOS model; mean of seeds "
               "1-10. Real data: building positions.")
 
@@ -397,10 +403,13 @@ def bars_by_window(agg, sel, metric_suffix, fname, title, onsets):
             ax = axes[i, j]
             A.grouped_bars(ax, a, models, "model", f"{w}_{metric_suffix}", protos, MODEL_LABEL)
             ax.set_title(f"{WINDOWS[w]}; onset {onset} Aug")
+            if not a[f"{w}_{metric_suffix}_mean"].notna().any():
+                ax.text(0.5, 0.5, "No packets sent in this window\n(every device had run out of battery)",
+                        transform=ax.transAxes, ha="center", va="center", color=A.INK2)
             ax.set_ylim(0, 100)
         axes[i, 0].set_ylabel("Delivered within T = 1 s (%)")
     A.legend_protocols(fig, protos)
-    A.savefig(fig, fname, title + " " + REAL_VS_ASSUMED)
+    savefig(fig, fname, title + " " + REAL_VS_ASSUMED)
 
 
 def fig_over_time(df):
@@ -438,7 +447,7 @@ def fig_over_time(df):
         axes[0, 0].set_ylabel("Devices still running")
         axes[1, 0].set_ylabel("Delivered within 1 s (%), all seeds")
         A.legend_protocols(fig, PROTOCOLS)
-        A.savefig(fig, f"chalakudy_over_time_on15_{battery}",
+        savefig(fig, f"chalakudy_over_time_on15_{battery}",
                   "Onset 15 Aug; 10 s bins pooled over seeds 1-10. " + REAL_VS_ASSUMED)
 
 
@@ -482,9 +491,11 @@ def fig_sensitivity(df):
         axes[0, j].set_ylabel("Acute phase: within T = 1 s (%)")
         axes[1, j].set_ylabel("Acute phase: within T = 1 s (%)")
     A.legend_protocols(fig, PROTOCOLS)
-    A.savefig(fig, "chalakudy_sensitivity_acute",
-              "One parameter changed at a time from the main setting (25%, 15 s, 50%); onset 15 Aug. All swept "
-              "values are assumptions. Error bars: 95% CI over seeds, clipped to 0-100%.")
+    savefig(fig, "chalakudy_sensitivity_acute",
+              "One parameter changed at a time from the main setting (25% flooded, 15 s gap, 50% battery share); onset "
+              "15 Aug. Flooded share and traffic: no battery limit. Battery share: batteries limited (every device runs "
+              "flat within hours of the power cut). All swept values are assumptions. Error bars: 95% CI over seeds, "
+              "clipped to 0-100%.")
 
 
 # ---------------------------------------------------------------------------
