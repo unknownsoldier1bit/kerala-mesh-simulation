@@ -1,0 +1,16 @@
+Scenario,Window,AODV,OLSR,DSDV
+No flooding,"14-15 Aug (before onset), all sent",86.2 ± 3.4,100.0 ± 0.0,95.4 ± 3.2
+Flood (lowest ground first),"14-15 Aug (before onset), all sent",86.2 ± 3.4,100.0 ± 0.0,95.4 ± 3.2
+Uniform random,"14-15 Aug (before onset), all sent",86.2 ± 3.4,100.0 ± 0.0,95.4 ± 3.2
+No flooding,"15-18 Aug (acute), all sent",91.2 ± 1.1,100.0 ± 0.0,97.3 ± 2.0
+Flood (lowest ground first),"15-18 Aug (acute), all sent",72.3 ± 6.4,75.8 ± 6.5,70.2 ± 5.5
+Uniform random,"15-18 Aug (acute), all sent",75.9 ± 6.3,75.9 ± 8.1,65.8 ± 7.1
+No flooding,"15-18 Aug (acute), path existed",91.2 ± 1.1,100.0 ± 0.0,97.3 ± 2.0
+Flood (lowest ground first),"15-18 Aug (acute), path existed",89.8 ± 3.9,94.1 ± 2.5,87.4 ± 4.1
+Uniform random,"15-18 Aug (acute), path existed",89.3 ± 2.2,89.0 ± 3.0,77.4 ± 4.7
+No flooding,"18-27 Aug (sustained), all sent",90.4 ± 1.7,100.0 ± 0.0,97.7 ± 0.9
+Flood (lowest ground first),"18-27 Aug (sustained), all sent",50.9 ± 12.1,56.8 ± 13.5,53.9 ± 13.5
+Uniform random,"18-27 Aug (sustained), all sent",52.2 ± 15.9,59.5 ± 18.0,56.6 ± 17.2
+No flooding,"18-27 Aug (sustained), path existed",90.4 ± 1.7,100.0 ± 0.0,97.7 ± 0.9
+Flood (lowest ground first),"18-27 Aug (sustained), path existed",89.7 ± 3.0,100.0 ± 0.0,93.5 ± 4.5
+Uniform random,"18-27 Aug (sustained), path existed",85.6 ± 6.9,99.9 ± 0.1,95.1 ± 2.0

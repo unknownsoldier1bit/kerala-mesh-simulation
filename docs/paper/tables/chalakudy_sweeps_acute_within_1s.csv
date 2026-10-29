@@ -1,0 +1,13 @@
+Parameter,Value,Scenario,AODV,OLSR,DSDV
+Flooded share (%),10,Flood (lowest ground first),86.6 ± 3.2,93.6 ± 2.3,87.6 ± 5.8
+Flooded share (%),25,Flood (lowest ground first),72.3 ± 6.4,75.8 ± 6.5,70.2 ± 5.5
+Flooded share (%),50,Flood (lowest ground first),57.5 ± 7.5,57.0 ± 8.2,49.2 ± 6.5
+Flooded share (%),10,Uniform random,82.8 ± 5.0,89.3 ± 5.0,83.6 ± 5.2
+Flooded share (%),25,Uniform random,75.9 ± 6.3,75.9 ± 8.1,65.8 ± 7.1
+Flooded share (%),50,Uniform random,58.8 ± 7.9,56.1 ± 8.6,47.0 ± 7.8
+Mean gap between bursts (s),7.5,Flood (lowest ground first),75.5 ± 5.3,76.8 ± 5.3,68.6 ± 6.2
+Mean gap between bursts (s),15,Flood (lowest ground first),72.3 ± 6.4,75.8 ± 6.5,70.2 ± 5.5
+Mean gap between bursts (s),30,Flood (lowest ground first),67.0 ± 8.2,74.6 ± 7.3,70.4 ± 10.9
+Mean gap between bursts (s),7.5,Uniform random,75.9 ± 6.5,74.9 ± 6.6,64.0 ± 8.8
+Mean gap between bursts (s),15,Uniform random,75.9 ± 6.3,75.9 ± 8.1,65.8 ± 7.1
+Mean gap between bursts (s),30,Uniform random,66.7 ± 6.8,75.1 ± 7.2,64.4 ± 10.0

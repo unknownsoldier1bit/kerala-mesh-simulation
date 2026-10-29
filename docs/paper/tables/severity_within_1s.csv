@@ -1,0 +1,9 @@
+Failures,Share failed,AODV,OLSR,DSDV
+Random links,5%,99.0 ± 0.8,99.6 ± 0.2,99.4 ± 0.2
+Random links,10%,99.2 ± 0.5,99.6 ± 0.1,99.3 ± 0.2
+Random links,20%,99.3 ± 0.6,99.1 ± 0.3,99.6 ± 0.2
+Random links,30%,98.7 ± 1.7,98.7 ± 0.2,99.3 ± 0.3
+Random relay nodes,5%,99.2 ± 0.6,99.9 ± 0.1,99.3 ± 0.3
+Random relay nodes,10%,99.4 ± 0.6,99.6 ± 0.2,99.2 ± 0.2
+Random relay nodes,20%,99.5 ± 0.4,99.1 ± 0.4,99.0 ± 0.5
+Random relay nodes,30%,99.6 ± 0.3,98.8 ± 0.4,98.2 ± 1.6

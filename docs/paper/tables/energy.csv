@@ -1,0 +1,7 @@
+Radio profile,Protocol,First node flat (s),Half of nodes flat (s),Control pkts/node/s,Within 1 s (%)
+ns-3 default radio,AODV,205.3 ± 3.1,400.1 ± 13.1,1.75 ± 0.41,75.9 ± 5.6
+ns-3 default radio,DSDV,205.0 ± 3.3,399.0 ± 13.1,1.86 ± 0.08,73.7 ± 5.5
+ns-3 default radio,OLSR,205.2 ± 3.2,400.1 ± 13.2,0.49 ± 0.01,75.5 ± 5.3
+Low-idle radio,AODV,165.2 ± 7.6,335.3 ± 10.0,1.36 ± 0.28,73.4 ± 6.9
+Low-idle radio,DSDV,154.4 ± 5.9,312.0 ± 8.6,1.46 ± 0.05,70.6 ± 6.6
+Low-idle radio,OLSR,157.8 ± 7.3,330.1 ± 10.3,0.41 ± 0.01,71.7 ± 7.3
