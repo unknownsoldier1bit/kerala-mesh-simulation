@@ -197,3 +197,41 @@ All 1,350 runs were checked: every configuration has 10 seeds, there are no dupl
 2. **Paired tests (§8).** Protocols that tie exactly were treated as slightly different because of floating-point noise around 1e-15, which made some p-values too small. Values are now rounded to 9 decimal places before testing. As a result, 24 Holm-corrected comparisons, mostly median-delay ones, are no longer significant at 0.05. Fixed in `experiments/analyze.py`; all tables, figures and `FINDINGS.md` regenerated. The analysis now reproduces identically on repeated runs.
 
 Any summary or figure taken from the repo before this date should be replaced with the current files.
+
+## Chalakudy experiment (added 29 October 2026, branch `chalakudy-buildings`)
+
+A further experiment: mesh devices at real building positions in a 1 km square of Chalakudy town, with flood failures ordered by real data (Sentinel-1 radar, Copernicus elevation) and timed by the dated 2018 events. Nothing in the seven experiments above was changed or rerun. Every number in the scenario is labelled MEASURED, DERIVED or ASSUMED in `data/chalakudy/PROVENANCE.md`; the step-by-step log, including every problem found, is `data/chalakudy/WORKLOG.md`.
+
+| If you need | Open |
+|---|---|
+| What is real data, what is assumed, with sources, licences and checksums | `data/chalakudy/PROVENANCE.md`, `data/chalakudy/downloads.csv`, `data/chalakudy/derived_files.csv` |
+| Files this session could not download (please fetch) | `data/chalakudy/MANUAL_DOWNLOADS.md` |
+| Method | `experiments/README.md`, section 8 (limitations in section 7) |
+| Numbers: means ± 95% CI, tests, checks | `results/analysis_chalakudy/FINDINGS.md` |
+| Tables | `results/analysis_chalakudy/tables/` (`chalakudy_by_config.csv`, `chalakudy_protocol_tests.csv`, `chalakudy_flood_vs_uniform_tests.csv`, `summary_table_chalakudy.csv`, `scenario_properties.csv`, `check_*.csv`) |
+| Figures (PDF and PNG; every caption says what is real and what is assumed) | `results/analysis_chalakudy/figures/` |
+
+| Experiment | What varies | Runs |
+|---|---|---|
+| `chalakudy` | 3 protocols × {no-flood control, flood 25% (lowest ground first), uniform random 25%} × onset 15 or 17 Aug × batteries unlimited or limited × 100 devices × seeds 1–10 | 360 |
+| `chalakudy_prop` | Propagation sensitivity: 3GPP TR 37.885 NLOS log-distance model instead of the 150 m unit disk | 90 |
+| `chalakudy_share` | Flooded share 10% and 50% | 120 |
+| `chalakudy_battery` | Battery share for the radio 25% and 100% (main 50%) | 180 |
+| `chalakudy_traffic` | Mean gap between message bursts 7.5 s and 30 s (main 15 s) | 180 |
+| `chalakudy_check` | Cross-checks: FlowMonitor and NS-3's energy framework, 50 devices, seeds 1–2 | 36 |
+
+The 50- and 150-device sweep (`chalakudy_nodes`) was not run (owner's compute decision, 29 Oct); density is covered at the graph level by `data/chalakudy/network_structure.csv` and the figure `chalakudy_network_density`.
+
+Deliverables §1–9 for this experiment:
+
+| Section | Where |
+|---|---|
+| §1 Configuration | As in §1 above except: 100 devices at building centroids in a 1 km square (coordinates in `results/chalakudy*/inputs/n100_s<seed>/topology.csv`, building ids in `nodes.csv`); 20 burst flows; 450 s with 1 day = 30 s; per-run `run_config.json` and `command.txt` |
+| §2 Scenarios | Flood order, uniform random with the same counts and times, no-flood control; each run's `scenario_*.json` lists every failed device with its time, position, building and ground estimate; averages and clustering in `tables/scenario_properties.csv` |
+| §3 Core metrics | `results/chalakudy*/summary.csv`; per window (before onset, acute, sustained): `<window>_within_1s_pct`, `<window>_pdr_pct`, `<window>_delay_mean_ms`, `<window>_ctrl_pkts_per_node_s` |
+| §4 Additional metrics | As in §4 above; connected PDR (`connected_pdr_pct`, `<window>_connected_within_1s_pct`) for every run; battery lifetime in battery-limited runs |
+| §5 Robustness | Seeds 1–10, paired; sweeps of flooded share, battery share and traffic; onsets 15 and 17 Aug; no failed runs (`tables/check_failed_runs.csv`) |
+| §6 Raw files | Per run as in §6 above; FlowMonitor XML in `chalakudy_check`; raw data downloads re-fetched by `experiments/chalakudy_fetch.py` (not committed, about 170 MB) |
+| §7 Summary table | `results/analysis_chalakudy/tables/summary_table_chalakudy.csv` |
+| §8 Outputs | Figures `chalakudy_within_T_by_window*`, `chalakudy_connected_within_T_by_window`, `chalakudy_over_time_*`, `chalakudy_sensitivity_acute`, `chalakudy_network_density`, `chalakudy_study_area`, `chalakudy_qa_geolocation`; tests in `tables/`; checks in `FINDINGS.md` |
+| §9 Dataset | Real positions and real-data failure order for the stronger dataset; the remaining gaps are listed in `MANUAL_DOWNLOADS.md` and `PROVENANCE.md` |
