@@ -1,0 +1,11 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+olsr_flood25_on17_batt50_g15_n100_s3,152.0,fail,7,True,False,,,296.0,448.0,0,0
+olsr_flood25_on17_batt50_g15_n100_s3,152.0,fail,9,True,False,,,296.0,448.0,0,0
+olsr_flood25_on17_batt50_g15_n100_s3,152.0,fail,19,True,False,,,296.0,448.0,4,0
+olsr_flood25_on17_batt50_g15_n100_s3,153.0,fail,6,True,False,,,295.0,448.0,0,0
+olsr_flood25_on17_batt50_g15_n100_s3,153.0,fail,10,True,False,,,295.0,448.0,0,0
+olsr_flood25_on17_batt50_g15_n100_s3,153.0,fail,11,True,False,,,295.0,448.0,4,0
+olsr_flood25_on17_batt50_g15_n100_s3,154.0,fail,6,False,False,,,294.0,448.0,0,0
+olsr_flood25_on17_batt50_g15_n100_s3,154.0,fail,11,True,False,,,294.0,448.0,0,0
+olsr_flood25_on17_batt50_g15_n100_s3,155.0,fail,6,False,False,,,293.0,448.0,0,0
+olsr_flood25_on17_batt50_g15_n100_s3,156.0,fail,6,False,False,,,292.0,448.0,0,0

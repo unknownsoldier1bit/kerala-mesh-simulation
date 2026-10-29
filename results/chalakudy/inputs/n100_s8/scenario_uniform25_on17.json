@@ -1,0 +1,215 @@
+{
+ "scenario": "uniform25",
+ "onset_day": 17,
+ "selection": "uniformly random (seeded), same count and times",
+ "failure_start_s": 150.6,
+ "failure_end_s": null,
+ "n_failed_nodes": 25,
+ "pct_failed_nodes": 25.0,
+ "n_observed_flooded_in_sample": 0,
+ "n_failed_links": 0,
+ "pct_failed_links": 0.0,
+ "components_at_peak": 5,
+ "failed_nodes": [
+  {
+   "node": 17,
+   "time_s": 150.6,
+   "building": 2816,
+   "x": 597.7,
+   "y": 102.1,
+   "ground_est_m": 13.75
+  },
+  {
+   "node": 20,
+   "time_s": 151.8,
+   "building": 2838,
+   "x": 658.2,
+   "y": 69.0,
+   "ground_est_m": 13.67
+  },
+  {
+   "node": 8,
+   "time_s": 153.0,
+   "building": 2740,
+   "x": 469.0,
+   "y": 47.7,
+   "ground_est_m": 12.36
+  },
+  {
+   "node": 88,
+   "time_s": 154.2,
+   "building": 15485,
+   "x": 984.7,
+   "y": 773.3,
+   "ground_est_m": 11.65
+  },
+  {
+   "node": 27,
+   "time_s": 155.4,
+   "building": 2934,
+   "x": 907.6,
+   "y": 292.3,
+   "ground_est_m": 12.82
+  },
+  {
+   "node": 50,
+   "time_s": 156.6,
+   "building": 13900,
+   "x": 358.5,
+   "y": 424.8,
+   "ground_est_m": 13.16
+  },
+  {
+   "node": 99,
+   "time_s": 157.8,
+   "building": 15575,
+   "x": 999.9,
+   "y": 512.5,
+   "ground_est_m": 10.77
+  },
+  {
+   "node": 21,
+   "time_s": 159.0,
+   "building": 2840,
+   "x": 649.6,
+   "y": 104.4,
+   "ground_est_m": 13.75
+  },
+  {
+   "node": 89,
+   "time_s": 160.2,
+   "building": 15504,
+   "x": 927.0,
+   "y": 580.4,
+   "ground_est_m": 12.27
+  },
+  {
+   "node": 85,
+   "time_s": 161.4,
+   "building": 15440,
+   "x": 946.9,
+   "y": 839.8,
+   "ground_est_m": 11.19
+  },
+  {
+   "node": 28,
+   "time_s": 162.6,
+   "building": 2937,
+   "x": 918.9,
+   "y": 224.4,
+   "ground_est_m": 10.12
+  },
+  {
+   "node": 26,
+   "time_s": 163.8,
+   "building": 2914,
+   "x": 822.0,
+   "y": 195.1,
+   "ground_est_m": 12.16
+  },
+  {
+   "node": 80,
+   "time_s": 165.0,
+   "building": 14503,
+   "x": 891.0,
+   "y": 760.6,
+   "ground_est_m": 11.49
+  },
+  {
+   "node": 47,
+   "time_s": 166.2,
+   "building": 13864,
+   "x": 346.7,
+   "y": 582.4,
+   "ground_est_m": 13.16
+  },
+  {
+   "node": 43,
+   "time_s": 167.4,
+   "building": 13754,
+   "x": 191.0,
+   "y": 449.3,
+   "ground_est_m": 12.24
+  },
+  {
+   "node": 66,
+   "time_s": 168.6,
+   "building": 14218,
+   "x": 591.2,
+   "y": 892.4,
+   "ground_est_m": 10.13
+  },
+  {
+   "node": 84,
+   "time_s": 169.8,
+   "building": 15433,
+   "x": 906.3,
+   "y": 991.8,
+   "ground_est_m": 13.35
+  },
+  {
+   "node": 78,
+   "time_s": 171.0,
+   "building": 14467,
+   "x": 867.5,
+   "y": 352.9,
+   "ground_est_m": 12.86
+  },
+  {
+   "node": 46,
+   "time_s": 172.2,
+   "building": 13810,
+   "x": 261.0,
+   "y": 543.2,
+   "ground_est_m": 13.1
+  },
+  {
+   "node": 93,
+   "time_s": 173.4,
+   "building": 15519,
+   "x": 950.7,
+   "y": 552.2,
+   "ground_est_m": 12.27
+  },
+  {
+   "node": 57,
+   "time_s": 174.6,
+   "building": 13967,
+   "x": 459.1,
+   "y": 509.0,
+   "ground_est_m": 13.36
+  },
+  {
+   "node": 94,
+   "time_s": 175.8,
+   "building": 15520,
+   "x": 947.0,
+   "y": 494.3,
+   "ground_est_m": 12.5
+  },
+  {
+   "node": 60,
+   "time_s": 177.0,
+   "building": 14000,
+   "x": 480.6,
+   "y": 740.4,
+   "ground_est_m": 13.75
+  },
+  {
+   "node": 42,
+   "time_s": 178.2,
+   "building": 13752,
+   "x": 200.4,
+   "y": 486.1,
+   "ground_est_m": 13.54
+  },
+  {
+   "node": 34,
+   "time_s": 179.4,
+   "building": 13687,
+   "x": 256.1,
+   "y": 971.9,
+   "ground_est_m": 12.44
+  }
+ ]
+}

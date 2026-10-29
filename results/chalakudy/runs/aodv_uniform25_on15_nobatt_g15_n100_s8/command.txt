@@ -1,0 +1,1 @@
+ns3.47-manet --protocol=aodv --topo=results/chalakudy/inputs/n100_s8/topology.csv --flows=results/chalakudy/inputs/n100_s8/flows_gap15.csv --outDir=results/chalakudy/runs/aodv_uniform25_on15_nobatt_g15_n100_s8 --run=8 --simTime=450.0 --range=150.0 --energyJ=0 --events=results/chalakudy/inputs/n100_s8/events_uniform25_on15.csv

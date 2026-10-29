@@ -1,0 +1,1 @@
+ns3.47-manet --protocol=olsr --topo=results/chalakudy/inputs/n100_s9/topology.csv --flows=results/chalakudy/inputs/n100_s9/flows_gap15.csv --outDir=results/chalakudy/runs/olsr_control_on15_nobatt_g15_n100_s9 --run=9 --simTime=450.0 --range=150.0 --energyJ=0 --events=results/chalakudy/inputs/n100_s9/events_control_on15.csv

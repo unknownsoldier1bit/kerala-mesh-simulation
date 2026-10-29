@@ -1,0 +1,16 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+aodv_flood25_on15_nobatt_g15_n100_s9,106.2,fail,0,True,False,,,341.8,448.0,0,0
+aodv_flood25_on15_nobatt_g15_n100_s9,106.2,fail,7,True,True,0.3625189999999918,0.31980899999999224,0.3625189999999918,448.0,3,2
+aodv_flood25_on15_nobatt_g15_n100_s9,124.2,fail,7,True,False,,,323.8,448.0,5,0
+aodv_flood25_on15_nobatt_g15_n100_s9,127.8,fail,4,False,False,,,320.2,448.0,2,0
+aodv_flood25_on15_nobatt_g15_n100_s9,127.8,fail,7,False,False,,,320.2,448.0,10,0
+aodv_flood25_on15_nobatt_g15_n100_s9,127.8,fail,8,False,False,,,320.2,448.0,7,0
+aodv_flood25_on15_nobatt_g15_n100_s9,127.8,fail,9,False,False,,,320.2,448.0,0,0
+aodv_flood25_on15_nobatt_g15_n100_s9,127.8,fail,18,False,False,,,320.2,448.0,9,0
+aodv_flood25_on15_nobatt_g15_n100_s9,135.0,fail,7,False,False,,,313.0,448.0,5,0
+aodv_flood25_on15_nobatt_g15_n100_s9,142.2,fail,4,False,False,,,305.8,448.0,5,0
+aodv_flood25_on15_nobatt_g15_n100_s9,142.2,fail,9,False,False,,,305.8,448.0,0,0
+aodv_flood25_on15_nobatt_g15_n100_s9,160.2,fail,9,False,False,,,287.8,448.0,10,0
+aodv_flood25_on15_nobatt_g15_n100_s9,160.2,fail,11,True,True,13.670992000000012,0.08223300000000222,13.670992000000012,448.0,0,0
+aodv_flood25_on15_nobatt_g15_n100_s9,160.2,fail,12,True,True,15.36684200000002,0.017031000000002905,15.36684200000002,448.0,0,0
+aodv_flood25_on15_nobatt_g15_n100_s9,167.4,fail,4,False,False,,,280.6,448.0,7,0
