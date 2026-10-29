@@ -287,6 +287,192 @@ def prepare():
     print(json.dumps(area, indent=1))
 
 
+# ---------------------------------------------------------------------------
+# Simulator inputs
+# ---------------------------------------------------------------------------
+
+DAY0_S = 60.0  # simulated time of 14 Aug 2018 00:00; 0-60 s is network warm-up
+SIM_END_S = DAY0_S + 13 * 30.0  # 27 Aug 00:00 at 30 s per day
+IDLE_W = 0.273 * 3.0  # ns-3 WifiRadioEnergyModel idle current x 3 V (docs/ns3-defaults.md)
+LOW_BATTERY = 0.10  # the radio switches off at 10% of the initial energy (BasicEnergySource default)
+BURST_PKTS, BURST_SPACING_S = 5, 0.2  # as in the kerala experiment
+
+
+def day(d):
+    """Simulated time of August day d (e.g. day(15) = 15 Aug 00:00)."""
+    return DAY0_S + (d - 14) * P("day_s")
+
+
+def square_buildings(rows):
+    a = json.load(open(os.path.join(DATA, "study_area.json")))
+    sel = [r for r in rows if a["x0"] <= r["x"] < a["x0"] + a["side_m"] and a["y0"] <= r["y"] < a["y0"] + a["side_m"]]
+    return sel, (a["x0"], a["y0"])
+
+
+def sample_nodes(sq, n, seed):
+    rng = np.random.default_rng(700_000 + 1000 * n + seed)
+    idx = np.sort(rng.choice(len(sq), size=n, replace=False))
+    return [sq[i] for i in idx]
+
+
+def component_flows(g, n_flows, seed, gap_s, t_start, t_stop):
+    """Random source-destination pairs in the same connected part, at least 2 hops apart, sending bursts."""
+    rng = np.random.default_rng(710_000 + 1000 * len(g) + seed)
+    pairs = []
+    for comp in nx.connected_components(g):
+        sub = g.subgraph(comp)
+        hops = dict(nx.all_pairs_shortest_path_length(sub))
+        pairs += [(a, b, hops[a][b]) for a in sub for b in sub if a < b and hops[a][b] >= 2]
+    order = rng.permutation(len(pairs))
+    flows = []
+    for k in order[:n_flows]:
+        a, b, h = pairs[k]
+        if rng.random() < 0.5:
+            a, b = b, a
+        flows.append({"flow": len(flows), "src": int(a), "dst": int(b), "hops": int(h)})
+    for f in flows:
+        segs = []
+        t = t_start + rng.exponential(gap_s)
+        while t + BURST_PKTS * BURST_SPACING_S < t_stop:
+            segs.append((t, t + BURST_PKTS * BURST_SPACING_S - 1e-6, BURST_SPACING_S))
+            t += BURST_PKTS * BURST_SPACING_S + rng.exponential(gap_s)
+        f["segments"] = segs
+    return flows
+
+
+def flood_order(nodes, buffer_m):
+    """Indices of nodes, observed-flooded first (Sentinel-1, 21 Aug), then lowest ground first."""
+    obs = [i for i, r in enumerate(nodes) if r["flood_dist_m_2018-08-21_des"] <= buffer_m]
+    rest = sorted((i for i in range(len(nodes)) if i not in obs), key=lambda i: (nodes[i]["ground_est_m"], i))
+    obs = sorted(obs, key=lambda i: (nodes[i]["ground_est_m"], i))
+    return obs + rest, len(obs)
+
+
+def flood_events(order, n_observed, n, share, onset):
+    k = max(round(share * n), n_observed)
+    t0, t1 = day(onset), day(P("peak_day"))
+    return [(round(t0 + (r + 0.5) / k * (t1 - t0), 3), "fail", "node", int(v), -1, "flood")
+            for r, v in enumerate(order[:k])]
+
+
+def battery_energy(n, seed, onset, share_for_radio):
+    """Initial energy (simulated J) so each battery empties after the power cut as a real phone would.
+
+    After the cut the radio has soc x share x capacity x voltage (real J). Time compression turns
+    that into simulated J (x day_s / 86400). Before the cut the battery is assumed full enough to
+    cover idling until then, so idle energy until the cut is added, and the total is divided by 0.9
+    because the radio switches off at 10% of the initial energy."""
+    rng = np.random.default_rng(720_000 + 1000 * n + seed)
+    soc = rng.uniform(0.2, 1.0, size=n)
+    real_j = soc * share_for_radio * P("battery_capacity_mah") / 1000 * P("battery_voltage_v") * 3600
+    sim_j = real_j * P("day_s") / 86400
+    return (sim_j + IDLE_W * day(onset)) / (1 - LOW_BATTERY), soc
+
+
+def chalakudy_runs(exp, protocols, seeds, onsets=(15,), batteries=("unlimited",), nodes=(100,),
+                   shares=(0.25,), radio_shares=(0.5,), gaps=(15.0,), models=("flood", "uniform", "control"),
+                   loss_model="range"):
+    rows = read_buildings()
+    sq, origin = square_buildings(rows)
+    runs = []
+    for n in nodes:
+        for seed in seeds:
+            picked = sample_nodes(sq, n, seed)
+            xy = np.array([[r["x"] - origin[0], r["y"] - origin[1]] for r in picked])
+            g = gen.unit_disk_graph(xy, P("range_m"))
+            idir = os.path.join("results", exp, "inputs", f"n{n}_s{seed}")
+            os.makedirs(os.path.join(REPO, idir), exist_ok=True)
+            topo = os.path.join(idir, "topology.csv")
+            gen.write_topology(os.path.join(REPO, topo), xy)
+            write_csv(os.path.join(REPO, idir, "nodes.csv"),
+                      [dict(node=i, building=int(r["building"]), overture_id=r["overture_id"], source=r["source"],
+                            utm_x=r["x"], utm_y=r["y"], ground_est_m=r["ground_est_m"],
+                            flood_dist_m_21aug=r["flood_dist_m_2018-08-21_des"]) for i, r in enumerate(picked)])
+            gen.write_json(os.path.join(REPO, idir, "network.json"), dict(network_stats(xy), origin_utm=origin))
+            order, n_obs = flood_order(picked, P("observed_flood_buffer_m"))
+            for gap in gaps:
+                fl = component_flows(g, P("flows"), seed, gap, DAY0_S, SIM_END_S - 2)
+                ffile = os.path.join(idir, f"flows_gap{gap:g}.csv")
+                gen.write_flows(os.path.join(REPO, ffile), fl)
+                for onset in onsets:
+                    for model in models:
+                        for share in (shares if model != "control" else (None,)):
+                            if model == "control":
+                                events = []
+                            else:
+                                events = flood_events(order, n_obs, n, share, onset)
+                                if model == "uniform":
+                                    rng = np.random.default_rng(730_000 + 1000 * n + 10 * seed + onset
+                                                                + int(100 * share))
+                                    pick = rng.permutation(n)[:len(events)]
+                                    events = sorted((t, a, k, int(v), b, "random")
+                                                    for (t, a, k, _, b, _), v in zip(events, pick))
+                            tag = model if model == "control" else f"{model}{int(round(100 * share))}"
+                            efile = os.path.join(idir, f"events_{tag}_on{onset}.csv")
+                            gen.write_events(os.path.join(REPO, efile), events)
+                            failed = [e[3] for e in events]
+                            h = g.copy()
+                            h.remove_nodes_from(failed)
+                            meta = dict(
+                                scenario=tag, onset_day=onset, selection={"flood": "observed-flooded first, then "
+                                "lowest ground first (Sentinel-1 + Copernicus DEM)", "uniform": "uniformly random "
+                                "(seeded), same count and times", "control": "none"}[model],
+                                failure_start_s=events[0][0] if events else None, failure_end_s=None,
+                                n_failed_nodes=len(failed), pct_failed_nodes=round(100 * len(failed) / n, 2),
+                                n_observed_flooded_in_sample=n_obs, n_failed_links=0, pct_failed_links=0.0,
+                                components_at_peak=nx.number_connected_components(h) if len(h) else 0,
+                                failed_nodes=[dict(node=int(e[3]), time_s=e[0],
+                                                   building=int(picked[e[3]]["building"]),
+                                                   x=round(float(xy[e[3]][0]), 1), y=round(float(xy[e[3]][1]), 1),
+                                                   ground_est_m=picked[e[3]]["ground_est_m"]) for e in events])
+                            gen.write_json(os.path.join(REPO, idir, f"scenario_{tag}_on{onset}.json"), meta)
+                            for batt in batteries:
+                                for rs in (radio_shares if batt == "limited" else (None,)):
+                                    bfile = ""
+                                    if batt == "limited":
+                                        e0, soc = battery_energy(n, seed, onset, rs)
+                                        bfile = os.path.join(idir, f"battery_on{onset}_r{int(round(100 * rs))}.csv")
+                                        with open(os.path.join(REPO, bfile), "w") as fh:
+                                            fh.write("node,initial_J\n")
+                                            fh.writelines(f"{i},{v:.4f}\n" for i, v in enumerate(e0))
+                                    btag = "nobatt" if batt == "unlimited" else f"batt{int(round(100 * rs))}"
+                                    for proto in protocols:
+                                        rid = f"{proto}_{tag}_on{onset}_{btag}_g{gap:g}_n{n}_s{seed}"
+                                        runs.append(dict(
+                                            experiment=exp, run_id=rid, protocol=proto, scenario=model,
+                                            nodes=n, seed=seed, rng_run=seed, n_flows=len(fl), severity=share,
+                                            severity_label=(f"{len(failed)} nodes flooded ({meta['pct_failed_nodes']}%)"
+                                                            if failed else "no flooding"),
+                                            onset_day=onset, battery=btag, burst_gap_s=gap, loss_model=loss_model,
+                                            topo=topo, flows_file=ffile, events_file=efile, energy_file=bfile,
+                                            energy_j=0, energy_model="states",
+                                            fail_time_s=meta["failure_start_s"], restore_time_s=None,
+                                            traffic_start_s=DAY0_S, traffic_stop_s=SIM_END_S - 2,
+                                            sim_time_s=SIM_END_S, payload_bytes=gen.PAYLOAD_B,
+                                            range_m=P("range_m"), deadline_s=1.0,
+                                            windows={"before_onset": [day(14), day(onset)],
+                                                     "acute": [day(onset), day(18)],
+                                                     "sustained": [day(18), SIM_END_S - 2]},
+                                            timeseries=True, connectivity=True, flows=fl))
+    return runs
+
+
+# Experiment variants: the main configuration and one-at-a-time sensitivity sweeps.
+VARIANTS = {
+    "chalakudy": dict(onsets=(15, 17), batteries=("limited", "unlimited")),
+    "chalakudy_share": dict(onsets=(15,), shares=(0.10, 0.50), models=("flood", "uniform")),
+    "chalakudy_nodes": dict(onsets=(15,), nodes=(50, 150)),
+    "chalakudy_traffic": dict(onsets=(15,), gaps=(7.5, 30.0)),
+    "chalakudy_battery": dict(onsets=(15,), batteries=("limited",), radio_shares=(0.25, 1.0)),
+    # feasibility pilot (run time, routing start-up): no flooding, seed 1 only; not part of the results
+    "chalakudy_pilot": dict(onsets=(15,), batteries=("limited", "unlimited"), models=("control",), nodes=(100, 150)),
+}
+
+
+def runs_for(exp, protocols, seeds):
+    return chalakudy_runs(exp, protocols, seeds, **VARIANTS[exp])
+
+
 if __name__ == "__main__":
     if sys.argv[1] == "prepare":
         prepare()

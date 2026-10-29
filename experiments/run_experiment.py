@@ -76,6 +76,10 @@ def grid(name):
         return kerala.energy_runs(name, PROTOCOLS, SEEDS)
     if name == "kerala":
         return kerala.kerala_runs(name, PROTOCOLS, SEEDS)
+    if name.startswith("chalakudy"):
+        import chalakudy
+
+        return chalakudy.runs_for(name, PROTOCOLS, SEEDS)
     if name == "rtscts100":  # sensitivity check: 100-node baseline with RTS/CTS on
         runs = standard_runs(name, scenarios=["baseline"], nodes=[100], flows=[10], severities=[None])
         for r in runs:
