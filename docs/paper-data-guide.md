@@ -76,7 +76,7 @@ All numbers are from `data/chalakudy/data_summary.json` unless another file is n
 - Call them "mesh nodes" or "mobile devices", not phones (stock phones can't do ad-hoc routing).
 - Density: 100 per km². That equals the density of the 25-node main grid (25 nodes in a 500 m square), not the 100-node one.
 - Network at 150 m: mean degree 7.2 (main grid at the same density: 5.2); the largest connected group holds 96.7% of devices on average (main grid: 100%, by construction).
-- Placement sensitivity (network structure only): drawing buildings in proportion to footprint area changes the mean degree by under 5% and the largest connected group from 97% to 94% (`network_structure.csv`).
+- Placement sensitivity (network structure only): drawing buildings in proportion to footprint area instead lowers the mean degree by 1–6% (7.0 instead of 7.2 at 100 devices) and changes the largest connected group from 97% to 94% at 100 devices (`network_structure.csv`).
 - Figure: `chalakudy_network_density` (devices per km² against neighbours and connectivity, at 150 m and 62.8 m, with the main grid for comparison).
 
 ### 4.3 Ground height
@@ -84,7 +84,7 @@ All numbers are from `data/chalakudy/data_summary.json` unless another file is n
 - Copernicus DEM GLO-30. It is a surface model: heights include trees and roofs, not bare ground. Heights are relative to the EGM2008 geoid.
 - Ground estimate per building (DERIVED): the 5th percentile of DEM cells within 50 m of the centroid (the lowest nearby cell is the best ground proxy a surface model gives).
 - Municipality: median 15.0 m (10th–90th percentile 10.6–27.6 m). Study square: median 12.1 m (10th–90th percentile 10.0–13.5 m). The square is nearly flat.
-- Used only to rank buildings from lowest to highest, never for absolute water levels: canopy bias makes absolute heights unreliable (the radar-visible flood water on 21 Aug sits at about 4.7 m on this DEM, while building ground estimates are around 12 m).
+- Used only to rank buildings from lowest to highest, never for absolute water levels: canopy bias makes absolute heights unreliable. Radar-visible flood water inside the municipality on 21 Aug lies at a median 4.9 m on this DEM (10th–90th percentile 3.4–6.0 m), while the buildings' ground estimates in the square are around 12 m; taken literally that would mean almost no building flooded, which contradicts the reports that Chalakudy town was under water.
 
 ### 4.4 Radar flood maps
 

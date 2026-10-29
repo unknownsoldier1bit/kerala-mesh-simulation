@@ -691,6 +691,9 @@ def data_summary():
     transform, perm, flood = flood_masks()
     inside = rasterio.features.rasterize([(town, 1)], out_shape=perm.shape, transform=transform).astype(bool)
     cell_km2 = abs(transform.a * transform.e) / 1e6
+    dem = rasterio.open(os.path.join(FLOOD, "dem_copernicus_on_grid.tif")).read(1)
+    out["dem_height_of_radar_flood_water_m"] = {
+        k: pct(dem[v & inside & np.isfinite(dem)], (10, 50, 90)) for k, v in flood.items()}
     out["water_in_municipality_km2"] = dict(
         permanent_jan_may=round(float((perm & inside).sum() * cell_km2), 3),
         **{f"flood_{k}": round(float((v & inside).sum() * cell_km2), 3) for k, v in flood.items()},
