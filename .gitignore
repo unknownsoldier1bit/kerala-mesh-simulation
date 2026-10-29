@@ -3,3 +3,4 @@ results/
 .ns3-path
 .DS_Store
 __pycache__/
+data/chalakudy/raw/

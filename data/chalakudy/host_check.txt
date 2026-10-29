@@ -1,0 +1,86 @@
+curl: (56) CONNECT tunnel failed, response 403
+000  https://overpass-api.de/api/status
+curl: (56) CONNECT tunnel failed, response 403
+000  https://overpass.kumi.systems/api/status
+curl: (56) CONNECT tunnel failed, response 403
+000  https://download.geofabrik.de/asia/india.html
+curl: (56) CONNECT tunnel failed, response 403
+000  https://nominatim.openstreetmap.org/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://api.openstreetmap.org/api/capabilities
+curl: (56) CONNECT tunnel failed, response 403
+000  https://data.humdata.org/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://minedbuildings.z5.web.core.windows.net/global-buildings/dataset-links.csv
+200  https://raw.githubusercontent.com/microsoft/GlobalMLBuildingFootprints/main/README.md
+200  https://storage.googleapis.com/open-buildings-data/v3/score_thresholds_s2_level_4.csv
+200  https://overturemaps-us-west-2.s3.amazonaws.com/
+200  https://copernicus-dem-30m.s3.amazonaws.com/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://prism-dem-open.copernicus.eu/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://srtm.csi.cgiar.org/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://portal.opentopography.org/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://global-flood-database.cloudtostreet.ai/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://unosat.org/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://emergency.copernicus.eu/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://bhuvan.nrsc.gov.in/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://floodobservatory.colorado.edu/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://journals.plos.org/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://zenodo.org/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://figshare.com/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://censusindia.gov.in/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://data.gov.in/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://www.citypopulation.de/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://en.wikipedia.org/wiki/Chalakudy
+curl: (56) CONNECT tunnel failed, response 403
+000  https://www.trai.gov.in/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://rchiips.org/nfhs/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://opencellid.org/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://geodata.ucdavis.edu/gadm/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://www.kseb.in/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://cag.gov.in/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://sdma.kerala.gov.in/
+curl: (56) CONNECT tunnel failed, response 403
+000  https://lsgkerala.gov.in/
+400  https://github.com/
+000  https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc
+000  https://planetarycomputer.microsoft.com/api/sas/v1/token/sentinel-1-grd
+000  https://sentinel1euwestrtc.blob.core.windows.net/
+000  https://sentinel1euwest.blob.core.windows.net/
+000  https://earth-search.aws.element84.com/v1/collections
+200  https://api.github.com/rate_limit
+404  https://storage.googleapis.com/sen1floods11/v1.1/catalog/sen1floods11_hand_labeled_label/sen1floods11_hand_labeled_label.json
+200  https://storage.googleapis.com/earthengine-public/
+000  https://dataspace.copernicus.eu/
+000  https://catalogue.dataspace.copernicus.eu/odata/v1/Products
+000  https://search.asf.alaska.edu/
+000  https://api.daac.asf.alaska.edu/services/search/param?platform=S1&maxResults=1&output=json
+000  https://cmr.earthdata.nasa.gov/search/collections.json?keyword=sentinel-1
+200  https://pypi.org/simple/
+404  https://files.pythonhosted.org/
+200  https://registry.npmjs.org/
+200  https://elevation-tiles-prod.s3.amazonaws.com/
+000  https://opendata.digitalglobe.com/
+200  https://maxar-opendata.s3.amazonaws.com/
+000  https://s3.amazonaws.com/
+200  https://sentinel-s1-l1c.s3.amazonaws.com/
