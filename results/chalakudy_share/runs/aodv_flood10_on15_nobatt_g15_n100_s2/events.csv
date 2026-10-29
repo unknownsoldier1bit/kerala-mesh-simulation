@@ -1,0 +1,11 @@
+time_s,action,kind,a,b,group
+94.5,fail,node,21,-1,flood
+103.5,fail,node,36,-1,flood
+112.5,fail,node,0,-1,flood
+121.5,fail,node,22,-1,flood
+130.5,fail,node,94,-1,flood
+139.5,fail,node,95,-1,flood
+148.5,fail,node,1,-1,flood
+157.5,fail,node,71,-1,flood
+166.5,fail,node,67,-1,flood
+175.5,fail,node,97,-1,flood

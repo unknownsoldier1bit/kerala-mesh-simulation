@@ -1,0 +1,1 @@
+ns3.47-manet --protocol=olsr --topo=results/chalakudy_share/inputs/n100_s7/topology.csv --flows=results/chalakudy_share/inputs/n100_s7/flows_gap15.csv --outDir=results/chalakudy_share/runs/olsr_flood10_on15_nobatt_g15_n100_s7 --run=7 --simTime=450.0 --range=150.0 --energyJ=0 --events=results/chalakudy_share/inputs/n100_s7/events_flood10_on15.csv

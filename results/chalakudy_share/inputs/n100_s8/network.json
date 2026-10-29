@@ -1,0 +1,13 @@
+{
+ "nodes": 100,
+ "links": 362,
+ "mean_degree": 7.24,
+ "components": 6,
+ "largest_component_share": 0.95,
+ "isolated_nodes": 5,
+ "diameter_largest_component": 11,
+ "origin_utm": [
+  645297.4693617495,
+  1138394.8639157033
+ ]
+}

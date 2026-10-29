@@ -1,0 +1,95 @@
+{
+ "scenario": "uniform10",
+ "onset_day": 15,
+ "selection": "uniformly random (seeded), same count and times",
+ "failure_start_s": 94.5,
+ "failure_end_s": null,
+ "n_failed_nodes": 10,
+ "pct_failed_nodes": 10.0,
+ "n_observed_flooded_in_sample": 0,
+ "n_failed_links": 0,
+ "pct_failed_links": 0.0,
+ "components_at_peak": 1,
+ "failed_nodes": [
+  {
+   "node": 52,
+   "time_s": 94.5,
+   "building": 13931,
+   "x": 456.5,
+   "y": 527.0,
+   "ground_est_m": 13.77
+  },
+  {
+   "node": 27,
+   "time_s": 103.5,
+   "building": 7945,
+   "x": 91.2,
+   "y": 614.1,
+   "ground_est_m": 13.29
+  },
+  {
+   "node": 20,
+   "time_s": 112.5,
+   "building": 7882,
+   "x": 19.1,
+   "y": 593.8,
+   "ground_est_m": 10.68
+  },
+  {
+   "node": 54,
+   "time_s": 121.5,
+   "building": 13953,
+   "x": 514.8,
+   "y": 447.9,
+   "ground_est_m": 13.55
+  },
+  {
+   "node": 0,
+   "time_s": 130.5,
+   "building": 2449,
+   "x": 90.0,
+   "y": 9.5,
+   "ground_est_m": 9.95
+  },
+  {
+   "node": 78,
+   "time_s": 139.5,
+   "building": 14456,
+   "x": 806.4,
+   "y": 423.2,
+   "ground_est_m": 11.59
+  },
+  {
+   "node": 31,
+   "time_s": 148.5,
+   "building": 7973,
+   "x": 67.5,
+   "y": 734.0,
+   "ground_est_m": 13.26
+  },
+  {
+   "node": 32,
+   "time_s": 157.5,
+   "building": 7985,
+   "x": 61.1,
+   "y": 587.7,
+   "ground_est_m": 12.43
+  },
+  {
+   "node": 34,
+   "time_s": 166.5,
+   "building": 8005,
+   "x": 49.1,
+   "y": 742.2,
+   "ground_est_m": 13.61
+  },
+  {
+   "node": 5,
+   "time_s": 175.5,
+   "building": 2729,
+   "x": 488.5,
+   "y": 24.5,
+   "ground_est_m": 12.36
+  }
+ ]
+}

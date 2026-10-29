@@ -1,0 +1,13 @@
+run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+dsdv_uniform50_on15_nobatt_g15_n100_s9,90.9,fail,2,True,False,,,357.1,448.0,0,0
+dsdv_uniform50_on15_nobatt_g15_n100_s9,90.9,fail,13,True,True,16.80054899999999,14.000644999999992,16.80054899999999,448.0,5,0
+dsdv_uniform50_on15_nobatt_g15_n100_s9,103.5,fail,2,True,False,,,344.5,448.0,3,0
+dsdv_uniform50_on15_nobatt_g15_n100_s9,119.7,fail,3,True,False,,,328.3,448.0,0,0
+dsdv_uniform50_on15_nobatt_g15_n100_s9,123.3,fail,17,True,False,,,324.7,448.0,0,0
+dsdv_uniform50_on15_nobatt_g15_n100_s9,126.9,fail,3,True,False,,,321.1,448.0,0,0
+dsdv_uniform50_on15_nobatt_g15_n100_s9,126.9,fail,13,True,True,9.574754999999982,0.00853099999997653,9.574754999999982,448.0,3,3
+dsdv_uniform50_on15_nobatt_g15_n100_s9,134.1,fail,3,True,False,,,313.9,448.0,0,0
+dsdv_uniform50_on15_nobatt_g15_n100_s9,148.5,fail,13,False,False,,,299.5,448.0,5,0
+dsdv_uniform50_on15_nobatt_g15_n100_s9,152.1,fail,11,True,False,,,295.9,448.0,5,0
+dsdv_uniform50_on15_nobatt_g15_n100_s9,152.1,fail,13,False,False,,,295.9,448.0,0,0
+dsdv_uniform50_on15_nobatt_g15_n100_s9,164.7,fail,7,True,True,32.173775000000006,0.007655999999997221,32.173775000000006,448.0,0,0

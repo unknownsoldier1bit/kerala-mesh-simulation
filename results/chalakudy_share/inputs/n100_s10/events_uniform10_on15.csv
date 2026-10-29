@@ -1,0 +1,11 @@
+time_s,action,kind,a,b,group
+94.5,fail,node,19,-1,random
+103.5,fail,node,28,-1,random
+112.5,fail,node,77,-1,random
+121.5,fail,node,85,-1,random
+130.5,fail,node,92,-1,random
+139.5,fail,node,69,-1,random
+148.5,fail,node,49,-1,random
+157.5,fail,node,7,-1,random
+166.5,fail,node,73,-1,random
+175.5,fail,node,11,-1,random
