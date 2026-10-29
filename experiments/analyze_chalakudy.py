@@ -51,7 +51,8 @@ REAL_VS_ASSUMED = ("Real data: building positions, ground height, Sentinel-1 wat
 METRICS = (["within_1s_pct", "connected_within_1s_pct", "pdr_pct", "connected_pdr_pct", "within_0.5s_pct",
             "within_2s_pct", "within_5s_pct", "delay_mean_ms", "delay_median_ms", "control_pkts_per_node_s",
             "nodes_depleted", "sent_while_connected", "packets_sent", "energy_mean_per_node_J",
-            "route_validity_mean_pct", "route_validity_at_traffic_start"]
+            "route_validity_mean_pct", "route_validity_at_traffic_start",
+            "delivered_of_scheduled_pct", "within_1s_of_scheduled_pct"]
            + [f"{w}_{m}" for w in WINDOWS for m in ("within_1s_pct", "connected_within_1s_pct", "pdr_pct",
                                                     "connected_pdr_pct", "delay_mean_ms",
                                                     "ctrl_pkts_per_node_s")])

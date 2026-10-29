@@ -18,7 +18,8 @@ import os
 import re
 import xml.etree.ElementTree as ET
 
-import matplotlib
+os.environ.setdefault("SOURCE_DATE_EPOCH", "0")  # fixed PDF timestamps, so reruns give identical files
+import matplotlib  # noqa: E402
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
@@ -60,6 +61,9 @@ KEY_METRICS = {
     "recovery_time_s": "Recovery time (s)",
     "restore_recovery_mean_s": "Recovery after restore (s)",
     "energy_mean_per_node_J": "Energy per node (J)",
+    "delivered_of_scheduled_pct": "Delivered of all scheduled messages (%)",
+    "within_1s_of_scheduled_pct": "Scheduled messages delivered within 1 s (%)",
+    "route_discovery_median_ms": "Median AODV route discovery time (ms)",
 }
 
 plt.rcParams.update({
