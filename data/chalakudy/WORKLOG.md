@@ -14,7 +14,7 @@ A running log of the `chalakudy` experiment, newest entry at the bottom. It is c
 | Census (population, households) and device ownership | sources blocked; owner must download (list pending) |
 | Elevation model | done: Copernicus GLO-30 tile N10E076 (surface model, includes trees/roofs) |
 | River and channels | done: Overture base/water (OSM): Chalakudy River, canals, streams, ponds |
-| 2018 flood extent | in progress: deriving from Sentinel-1 radar (no ready-made map reachable) |
+| 2018 flood extent | derived from Sentinel-1 (24 scenes); shows field flooding, cannot see water between buildings |
 | Timeline, power restoration, cell towers, battery capacity | not started |
 | `experiments/chalakudy.py` (raw data → simulator inputs) | not started |
 | `data/chalakudy/PROVENANCE.md` | not started |
@@ -81,3 +81,20 @@ Design problem found: at the 150 m unit-disk range the whole 24.8 km² municipal
 - Ready-made 2018 flood maps: none reachable. The Dartmouth Flood Observatory page for event 4663 (https://floodobservatory.colorado.edu/Events/4663/2018India4663.html) reportedly lists Sentinel-1 flood-extent shapefiles, but the host is blocked. Owner to download if possible (cross-check).
 - Sentinel-1 GRD images can be read remotely by window (GDAL /vsicurl/, tiles 1024×1024), so only the Chalakudy part of each 700 MB image is fetched.
 - Geolocation problem found: GRD geolocation grids use a reference height per image line (255–402 m on 21 Aug), while Chalakudy's ground is near sea level and the geoid around Kerala is well below the ellipsoid. Without correction, pixels would be displaced by hundreds of metres in range. The geoid model (cdn.proj.org, download.osgeo.org) is blocked, so the constant geoid offset will be estimated from the data by aligning the Chalakudy River's dark water pixels with the OSM river polygon; the DEM handles height differences inside the area.
+
+### 2026-10-29 09:00 UTC: flood maps from Sentinel-1 (`experiments/chalakudy_flood.py`)
+
+What the script does: reads only the Chalakudy window of each VV image; calibrates to sigma0 with the image's calibration and thermal-noise tables (2018 products use the older `noiseVector`/`noiseLut` layout; the script handles both); 5×5 moving average against speckle; puts every pixel on a 10 m UTM 43N grid with a terrain correction; classifies water with Otsu's threshold.
+
+Results (`data/chalakudy/flood/scenes_processed.csv`, `geoid_offset_scan.csv`, `water_*.tif`):
+- Geolocation: GRD images are placed on a reference surface 255–720 m high (per image line); Chalakudy's ground is near sea level. The geoid offset that lines dark radar pixels up with mapped water (OSM river and ponds ≥ 2,000 m²) is −96 m in 5 of 6 calibration scenes (−92 m in one), with mapped water 7.4 dB darker than its surroundings. Polynomial fit of the image geometry: max residual 0.03 pixel at the grid points.
+- Threshold: Otsu on the whole-area histogram failed (in March it picked −8.3 dB and called 37% of the area water) because water is only a few per cent of cells. Fixed by computing Otsu per image on a balanced sample: all mapped-water cells plus an equal random sample of land ≥150 m from mapped water. Thresholds then lie between −10.6 and −12.95 dB (mostly about −12.5 dB); 82–93% of mapped water cells and under 1% of far land are classed as water in the dry season.
+- Open water in the grid (municipality + 1 km margin): about 2% in Jan–May; 6.3% on 16 Jul; 1.9% on 28 Jul; 5.0% on 9 Aug; 5.0% on 21 Aug 06:10 IST; 4.2% on 21 Aug 18:36 IST; ~2.6% on 27 Aug and 2 Sep.
+- New flood water inside the municipality (water that was not water on 28 Jul and is not permanent, i.e. not water in ≥ half the dry-season images): 1.01 km² (4.1% of the area) on 9 Aug and on 21 Aug morning, 0.86 km² on 21 Aug evening, 0.26 km² on 27 Aug, 0.20 km² on 2 Sep. The water was receding after the (unimaged) peak.
+- QA map: `data/chalakudy/figures/qa_flood_2018-08-21.png`. The Chalakudy River lines up with the municipality's southern boundary (which follows the river), so the geolocation correction works.
+
+Bug found and fixed (in an exploratory check, not in a committed script): counting buildings near flood water with `scipy.ndimage.minimum(..., labels=footprint_raster)` gave about 1,500 "flooded" buildings on every date. Cause: small adjoining footprints lose all their 10 m cells to neighbours when rasterised, and `ndimage.minimum` returns 0 for a label with no cells. Fixed by measuring distance at each footprint's own vertices and centroid.
+
+Key finding: with the fix, only 8–31 of 21,355 buildings have radar-visible flood water within 10–20 m on 21 Aug (2–22 on 9 Aug; 3–31 on 27 Aug; numbers depend on a minimum flood-patch size of 1–25 cells). The radar sees flooded fields around the town but not water between houses: walls and trees scatter the signal back to the satellite, so flooded built-up areas do not look dark. Sentinel-1 therefore gives (a) a measured lower bound and (b) the recession timing, but it cannot say which buildings flooded at the 15–18 Aug peak. Building-level flooding will have to come from ground height (Copernicus DEM) with the peak water level as an assumed, swept parameter, anchored to the water level of the flood patches the radar does see on 21 Aug.
+
+Documents the owner will need to download (sites blocked here): see `data/chalakudy/MANUAL_DOWNLOADS.md` (being written).
