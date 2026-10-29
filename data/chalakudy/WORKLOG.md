@@ -45,7 +45,7 @@ Blocked (403 at the proxy): openstreetmap.org (Overpass, Nominatim, API), downlo
 
 ### 2026-10-29 06:55 UTC: Global Flood Database has no Kerala 2018 event
 
-- Read the metadata of every 2018 event in `gs://gfd_v1_4` that overlaps July–September (range requests on the zips; script `experiments/chalakudy_fetch.py`, to be added). The two Indian events are DFO 4665 (2–10 Aug, centroid 27.3°N 94.1°E, north-east India/Bangladesh) and DFO 4673 (1–7 Sep, centroid 25.7°N 82.4°E). Neither covers Kerala. The database is built from MODIS optical imagery, which monsoon cloud blocks; Kerala's August 2018 flood is not in it.
+- Read the metadata of every 2018 event in `gs://gfd_v1_4` that overlaps July–September (range requests on the zips; script `experiments/chalakudy_fetch.py`, to be added). The two Indian events are DFO 4665 (2–10 Aug, centroid 27.3°N 94.1°E, north-east India/Bangladesh) and DFO 4673 (1–7 Sep, centroid 25.7°N 82.4°E). Neither covers Kerala, so Kerala's August 2018 flood is not in the database. A likely reason (not verified) is that it is built from MODIS optical imagery, which monsoon cloud blocks.
 - Downloaded DFO 4662 by mistake while checking (South America); it is not used.
 - Licence of the database: CC BY-NC 4.0 (from the LICENSE.txt in each zip).
 
@@ -54,3 +54,11 @@ Blocked (403 at the proxy): openstreetmap.org (Overpass, Nominatim, API), downlo
 - `sentinel-s1-l1c` on AWS serves 2018 IW GRD scenes anonymously. Each scene has a `productInfo.json` with its footprint; the VV image is about 700 MB.
 - Plan: find every scene covering Chalakudy from July to September 2018, then map open water by thresholding radar backscatter (a standard change-detection method; method and threshold to be cited), giving a measured-from-satellite flood extent on the actual overpass dates.
 - Raw downloads go to `data/chalakudy/raw/` (git-ignored); checksums and re-download instructions will be committed.
+
+### 2026-10-29 07:20 UTC: Sentinel-1 scenes over Chalakudy, July–September 2018
+
+- `experiments/chalakudy_fetch.py s1-scan 2018-07-01 2018-09-30`: listed 7,838 IW scenes acquired at Kerala overpass times, read each footprint, kept those that fully cover a box around Chalakudy town (76.25–76.40°E, 10.25–10.36°N). Result: `data/chalakudy/sentinel1_scenes.csv`, 11 scenes:
+  - descending, relative orbit 165 (about 00:40 UTC = 06:10 IST): 4, 16, 28 Jul; 9, 21 Aug; 2, 14, 26 Sep (Sentinel-1A, 12-day repeat) and 27 Aug (Sentinel-1B);
+  - ascending, relative orbit 173 (about 13:06 UTC = 18:36 IST): 21 and 27 Aug.
+- No scene between 10 and 20 Aug, so the flood peak (15–17 Aug) was not imaged. The 21 Aug 06:10 IST scene is the first after the peak; it can only show water that was still standing then, so it is a lower bound on the peak extent.
+- First scan attempt failed with `ConnectionResetError` from the proxy; added retries and fewer parallel requests.
