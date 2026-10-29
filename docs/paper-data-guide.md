@@ -208,7 +208,7 @@ What a data-availability statement can truthfully say:
 
 - Code, inputs, raw simulation outputs and analysis are in the public repository github.com/unknownsoldier1bit/kerala-mesh-simulation. The Chalakudy work is on branch `chalakudy-buildings` (not yet merged into `main`; update the statement if it is merged).
 - Raw downloads (about 170 MB) are not in the repository; `experiments/chalakudy_fetch.py` re-fetches them, and `data/chalakudy/downloads.csv` gives the URL, access time, size and SHA-256 of each file.
-- Every derived data file (boundary, building table, flood maps, study square, network structure, data summary) is rebuilt by a script and has a SHA-256 in `data/chalakudy/derived_files.csv`. The building table, study square, network table and data summary were checked to rebuild byte for byte.
+- Every derived data file (boundary, building table, flood maps, study square, network structure, data summary) is rebuilt by a script and has a SHA-256 in `data/chalakudy/derived_files.csv`. The town boundary, building table, study square, network table and data summary were checked to rebuild byte for byte; the flood maps were not rebuilt (that step reads radar image windows over the network).
 - All 966 Chalakudy runs (930 plus 36 cross-checks) recompute identically from their raw files, and `experiments/analyze_chalakudy.py` reproduces its tables and figures byte for byte. On a second machine every Chalakudy run checked matched exactly.
 - Software: ns-3.47; Python with NumPy, SciPy, pandas, networkx, matplotlib, rasterio, shapely, pyproj, pyarrow.
 

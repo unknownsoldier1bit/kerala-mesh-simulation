@@ -217,6 +217,7 @@ A further experiment: mesh devices at real building positions in a 1 km square o
 
 | If you need | Open |
 |---|---|
+| Everything the paper must say about the data: sources to cite, numbers, limitations, what not to claim, licences, to-do | `docs/paper-data-guide.md` |
 | What is real data, what is assumed, with sources, licences and checksums | `data/chalakudy/PROVENANCE.md`, `data/chalakudy/downloads.csv`, `data/chalakudy/derived_files.csv` |
 | Files this session could not download (please fetch) | `data/chalakudy/MANUAL_DOWNLOADS.md` |
 | Method | `experiments/README.md`, section 8 (limitations in section 7) |
