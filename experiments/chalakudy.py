@@ -625,8 +625,111 @@ def network_stats_fast(xy, rng_m):
                 isolated_nodes=sum(1 for c in comps if len(c) == 1), diameter_largest_component=None)
 
 
+def data_summary():
+    """Descriptive numbers about the data, for the paper's data section. Writes data/chalakudy/data_summary.json.
+    Everything comes from committed files: buildings.csv, study_area.json, sentinel1_scenes.csv, the flood/
+    rasters and tables, network_structure.csv and the chalakudy experiment's inputs."""
+    import rasterio.features
+
+    def pct(a, qs=(5, 10, 25, 50, 75, 90, 95)):
+        a = np.asarray(a, dtype=float)
+        return {f"p{q}": round(float(np.percentile(a, q)), 2) for q in qs}
+
+    out = {}
+    rows = read_buildings()
+    town = town_polygon_utm()
+    src = {}
+    for r in rows:
+        src[r["source"]] = src.get(r["source"], 0) + 1
+    out["municipality"] = dict(
+        area_km2=round(town.area / 1e6, 2), buildings=len(rows), buildings_by_source=src,
+        footprint_m2=pct([r["footprint_m2"] for r in rows], (25, 50, 75)),
+        ground_estimate_m=pct([r["ground_est_m"] for r in rows]),
+        building_density_per_km2=round(len(rows) / (town.area / 1e6), 1))
+
+    sq, origin = square_buildings(rows)
+    area = json.load(open(os.path.join(DATA, "study_area.json")))
+    near = {}
+    for col in [c for c in rows[0] if c.startswith("flood_dist_m_")]:
+        d = np.array([r[col] for r in sq], dtype=float)
+        near[col.replace("flood_dist_m_", "")] = dict(
+            nearest_m=round(float(d.min()), 1), **{f"within_{t}m": int((d <= t).sum()) for t in (20, 50, 100, 300)})
+    ssrc = {}
+    for r in sq:
+        ssrc[r["source"]] = ssrc.get(r["source"], 0) + 1
+    out["study_square"] = dict(
+        sw_corner_utm43n=[round(area["x0"], 1), round(area["y0"], 1)], side_m=area["side_m"], buildings=len(sq),
+        buildings_by_source=ssrc, lowest25pct_buildings=area["score_lowest25pct_buildings"],
+        ground_estimate_m=pct([r["ground_est_m"] for r in sq]), distance_to_radar_flood_water=near,
+        alternative_square=dict(sw_corner_utm43n=[round(area["alternative_x0"], 1), round(area["alternative_y0"], 1)],
+                                buildings=area["alternative_buildings"], rule=area["alternative_rule"]))
+
+    scenes = {r["id"]: r for r in csv.DictReader(open(os.path.join(DATA, "sentinel1_scenes.csv")))}
+    proc = list(csv.DictReader(open(os.path.join(FLOOD, "scenes_processed.csv"))))
+    sc_rows = []
+    for r in proc:
+        meta = scenes[r["scene"]]
+        sc_rows.append(dict(date=r["start_utc"][:10], time_utc=r["start_utc"][11:16], mission=meta["mission"],
+                            pass_direction=r["pass_direction"], relative_orbit=int(r["relative_orbit"]),
+                            threshold_db=float(r["otsu_threshold_db"]), water_share_pct=float(r["water_share_pct"]),
+                            reference_water_detected_pct=float(r["ref_water_cells_classified_water_pct"]),
+                            far_land_detected_as_water_pct=float(r["far_land_classified_water_pct"])))
+    geo = list(csv.DictReader(open(os.path.join(FLOOD, "geoid_offset_scan.csv"))))
+    best = max(geo, key=lambda g: float(g["mean_contrast_db"]))
+    out["sentinel1"] = dict(
+        scenes=len(sc_rows), first=sc_rows[0]["date"], last=sc_rows[-1]["date"],
+        missions={m: sum(1 for r in sc_rows if r["mission"] == m) for m in sorted({r["mission"] for r in sc_rows})},
+        gap_in_august="no image between 2018-08-09 and 2018-08-21",
+        threshold_db_range=[min(r["threshold_db"] for r in sc_rows), max(r["threshold_db"] for r in sc_rows)],
+        reference_water_detected_pct_range=[min(r["reference_water_detected_pct"] for r in sc_rows),
+                                            max(r["reference_water_detected_pct"] for r in sc_rows)],
+        far_land_detected_as_water_pct_range=[min(r["far_land_detected_as_water_pct"] for r in sc_rows),
+                                              max(r["far_land_detected_as_water_pct"] for r in sc_rows)],
+        geoid_offset_m=float(best["geoid_n_m"]), geoid_offset_contrast_db=float(best["mean_contrast_db"]),
+        per_scene=sc_rows)
+
+    transform, perm, flood = flood_masks()
+    inside = rasterio.features.rasterize([(town, 1)], out_shape=perm.shape, transform=transform).astype(bool)
+    cell_km2 = abs(transform.a * transform.e) / 1e6
+    out["water_in_municipality_km2"] = dict(
+        permanent_jan_may=round(float((perm & inside).sum() * cell_km2), 3),
+        **{f"flood_{k}": round(float((v & inside).sum() * cell_km2), 3) for k, v in flood.items()},
+        note="flood = water on that date that was not water in >= 50% of the Jan-May scenes nor on 28 Jul, in "
+             "patches of >= 10 cells (0.1 ha); radar cannot see water among buildings and trees")
+
+    net = list(csv.DictReader(open(os.path.join(DATA, "network_structure.csv"))))
+    nets = {}
+    for r in net:
+        if r["placement"] not in ("uniform", "uniform random in a 500 m square, redrawn until connected"):
+            continue
+        k = f"{r['source']}|{float(r['range_m']):g} m|{r['nodes']} devices"
+        nets.setdefault(k, []).append((float(r["mean_degree"]), float(r["largest_component_share"])))
+    out["network_structure"] = {k: dict(seeds=len(v), mean_degree=round(float(np.mean([a for a, _ in v])), 2),
+                                        largest_connected_share=round(float(np.mean([b for _, b in v])), 3))
+                                for k, v in sorted(nets.items())}
+
+    clus = {"flood25": [], "uniform25": []}
+    for seed in SEEDS:
+        d = os.path.join(REPO, "results", "chalakudy", "inputs", f"n100_s{seed}")
+        topo = {int(r["node_id"]): (float(r["x"]), float(r["y"])) for r in csv.DictReader(open(os.path.join(d, "topology.csv")))}
+        for tag in clus:
+            m = json.load(open(os.path.join(d, f"scenario_{tag}_on15.json")))
+            xy = np.array([topo[f["node"]] for f in m["failed_nodes"]])
+            dd = np.sqrt(((xy[:, None] - xy[None]) ** 2).sum(-1))
+            np.fill_diagonal(dd, np.inf)
+            clus[tag].append((float(dd.min(1).mean()), m["components_at_peak"]))
+    out["failure_pattern_n100_on15"] = {
+        tag: dict(failed_devices=25, nearest_other_failed_m_mean=round(float(np.mean([a for a, _ in v])), 1),
+                  components_at_peak_mean=round(float(np.mean([b for _, b in v])), 1)) for tag, v in clus.items()}
+    with open(os.path.join(DATA, "data_summary.json"), "w") as fh:
+        json.dump(out, fh, indent=1)
+    print(json.dumps({k: v for k, v in out.items() if k != "sentinel1"}, indent=1))
+
+
 if __name__ == "__main__":
     if sys.argv[1] == "prepare":
         prepare()
+    elif sys.argv[1] == "summary":
+        data_summary()
     elif sys.argv[1] == "network":
         network_table()

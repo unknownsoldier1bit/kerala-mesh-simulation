@@ -91,6 +91,7 @@ Checksums (SHA-256) of every downloaded file are in `downloads.csv`; raw files a
 | `data/chalakudy/buildings.csv` | `python3 experiments/chalakudy.py prepare` |
 | `data/chalakudy/study_area.json` | `python3 experiments/chalakudy.py prepare` |
 | `data/chalakudy/network_structure.csv` | `python3 experiments/chalakudy.py network` |
+| `data/chalakudy/data_summary.json` | `python3 experiments/chalakudy.py summary` |
 
 `chalakudy_fetch.py boundary` and `chalakudy.py prepare` were rerun on 29 Oct 2026 and reproduced `chalakudy_town_boundary.geojson`, `buildings.csv` and `study_area.json` byte for byte.
 

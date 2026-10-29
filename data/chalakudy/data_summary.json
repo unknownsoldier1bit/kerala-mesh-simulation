@@ -1,0 +1,492 @@
+{
+ "municipality": {
+  "area_km2": 24.83,
+  "buildings": 21355,
+  "buildings_by_source": {
+   "Google Open Buildings": 11841,
+   "OpenStreetMap": 9514
+  },
+  "footprint_m2": {
+   "p25": 46.3,
+   "p50": 100.9,
+   "p75": 166.3
+  },
+  "ground_estimate_m": {
+   "p5": 9.26,
+   "p10": 10.56,
+   "p25": 12.55,
+   "p50": 15.02,
+   "p75": 21.09,
+   "p90": 27.6,
+   "p95": 31.18
+  },
+  "building_density_per_km2": 860.0
+ },
+ "study_square": {
+  "sw_corner_utm43n": [
+   645297.5,
+   1138394.9
+  ],
+  "side_m": 1000.0,
+  "buildings": 1383,
+  "buildings_by_source": {
+   "Google Open Buildings": 712,
+   "OpenStreetMap": 671
+  },
+  "lowest25pct_buildings": 869.0,
+  "ground_estimate_m": {
+   "p5": 9.62,
+   "p10": 10.02,
+   "p25": 10.93,
+   "p50": 12.12,
+   "p75": 12.96,
+   "p90": 13.54,
+   "p95": 13.77
+  },
+  "distance_to_radar_flood_water": {
+   "2018-08-09_des": {
+    "nearest_m": 40.0,
+    "within_20m": 0,
+    "within_50m": 2,
+    "within_100m": 5,
+    "within_300m": 107
+   },
+   "2018-08-21_des": {
+    "nearest_m": 131.5,
+    "within_20m": 0,
+    "within_50m": 0,
+    "within_100m": 0,
+    "within_300m": 113
+   },
+   "2018-08-21_asc": {
+    "nearest_m": 58.3,
+    "within_20m": 0,
+    "within_50m": 0,
+    "within_100m": 9,
+    "within_300m": 169
+   },
+   "2018-08-27_des": {
+    "nearest_m": 80.6,
+    "within_20m": 0,
+    "within_50m": 0,
+    "within_100m": 2,
+    "within_300m": 120
+   }
+  },
+  "alternative_square": {
+   "sw_corner_utm43n": [
+    643597.5,
+    1138844.9
+   ],
+   "buildings": 838,
+   "rule": "most buildings within 300 m of 21-Aug Sentinel-1 flood water"
+  }
+ },
+ "sentinel1": {
+  "scenes": 24,
+  "first": "2018-01-05",
+  "last": "2018-09-26",
+  "missions": {
+   "S1A": 22,
+   "S1B": 2
+  },
+  "gap_in_august": "no image between 2018-08-09 and 2018-08-21",
+  "threshold_db_range": [
+   -12.948,
+   -10.608
+  ],
+  "reference_water_detected_pct_range": [
+   68.35,
+   92.62
+  ],
+  "far_land_detected_as_water_pct_range": [
+   0.33,
+   4.46
+  ],
+  "geoid_offset_m": -96.0,
+  "geoid_offset_contrast_db": 7.4023,
+  "per_scene": [
+   {
+    "date": "2018-01-05",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -12.564,
+    "water_share_pct": 2.041,
+    "reference_water_detected_pct": 84.15,
+    "far_land_detected_as_water_pct": 0.77
+   },
+   {
+    "date": "2018-01-17",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -12.671,
+    "water_share_pct": 1.842,
+    "reference_water_detected_pct": 82.23,
+    "far_land_detected_as_water_pct": 0.55
+   },
+   {
+    "date": "2018-01-29",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -12.454,
+    "water_share_pct": 1.924,
+    "reference_water_detected_pct": 82.11,
+    "far_land_detected_as_water_pct": 0.74
+   },
+   {
+    "date": "2018-02-10",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -12.771,
+    "water_share_pct": 1.974,
+    "reference_water_detected_pct": 82.0,
+    "far_land_detected_as_water_pct": 0.72
+   },
+   {
+    "date": "2018-02-22",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -12.609,
+    "water_share_pct": 2.407,
+    "reference_water_detected_pct": 83.07,
+    "far_land_detected_as_water_pct": 1.16
+   },
+   {
+    "date": "2018-03-06",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -12.51,
+    "water_share_pct": 2.596,
+    "reference_water_detected_pct": 82.91,
+    "far_land_detected_as_water_pct": 1.41
+   },
+   {
+    "date": "2018-03-18",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -12.63,
+    "water_share_pct": 2.783,
+    "reference_water_detected_pct": 83.48,
+    "far_land_detected_as_water_pct": 1.42
+   },
+   {
+    "date": "2018-03-30",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -12.569,
+    "water_share_pct": 2.537,
+    "reference_water_detected_pct": 82.83,
+    "far_land_detected_as_water_pct": 1.32
+   },
+   {
+    "date": "2018-04-11",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -12.586,
+    "water_share_pct": 2.14,
+    "reference_water_detected_pct": 82.51,
+    "far_land_detected_as_water_pct": 1.13
+   },
+   {
+    "date": "2018-04-23",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -12.426,
+    "water_share_pct": 2.04,
+    "reference_water_detected_pct": 83.93,
+    "far_land_detected_as_water_pct": 0.77
+   },
+   {
+    "date": "2018-05-05",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -12.401,
+    "water_share_pct": 1.794,
+    "reference_water_detected_pct": 82.93,
+    "far_land_detected_as_water_pct": 0.6
+   },
+   {
+    "date": "2018-05-17",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -12.182,
+    "water_share_pct": 2.015,
+    "reference_water_detected_pct": 83.53,
+    "far_land_detected_as_water_pct": 0.72
+   },
+   {
+    "date": "2018-05-29",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -11.676,
+    "water_share_pct": 1.752,
+    "reference_water_detected_pct": 84.65,
+    "far_land_detected_as_water_pct": 0.33
+   },
+   {
+    "date": "2018-07-04",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -11.8,
+    "water_share_pct": 1.879,
+    "reference_water_detected_pct": 85.78,
+    "far_land_detected_as_water_pct": 0.43
+   },
+   {
+    "date": "2018-07-16",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -10.608,
+    "water_share_pct": 6.32,
+    "reference_water_detected_pct": 92.62,
+    "far_land_detected_as_water_pct": 4.46
+   },
+   {
+    "date": "2018-07-28",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -12.443,
+    "water_share_pct": 1.909,
+    "reference_water_detected_pct": 87.46,
+    "far_land_detected_as_water_pct": 0.5
+   },
+   {
+    "date": "2018-08-09",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -12.37,
+    "water_share_pct": 5.033,
+    "reference_water_detected_pct": 90.16,
+    "far_land_detected_as_water_pct": 3.42
+   },
+   {
+    "date": "2018-08-21",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -12.25,
+    "water_share_pct": 4.998,
+    "reference_water_detected_pct": 91.05,
+    "far_land_detected_as_water_pct": 3.19
+   },
+   {
+    "date": "2018-08-21",
+    "time_utc": "13:06",
+    "mission": "S1A",
+    "pass_direction": "ascending",
+    "relative_orbit": 173,
+    "threshold_db": -12.948,
+    "water_share_pct": 4.199,
+    "reference_water_detected_pct": 85.09,
+    "far_land_detected_as_water_pct": 2.56
+   },
+   {
+    "date": "2018-08-27",
+    "time_utc": "00:40",
+    "mission": "S1B",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -12.254,
+    "water_share_pct": 2.714,
+    "reference_water_detected_pct": 68.35,
+    "far_land_detected_as_water_pct": 1.45
+   },
+   {
+    "date": "2018-08-27",
+    "time_utc": "13:05",
+    "mission": "S1B",
+    "pass_direction": "ascending",
+    "relative_orbit": 173,
+    "threshold_db": -12.911,
+    "water_share_pct": 2.453,
+    "reference_water_detected_pct": 82.25,
+    "far_land_detected_as_water_pct": 1.28
+   },
+   {
+    "date": "2018-09-02",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -12.352,
+    "water_share_pct": 2.624,
+    "reference_water_detected_pct": 90.56,
+    "far_land_detected_as_water_pct": 1.34
+   },
+   {
+    "date": "2018-09-14",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -12.834,
+    "water_share_pct": 2.466,
+    "reference_water_detected_pct": 89.63,
+    "far_land_detected_as_water_pct": 0.98
+   },
+   {
+    "date": "2018-09-26",
+    "time_utc": "00:40",
+    "mission": "S1A",
+    "pass_direction": "descending",
+    "relative_orbit": 165,
+    "threshold_db": -12.759,
+    "water_share_pct": 2.175,
+    "reference_water_detected_pct": 89.85,
+    "far_land_detected_as_water_pct": 0.69
+   }
+  ]
+ },
+ "water_in_municipality_km2": {
+  "permanent_jan_may": 0.393,
+  "flood_2018-08-09T0040_des": 0.983,
+  "flood_2018-08-21T0040_des": 0.981,
+  "flood_2018-08-21T1306_asc": 0.84,
+  "flood_2018-08-27T0040_des": 0.251,
+  "note": "flood = water on that date that was not water in >= 50% of the Jan-May scenes nor on 28 Jul, in patches of >= 10 cells (0.1 ha); radar cannot see water among buildings and trees"
+ },
+ "network_structure": {
+  "chalakudy_all_buildings|150 m|1383 devices": {
+   "seeds": 1,
+   "mean_degree": 100.18,
+   "largest_connected_share": 1.0
+  },
+  "chalakudy_all_buildings|62.8 m|1383 devices": {
+   "seeds": 1,
+   "mean_degree": 20.66,
+   "largest_connected_share": 0.983
+  },
+  "chalakudy|150 m|100 devices": {
+   "seeds": 10,
+   "mean_degree": 7.21,
+   "largest_connected_share": 0.967
+  },
+  "chalakudy|150 m|1000 devices": {
+   "seeds": 10,
+   "mean_degree": 72.15,
+   "largest_connected_share": 1.0
+  },
+  "chalakudy|150 m|150 devices": {
+   "seeds": 10,
+   "mean_degree": 10.78,
+   "largest_connected_share": 0.986
+  },
+  "chalakudy|150 m|300 devices": {
+   "seeds": 10,
+   "mean_degree": 21.95,
+   "largest_connected_share": 0.997
+  },
+  "chalakudy|150 m|50 devices": {
+   "seeds": 10,
+   "mean_degree": 3.75,
+   "largest_connected_share": 0.606
+  },
+  "chalakudy|150 m|500 devices": {
+   "seeds": 10,
+   "mean_degree": 35.91,
+   "largest_connected_share": 0.999
+  },
+  "chalakudy|150 m|800 devices": {
+   "seeds": 10,
+   "mean_degree": 57.85,
+   "largest_connected_share": 1.0
+  },
+  "chalakudy|62.8 m|100 devices": {
+   "seeds": 10,
+   "mean_degree": 1.5,
+   "largest_connected_share": 0.103
+  },
+  "chalakudy|62.8 m|1000 devices": {
+   "seeds": 10,
+   "mean_degree": 14.98,
+   "largest_connected_share": 0.982
+  },
+  "chalakudy|62.8 m|150 devices": {
+   "seeds": 10,
+   "mean_degree": 2.2,
+   "largest_connected_share": 0.16
+  },
+  "chalakudy|62.8 m|300 devices": {
+   "seeds": 10,
+   "mean_degree": 4.49,
+   "largest_connected_share": 0.494
+  },
+  "chalakudy|62.8 m|50 devices": {
+   "seeds": 10,
+   "mean_degree": 0.74,
+   "largest_connected_share": 0.084
+  },
+  "chalakudy|62.8 m|500 devices": {
+   "seeds": 10,
+   "mean_degree": 7.35,
+   "largest_connected_share": 0.921
+  },
+  "chalakudy|62.8 m|800 devices": {
+   "seeds": 10,
+   "mean_degree": 11.85,
+   "largest_connected_share": 0.972
+  },
+  "main_grid|150 m|100 devices": {
+   "seeds": 10,
+   "mean_degree": 22.41,
+   "largest_connected_share": 1.0
+  },
+  "main_grid|150 m|25 devices": {
+   "seeds": 10,
+   "mean_degree": 5.15,
+   "largest_connected_share": 1.0
+  },
+  "main_grid|150 m|50 devices": {
+   "seeds": 10,
+   "mean_degree": 10.53,
+   "largest_connected_share": 1.0
+  }
+ },
+ "failure_pattern_n100_on15": {
+  "flood25": {
+   "failed_devices": 25,
+   "nearest_other_failed_m_mean": 83.1,
+   "components_at_peak_mean": 3.3
+  },
+  "uniform25": {
+   "failed_devices": 25,
+   "nearest_other_failed_m_mean": 103.8,
+   "components_at_peak_mean": 4.2
+  }
+ }
+}

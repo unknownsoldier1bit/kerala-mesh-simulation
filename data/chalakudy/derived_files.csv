@@ -32,3 +32,4 @@ data/chalakudy/flood/water_2018-09-26T0040_des.tif,9580,74c2115b876bd45459aed128
 data/chalakudy/buildings.csv,2655035,9cd5001cfe41c7c3c57ed477a8c717d3492837bd5cee75dd98539b48b2a67ade,python3 experiments/chalakudy.py prepare
 data/chalakudy/study_area.json,516,6b2655266b5da074f084749516243ea85501ee21c8b2027b7bf591b09aa427c4,python3 experiments/chalakudy.py prepare
 data/chalakudy/network_structure.csv,12336,42064ce0078ce8f1ca9673735e80607cfc726eaea31807cf46c8269e10a6d78f,python3 experiments/chalakudy.py network
+data/chalakudy/data_summary.json,11992,c79dda287ca40073cb57c9607ec5d3b9f429782beac787a04ad10121acdf0665,python3 experiments/chalakudy.py summary

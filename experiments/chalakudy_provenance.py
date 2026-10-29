@@ -151,6 +151,7 @@ DERIVED = [
     ("buildings.csv", "python3 experiments/chalakudy.py prepare"),
     ("study_area.json", "python3 experiments/chalakudy.py prepare"),
     ("network_structure.csv", "python3 experiments/chalakudy.py network"),
+    ("data_summary.json", "python3 experiments/chalakudy.py summary"),
 ]
 
 
