@@ -169,3 +169,76 @@ All numbers are from `data/chalakudy/data_summary.json` unless another file is n
 - Sensitivity run: the 3GPP TR 37.885 V2V-Urban NLOS path-loss formula, PL = 36.85 + 30 log10(d) + 18.9 log10(f), at ns-3's default 2,412 MHz (exponent 3, 44.08 dB at 1 m), nothing adjusted. With ns-3's default transmit power (16.02 dBm) and preamble-detection threshold (−82 dBm), frames get through up to 62.8 m (checked with two devices: 100/100 packets at 62.5 m, 0/100 at 63 m).
 - NLOS for every link is ASSUMED (devices in houses under dense tree cover). The model was made for vehicles near street level, not for devices inside houses.
 - What it shows: at 62.8 m the 100 devices split into about 48 groups (the largest holds 10%), no traffic pair is connected, and no packet is delivered in any of the 90 runs (184,731 sent). A connected network under this model would need about 500 devices in the square (largest group 92%), about one per three buildings. Every Chalakudy result is therefore conditional on the 150 m range.
+
+## 5. Data limitations to state
+
+Put these in the limitations or discussion section. Each one changes how strongly a result can be read.
+
+1. **The radar cannot say which buildings flooded.** Sentinel-1 sees flooded fields, not water among houses and trees, and has no image between 9 and 21 Aug, so the peak was never observed. In the study square the failure order comes from ground height alone.
+2. **The ground height is a surface model.** Copernicus DEM includes trees and roofs, so it ranks buildings only roughly, and its absolute heights cannot set a flood level. The square is nearly flat (10.0–13.5 m for 80% of buildings), so the ranking is noisy and the flood pattern is only moderately clustered. A bare-earth model (FABDEM) would improve it (`MANUAL_DOWNLOADS.md` item 8).
+3. **The buildings are present-day map features, not the 2018 town.** Overture 2026-10-21.0; the Google Open Buildings records are dated 2023 and are machine-detected, so outlines are less precise. 21,355 is a count of mapped features, not of households, and some buildings may not have existed in 2018.
+4. **One square of one town.** 1 km², 1,383 buildings, chosen by a rule (lowest-lying built-up area). Results may not carry over to other parts of Chalakudy or to other towns.
+5. **How many buildings flooded is assumed** (25%, with 10% and 50% swept), and so are the steady rise of the water from the onset to 18 Aug and that flooded devices never return.
+6. **The event dates partly rest on press reports that disagree** (Chalakudy flooded on 15 or 17 Aug; both are run), and the 27 Aug restoration date is for the last Thrissur substation, not necessarily for this square.
+7. **Who has a device is unknown.** Census and device-ownership figures could not be obtained, so 100 devices per km² is a scenario, not an estimate of participation.
+8. **Batteries and energy are placeholders.** The battery size is not from a cited source, only the Wi-Fi radio is modelled, and ns-3's default currents are not measurements of a 2018 phone. With them every device runs flat within hours of the power cut.
+9. **Time compression.** 1 day = 30 s (factor 2,880) for failures and batteries, while routing and traffic run in real simulated time. The scenario keeps the order and relative timing of events, not their durations.
+10. **Radio range.** The 150 m unit disk is an assumption. Under a cited path-loss model the default radio reaches 62.8 m and 100 devices do not form a network. Every result is conditional on the 150 m range.
+11. **Static devices and assumed traffic.** No movement; message traffic is assumed (no data exists).
+12. **The geoid offset was estimated from the data** (−96 m), because the geoid grid could not be downloaded here; it agrees with EGM2008 at the town centre (−95.7 m).
+
+## 6. What not to say or cite
+
+- **DON'T** call the devices "phones". Use "mesh nodes" or "mobile devices" (stock phones can't do ad-hoc routing).
+- **DON'T** write that buildings were observed to flood, or call the flood model "real flooding". Say: failure order from real elevation data, timed by dated 2018 events, with an assumed flooded share.
+- **DON'T** present either flood scenario as a measurement of what happened in Kerala. Both are hypothetical scenarios anchored to real data.
+- **DON'T** cite the figures in the "Don't cite" list of `data/sources.md`: ~300 Kerala towers down, 4–8 h tower batteries, Nepal ~90%, Hurricane Maria ~95%, Haiti ~60%. Death tolls differ by source (339 / 433 / 474 / 483): if you give one, name its source.
+- **DON'T** cite the Chalakudy census figures seen only in search snippets (population 49,525; 12,218 or 12,567 households; about 36 wards) until the census or AMRUT document is opened.
+- The 27% statewide base-station outage (Kerala-anchored experiment) is **press-reported** (Telecom Secretary review, via ET and TelecomTalk, 27 Aug 2018). Say so wherever it appears.
+- Use the CAG report for dated events only, **not** as a river level or flood curve.
+- **NEEDS URL** before citing: the KSEB 27 Aug restoration date and the two onset reports (Deccan Herald, Scroll).
+- Don't compare whole-run PDR across battery settings (a flat device sends nothing); use delivered-of-scheduled messages.
+- Don't attribute a difference to flooding if the no-flood control already shows it (for example AODV's lower within-1 s delivery). Compare each flood run with the control of the same devices.
+- Don't describe the 3GPP path-loss result as measured in Chalakudy: it is a published model applied without adjustment.
+- Don't call any Chalakudy result a confirmed prediction: the predictions were skipped before these runs (`experiments/README.md` section 7).
+
+## 7. Data availability, reproducibility and licences
+
+What a data-availability statement can truthfully say:
+
+- Code, inputs, raw simulation outputs and analysis are in the public repository github.com/unknownsoldier1bit/kerala-mesh-simulation. The Chalakudy work is on branch `chalakudy-buildings` (not yet merged into `main`; update the statement if it is merged).
+- Raw downloads (about 170 MB) are not in the repository; `experiments/chalakudy_fetch.py` re-fetches them, and `data/chalakudy/downloads.csv` gives the URL, access time, size and SHA-256 of each file.
+- Every derived data file (boundary, building table, flood maps, study square, network structure, data summary) is rebuilt by a script and has a SHA-256 in `data/chalakudy/derived_files.csv`. The building table, study square, network table and data summary were checked to rebuild byte for byte.
+- All 966 Chalakudy runs (930 plus 36 cross-checks) recompute identically from their raw files, and `experiments/analyze_chalakudy.py` reproduces its tables and figures byte for byte. On a second machine every Chalakudy run checked matched exactly.
+- Software: ns-3.47; Python with NumPy, SciPy, pandas, networkx, matplotlib, rasterio, shapely, pyproj, pyarrow.
+
+Licences and credits that must appear (acknowledgements, figure captions or data statement):
+
+- "© OpenStreetMap contributors" and "Overture Maps Foundation" on every map and for the building and water data (ODbL).
+- DataMeet for the municipality boundary (ODbL).
+- Google Open Buildings for the machine-detected footprints (VERIFY the licence wording).
+- "Contains modified Copernicus Sentinel data [2018]" for the radar maps.
+- The Copernicus DEM attribution (VERIFY the exact wording).
+- **Share-alike:** `buildings.csv` and the other derived tables are built from ODbL data and are published in a public repository, so they should carry an ODbL notice and attribution. The repository currently has no licence file at all (see section 9).
+
+## 8. Figures and tables about the data
+
+| Item | File (`results/analysis_chalakudy/figures/` unless noted) | Suggested place |
+|---|---|---|
+| Study-area map (buildings, devices, failures, radar water) | `chalakudy_study_area` | Data section |
+| Network density vs the main grid, at 150 m and 62.8 m | `chalakudy_network_density` | Data section or density discussion |
+| Geolocation check of the radar maps | `chalakudy_qa_geolocation` | Appendix |
+| Measured / derived / assumed table | `data/chalakudy/PROVENANCE.md` (condense) | Appendix, referenced in methods |
+| Sentinel-1 scene table | section 4.4 above | Appendix |
+| Timeline table | section 4.5 above | Methods |
+| Scenario properties (failed devices, clustering, groups at peak) | `results/analysis_chalakudy/tables/scenario_properties.csv` | Methods or appendix |
+| Every caption | must say which parts are real data and which are assumed (the figures above already do) | |
+
+## 9. To do before submission
+
+1. Record the URLs (and page or section) of the KSEB report, the Deccan Herald article and the Scroll article; for KSEB, note which area the 27 Aug date covers.
+2. Check every citation marked VERIFY in section 2 (Google Open Buildings paper and licence, Copernicus DEM DOI and attribution wording, 3GPP TR 37.885 version, Otsu, Friedman, Wilcoxon, Holm).
+3. Fetch what you can from `data/chalakudy/MANUAL_DOWNLOADS.md`. Census and device ownership would let you state a participation rate; the KSEB cut-off date would replace the assumed power-cut date; a cited battery capacity would replace the 3,000 mAh placeholder; FABDEM would improve the ground ranking. Any of these changes the inputs, so the affected runs would need redoing.
+4. Add licence notices to the public repository: an ODbL notice and attribution for the derived data in `data/chalakudy/`, and a licence of your choice for the code. Ask your teacher or co-author if unsure.
+5. Set the deadline T from Kerala data, or say in the paper that T = 1 s is a placeholder and show the other deadlines (0.5, 2, 5 s are in the tables).
+6. Decide where the propagation result goes. It is the strongest single caveat on all Chalakudy results, so it belongs in the main text, not only the appendix.
