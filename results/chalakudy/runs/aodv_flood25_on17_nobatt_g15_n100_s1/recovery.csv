@@ -3,6 +3,7 @@ aodv_flood25_on17_nobatt_g15_n100_s1,153.0,fail,14,True,True,6.328402000000011,0
 aodv_flood25_on17_nobatt_g15_n100_s1,156.6,fail,0,True,False,,,291.4,448.0,0,0
 aodv_flood25_on17_nobatt_g15_n100_s1,157.8,fail,0,True,False,,,290.2,448.0,0,0
 aodv_flood25_on17_nobatt_g15_n100_s1,157.8,fail,5,True,False,,,290.2,448.0,4,0
+aodv_flood25_on17_nobatt_g15_n100_s1,157.8,fail,16,True,True,2.7094859999999983,0.005032999999997401,2.7094859999999983,448.0,10,10
 aodv_flood25_on17_nobatt_g15_n100_s1,157.8,fail,19,True,True,29.019787999999977,2.0212609999999813,29.019787999999977,448.0,0,0
 aodv_flood25_on17_nobatt_g15_n100_s1,159.0,fail,10,True,True,68.202574,1.2473439999999982,68.202574,448.0,0,0
 aodv_flood25_on17_nobatt_g15_n100_s1,159.0,fail,15,True,False,,,289.0,448.0,0,0

@@ -1,5 +1,6 @@
 run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
 aodv_uniform25_on17_batt50_g15_n100_s7,150.6,fail,1,True,False,,,297.4,448.0,0,0
+aodv_uniform25_on17_batt50_g15_n100_s7,150.6,fail,14,True,True,0.20256600000001868,0.004159000000015567,0.20256600000001868,448.0,4,3
 aodv_uniform25_on17_batt50_g15_n100_s7,152.0,fail,5,True,False,,,296.0,448.0,0,0
 aodv_uniform25_on17_batt50_g15_n100_s7,152.0,fail,7,True,False,,,296.0,448.0,5,0
 aodv_uniform25_on17_batt50_g15_n100_s7,152.0,fail,12,True,False,,,296.0,448.0,0,0

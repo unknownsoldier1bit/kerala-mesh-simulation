@@ -1,4 +1,4 @@
-# Run from the repo root. ns3.47-manet = <NS-3 dir>/build/scratch/manet/ns3.47-manet-optimized
+# Run from the repo root. ns3.47-manet = <NS-3 dir>/build/scratch/manet/ns3.47-manet-optimized (or -default)
 # (equivalently: ./ns3 run "manet <args>" from the NS-3 dir, with absolute paths)
 ns3.47-manet --protocol=aodv --topo=results/rtscts100/inputs/n100_s1/topology.csv --flows=results/rtscts100/inputs/n100_s1/flows_f10.csv --outDir=results/rtscts100/runs/aodv_baseline_rtscts_n100_f10_s1 --run=1 --simTime=300.0 --range=150.0 --energyJ=0 --events=results/rtscts100/inputs/n100_s1/events_baseline_f10.csv --rtsCts=true
 ns3.47-manet --protocol=olsr --topo=results/rtscts100/inputs/n100_s1/topology.csv --flows=results/rtscts100/inputs/n100_s1/flows_f10.csv --outDir=results/rtscts100/runs/olsr_baseline_rtscts_n100_f10_s1 --run=1 --simTime=300.0 --range=150.0 --energyJ=0 --events=results/rtscts100/inputs/n100_s1/events_baseline_f10.csv --rtsCts=true

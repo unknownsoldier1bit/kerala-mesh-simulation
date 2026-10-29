@@ -1,4 +1,4 @@
-# Run from the repo root. ns3.47-manet = <NS-3 dir>/build/scratch/manet/ns3.47-manet-optimized
+# Run from the repo root. ns3.47-manet = <NS-3 dir>/build/scratch/manet/ns3.47-manet-optimized (or -default)
 # (equivalently: ./ns3 run "manet <args>" from the NS-3 dir, with absolute paths)
 ns3.47-manet --protocol=aodv --topo=results/chalakudy_traffic/inputs/n100_s1/topology.csv --flows=results/chalakudy_traffic/inputs/n100_s1/flows_gap7.5.csv --outDir=results/chalakudy_traffic/runs/aodv_flood25_on15_nobatt_g7.5_n100_s1 --run=1 --simTime=450.0 --range=150.0 --energyJ=0 --events=results/chalakudy_traffic/inputs/n100_s1/events_flood25_on15.csv
 ns3.47-manet --protocol=olsr --topo=results/chalakudy_traffic/inputs/n100_s1/topology.csv --flows=results/chalakudy_traffic/inputs/n100_s1/flows_gap7.5.csv --outDir=results/chalakudy_traffic/runs/olsr_flood25_on15_nobatt_g7.5_n100_s1 --run=1 --simTime=450.0 --range=150.0 --energyJ=0 --events=results/chalakudy_traffic/inputs/n100_s1/events_flood25_on15.csv

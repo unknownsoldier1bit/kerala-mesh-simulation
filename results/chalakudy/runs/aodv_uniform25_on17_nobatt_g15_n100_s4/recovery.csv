@@ -3,6 +3,7 @@ aodv_uniform25_on17_nobatt_g15_n100_s4,151.8,fail,5,True,True,9.875378999999981,
 aodv_uniform25_on17_nobatt_g15_n100_s4,156.6,fail,9,True,False,,,291.4,448.0,0,0
 aodv_uniform25_on17_nobatt_g15_n100_s4,160.2,fail,5,True,True,1.4753790000000038,0.07448599999997896,1.4753790000000038,448.0,10,9
 aodv_uniform25_on17_nobatt_g15_n100_s4,160.2,fail,10,True,False,,,287.8,448.0,0,0
+aodv_uniform25_on17_nobatt_g15_n100_s4,160.2,fail,13,True,True,1.770292000000012,1.614118999999988,1.770292000000012,448.0,8,8
 aodv_uniform25_on17_nobatt_g15_n100_s4,160.2,fail,15,True,True,5.430383000000006,0.020018999999990683,5.430383000000006,448.0,5,5
 aodv_uniform25_on17_nobatt_g15_n100_s4,160.2,fail,18,True,False,,,287.8,448.0,0,0
 aodv_uniform25_on17_nobatt_g15_n100_s4,161.4,fail,17,True,False,,,286.6,448.0,0,0
@@ -20,3 +21,4 @@ aodv_uniform25_on17_nobatt_g15_n100_s4,175.8,fail,1,False,False,,,272.2,448.0,0,
 aodv_uniform25_on17_nobatt_g15_n100_s4,175.8,fail,6,False,False,,,272.2,448.0,0,0
 aodv_uniform25_on17_nobatt_g15_n100_s4,175.8,fail,12,False,False,,,272.2,448.0,5,0
 aodv_uniform25_on17_nobatt_g15_n100_s4,175.8,fail,19,False,False,,,272.2,448.0,0,0
+aodv_uniform25_on17_nobatt_g15_n100_s4,177.0,fail,5,True,True,8.715722,0.07311300000000642,8.715722,448.0,5,5

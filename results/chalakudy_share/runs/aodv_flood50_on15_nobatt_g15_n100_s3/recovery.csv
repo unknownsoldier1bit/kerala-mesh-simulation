@@ -1,4 +1,5 @@
 run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+aodv_flood50_on15_nobatt_g15_n100_s3,107.1,fail,5,True,True,1.9094500000000068,1.7908060000000035,1.9094500000000068,448.0,4,4
 aodv_flood50_on15_nobatt_g15_n100_s3,108.9,fail,1,True,True,16.942111999999995,0.04102899999999465,16.942111999999995,448.0,0,0
 aodv_flood50_on15_nobatt_g15_n100_s3,108.9,fail,6,True,True,37.374538,1.9846900000000005,37.374538,448.0,0,0
 aodv_flood50_on15_nobatt_g15_n100_s3,108.9,fail,16,True,True,0.38299999999999557,0.05329500000000564,0.38299999999999557,448.0,10,10

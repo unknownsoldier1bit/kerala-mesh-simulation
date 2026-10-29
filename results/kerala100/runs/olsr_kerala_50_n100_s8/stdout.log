@@ -1,1 +1,1 @@
-done protocol=olsr nodes=100 flows=20 wall_s=95.889
+done protocol=olsr nodes=100 flows=20 wall_s=110.849 fragmented_routing_packets=1

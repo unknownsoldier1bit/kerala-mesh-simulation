@@ -4,6 +4,7 @@ aodv_flood25_on15_nobatt_g30_n100_s5,95.4,fail,15,True,True,27.49508999999999,1.
 aodv_flood25_on15_nobatt_g30_n100_s5,109.8,fail,8,True,True,14.540744000000004,1.2647249999999985,14.540744000000004,448.0,0,0
 aodv_flood25_on15_nobatt_g30_n100_s5,109.8,fail,15,True,True,13.095089999999999,1.2666559999999976,13.095089999999999,448.0,0,0
 aodv_flood25_on15_nobatt_g30_n100_s5,124.2,fail,18,True,True,4.4008189999999985,0.6794909999999987,4.4008189999999985,448.0,5,5
+aodv_flood25_on15_nobatt_g30_n100_s5,127.8,fail,9,True,False,,,320.2,448.0,0,0
 aodv_flood25_on15_nobatt_g30_n100_s5,131.4,fail,1,False,False,,,316.6,448.0,0,0
 aodv_flood25_on15_nobatt_g30_n100_s5,131.4,fail,9,False,False,,,316.6,448.0,0,0
 aodv_flood25_on15_nobatt_g30_n100_s5,131.4,fail,16,False,False,,,316.6,448.0,0,0

@@ -2,6 +2,7 @@ run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_fro
 aodv_flood25_on15_batt50_g15_n100_s3,93.0,fail,5,True,False,,,355.0,448.0,0,0
 aodv_flood25_on15_batt50_g15_n100_s3,93.0,fail,7,True,False,,,355.0,448.0,0,0
 aodv_flood25_on15_batt50_g15_n100_s3,93.0,fail,9,True,False,,,355.0,448.0,0,0
+aodv_flood25_on15_batt50_g15_n100_s3,93.0,fail,11,True,True,0.887163000000001,0.8381439999999998,0.887163000000001,448.0,3,3
 aodv_flood25_on15_batt50_g15_n100_s3,93.0,fail,13,True,False,,,355.0,448.0,0,0
 aodv_flood25_on15_batt50_g15_n100_s3,93.0,fail,19,True,False,,,355.0,448.0,0,0
 aodv_flood25_on15_batt50_g15_n100_s3,94.0,fail,12,True,False,,,354.0,448.0,0,0

@@ -1,3 +1,4 @@
 run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
 aodv_kerala_50_n100_s9,91.333,fail,1,True,False,,,356.66700000000003,448.0,0,0
+aodv_kerala_50_n100_s9,112.667,fail,9,True,False,,,335.33299999999997,448.0,2,0
 aodv_kerala_50_n100_s9,409.0,fail,11,True,True,29.45348100000001,0.046469999999999345,29.45348100000001,448.0,0,0

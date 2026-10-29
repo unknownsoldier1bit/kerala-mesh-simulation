@@ -19,6 +19,7 @@ aodv_uniform25_on17_batt50_g15_n100_s9,154.0,fail,3,False,False,,,294.0,448.0,0,
 aodv_uniform25_on17_batt50_g15_n100_s9,154.0,fail,4,False,False,,,294.0,448.0,0,0
 aodv_uniform25_on17_batt50_g15_n100_s9,154.0,fail,8,False,False,,,294.0,448.0,0,0
 aodv_uniform25_on17_batt50_g15_n100_s9,154.0,fail,11,False,False,,,294.0,448.0,5,0
+aodv_uniform25_on17_batt50_g15_n100_s9,154.0,fail,13,True,False,,,294.0,448.0,0,0
 aodv_uniform25_on17_batt50_g15_n100_s9,154.0,fail,16,False,False,,,294.0,448.0,4,0
 aodv_uniform25_on17_batt50_g15_n100_s9,154.0,fail,17,False,False,,,294.0,448.0,5,0
 aodv_uniform25_on17_batt50_g15_n100_s9,155.0,fail,2,False,False,,,293.0,448.0,3,0

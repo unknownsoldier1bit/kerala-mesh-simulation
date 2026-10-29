@@ -1,4 +1,4 @@
-# Run from the repo root. ns3.47-manet = <NS-3 dir>/build/scratch/manet/ns3.47-manet-optimized
+# Run from the repo root. ns3.47-manet = <NS-3 dir>/build/scratch/manet/ns3.47-manet-optimized (or -default)
 # (equivalently: ./ns3 run "manet <args>" from the NS-3 dir, with absolute paths)
 ns3.47-manet --protocol=aodv --topo=results/kerala100/inputs/n100_s1/topology.csv --flows=results/kerala100/inputs/n100_s1/flows_bursts.csv --outDir=results/kerala100/runs/aodv_control_n100_s1 --run=1 --simTime=450.0 --range=150.0 --energyJ=0 --events=results/kerala100/inputs/n100_s1/events_control.csv --energyFile=results/kerala100/inputs/n100_s1/battery.csv
 ns3.47-manet --protocol=olsr --topo=results/kerala100/inputs/n100_s1/topology.csv --flows=results/kerala100/inputs/n100_s1/flows_bursts.csv --outDir=results/kerala100/runs/olsr_control_n100_s1 --run=1 --simTime=450.0 --range=150.0 --energyJ=0 --events=results/kerala100/inputs/n100_s1/events_control.csv --energyFile=results/kerala100/inputs/n100_s1/battery.csv

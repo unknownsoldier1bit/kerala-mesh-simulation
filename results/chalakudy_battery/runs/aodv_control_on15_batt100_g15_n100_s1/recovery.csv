@@ -17,5 +17,6 @@ aodv_control_on15_batt100_g15_n100_s1,99.0,fail,6,False,False,,,349.0,448.0,0,0
 aodv_control_on15_batt100_g15_n100_s1,99.0,fail,17,True,False,,,349.0,448.0,1,0
 aodv_control_on15_batt100_g15_n100_s1,100.0,fail,2,True,False,,,348.0,448.0,0,0
 aodv_control_on15_batt100_g15_n100_s1,100.0,fail,6,False,False,,,348.0,448.0,0,0
+aodv_control_on15_batt100_g15_n100_s1,100.0,fail,7,True,True,0.39314600000000155,0.362370999999996,0.39314600000000155,448.0,2,2
 aodv_control_on15_batt100_g15_n100_s1,101.0,fail,6,False,False,,,347.0,448.0,0,0
 aodv_control_on15_batt100_g15_n100_s1,101.0,fail,7,False,False,,,347.0,448.0,0,0

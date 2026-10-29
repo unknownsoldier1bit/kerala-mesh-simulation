@@ -1,2 +1,2 @@
 protocol,nodes,flows,suppressed_sends,socket_errors,duplicate_receptions,wall_s
-olsr,100,20,1239,583,0,95.889
+olsr,100,20,1239,583,0,110.849

@@ -1,4 +1,5 @@
 run_id,event_time_s,event,flow,route_available,recovered,recovery_s,recovery_from_next_send_s,outage_s,censored_at_s,sent_in_window,delivered_in_window
+aodv_uniform_50_n100_s6,74.0,fail,10,True,True,3.5179779999999994,0.12867900000000532,3.5179779999999994,448.0,10,10
 aodv_uniform_50_n100_s6,92.667,fail,3,True,True,1.871257,0.054000000000002046,1.871257,448.0,10,7
 aodv_uniform_50_n100_s6,92.667,fail,15,True,True,18.348116000000005,0.40241000000000327,18.348116000000005,448.0,0,0
 aodv_uniform_50_n100_s6,95.333,fail,4,True,False,,,352.66700000000003,448.0,0,0

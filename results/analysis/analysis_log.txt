@@ -7,7 +7,7 @@ RTS/CTS sensitivity: 30 runs
 energy check: 38 runs, max relative difference 7.56e-01
 FlowMonitor check: 54 runs, max |received difference| 10, after excluding packets slower than 10 s: 0; max |sent difference| after excluding source refusals: 0
 convergence check: 12 of 880 OLSR/DSDV runs not converged when traffic started (dsdv n25 s10, dsdv n25 s4)
-scenario properties: 430 scenario files
+scenario properties: 626 scenario files
 failed runs: 0
 combined summary table: 1350 runs
 findings digest written
