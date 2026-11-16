@@ -23,7 +23,7 @@ import sys
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 TABLES = os.path.join(REPO, "docs", "paper", "tables")
 OUT = os.environ.get("OUT", "/tmp")
-DOC_ID = "1SNSzLxNARXC23C7tTHJGshCh_LWfS0TynoMmm9px1lE"
+DOC_ID = "1jULbOBAzoe8FVNwMYo824ni0_Z7ThJIEu91CbIyw42k"   # "FINAL draft", from 2026-11-16 (earlier: 1SNSzLx...)
 OLD_END = 23823
 RAW = "https://raw.githubusercontent.com/unknownsoldier1bit/kerala-mesh-simulation/chalakudy-buildings/"
 REPO_URL = "https://github.com/unknownsoldier1bit/kerala-mesh-simulation"
