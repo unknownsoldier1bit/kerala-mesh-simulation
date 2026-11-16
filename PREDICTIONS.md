@@ -111,7 +111,25 @@ Test 1, opened 16 Nov 2026 after the predictions above were committed (10 runs, 
 
 Delivery rose in every seed (median +28 points, Wilcoxon p = 0.002), the opposite of the prediction, and stayed below OLSR in every seed (median 12.6 points lower, p = 0.002). AODV still ran 2,508 discoveries per run with the reports ignored: it also drops a neighbour after missed HELLOs, and HELLOs are broadcasts that collisions can destroy.
 
-Test 2: (fill in when its runs finish)
+Test 2, opened 16 Nov 2026 (20 runs; 100 devices in a 1,000 m square, 6.3 neighbours each, mean of 10 seeds):
+
+| Measure | AODV, 500 m | AODV, 1,000 m | OLSR, 500 m | OLSR, 1,000 m |
+|---|---|---|---|---|
+| Delivered (PDR) | 60.0% | 99.8% | 99.95% | 99.6% |
+| Delivered within 1 s | 59.4% | 99.5% (95% CI ± 0.3) | 99.95% | 99.6% (± 0.5) |
+| Mean hops of delivered packets | 3.5 | 7.2 | 2.7 | 6.8 |
+| Route discoveries per run | 4,324 | 77 | none | none |
+| Frames given up after the retry limit | 14,943 | 3.4 | 2.4 | 1.1 |
+| Routing packets per node per second | 18.65 | 1.19 | 0.75 | 0.97 |
+| Energy used per device in the 300 s run | 251.8 J | 246.3 J | 247.8 J | 246.8 J |
+
+| Prediction | Outcome |
+|---|---|
+| AODV improves | Right: 59.4% to 99.5% within 1 s (Mann-Whitney p = 0.0002) |
+| OLSR stays at 99.9% | Right: 99.6%, no significant change (p = 0.32) |
+| OLSR drains more battery when spread out | Not seen: 247.8 J to 246.8 J per device, no real change |
+
+In the 1,000 m square AODV and OLSR do not differ (median difference 0.1 points within 1 s, Wilcoxon p = 0.48), although paths are twice as long. So the 40-point gap of the main experiment's "100 nodes" comes from crowding (22.4 neighbours per device), not from the number of devices.
 
 Where were you wrong, and why? (Saksham)
 

@@ -1,0 +1,6 @@
+config,protocol,runs,pdr_pct,pdr_pct_ci95,within_1s_pct,within_1s_pct_ci95,delay_median_ms,mean_hops,control_pkts_per_node_s,mac_link_break_detections,route_discoveries,ctrl_aodv_rreq_forwarded,energy_mean_per_node_J,packets_lost,lostshare_mac_retry_limit_pct,lostshare_ip_no_route_pct,lostshare_mac_lifetime_expired_pct,lostshare_ip_route_error_pct
+"1,000 m square",aodv,10,99.76,0.33,99.52,0.34,5.7,7.16,1.19,3.4,77.1,2742.4,246.34,22.2,6.31,74.77,0.0,18.92
+"1,000 m square",olsr,10,99.59,0.47,99.59,0.47,5.72,6.82,0.97,1.1,,,246.79,38.1,2.89,21.78,0.0,0.0
+AODV ignores MAC reports (500 m),aodv,10,87.25,0.69,87.22,0.69,3.23,3.1,8.99,7453.7,2508.0,95621.3,249.1,1172.6,78.86,14.37,5.94,0.0
+main (500 m square),aodv,10,60.03,4.39,59.37,4.4,17.5,3.46,18.65,14942.7,4323.7,190820.1,251.78,3677.0,43.91,38.86,16.32,0.63
+main (500 m square),olsr,10,99.95,0.05,99.95,0.05,2.15,2.73,0.75,2.4,,,247.81,5.0,48.0,0.0,0.0,0.0
