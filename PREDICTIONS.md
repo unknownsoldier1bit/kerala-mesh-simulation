@@ -50,5 +50,42 @@ The same three ideas as testable statements (rephrased by Claude, each with what
 | 2 | A routing packet gets through once, under conditions the data cannot repeat, so a route is set up that the data then cannot use | Discoveries complete, but the data dies on the route: lost at the MAC after the retry limit; routes break soon after they form |
 | 3 | Overflow | Most lost messages are dropped from full or expired queues |
 
-### What actually happened (fill in after the check)
+### What actually happened (checked 16 Nov 2026, from the stored runs of the main experiment)
+
+Where the lost messages died, AODV, 100 nodes, baseline, mean of 10 runs (3,677 lost of 9,200 sent):
+
+| Where | Share of lost messages | Fits idea |
+|---|---|---|
+| At the radio, after the retry limit: the next device never acknowledged | 43.9% | 2 |
+| At a relay that had no route any more (the route had just been cancelled) | 38.9% | 2 |
+| Expired in a radio queue after waiting 0.5 s for a free channel | 16.3% | 3 |
+| Dropped while waiting for a route | 0.6% | 1 |
+| Radio queue full | 0% | 3 |
+
+Route discoveries: 4,324 per run, 94% of them completed, median 77.6 ms. With 10 flows in a network where nothing fails, about 10 would be enough. Each run also has 14,943 MAC link-break reports and 190,820 forwarded route requests.
+
+- Idea 1: correctly ruled out. Almost nothing is lost while waiting for a route, and discovery is fast.
+- Idea 2: the main cause, 83% of the losses. Routes do get set up, and then the data cannot use them.
+- Idea 3: a smaller part, 16%, and only as waiting too long, never as a full queue.
+
+Not answered by this check: why the data frames go unacknowledged when no device has failed. Tests 1 and 2 below are for that.
+
+## Diagnosis 2: what makes the links look broken (16 Nov 2026)
+
+Two new experiments, both the 100-node baseline with the same traffic, 10 seeds. Results stay unopened until the predictions are written here.
+
+| Test | The one thing changed | Runs |
+|---|---|---|
+| 1 `diag_nofeedback100` | AODV ignores the radio's "no acknowledgement" reports (`--aodvMacFeedback=false`), so it never cancels a route it is using. Same networks and flows as the main experiment. Diagnostic only: in ns-3 this AODV also cannot notice a dead next hop while it sends to it, which does not matter when nothing fails. | AODV, 10 |
+| 2 `diag_sparse100` | The same 100 devices in a 1,000 m square instead of 500 m: 6.3 neighbours per device instead of 22.4. Side effect: paths get longer (network diameter 17.8 hops instead of 5.0). | AODV and OLSR, 20 |
+
+Saksham's predictions:
+
+| Question | Prediction | Why |
+|---|---|---|
+| Test 1: AODV's delivery (60% now) | | |
+| Test 2: AODV's delivery (60% now); OLSR's (99.9% now) | | |
+
+### What actually happened (fill in after the runs are opened)
+
 

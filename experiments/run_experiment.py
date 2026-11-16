@@ -95,6 +95,16 @@ def grid(name):
             r.update(rts_cts=True, flowmon=False, rt_dump="", energy_model="states")
             r["run_id"] = r["run_id"].replace("_baseline_", "_baseline_rtscts_")
         return runs
+    if name == "diag_nofeedback100":  # diagnosis: 100-node baseline, AODV ignores MAC retry-limit reports
+        runs = standard_runs(name, scenarios=["baseline"], nodes=[100], flows=[10], severities=[None],
+                             protocols=["aodv"])
+        for r in runs:
+            r.update(aodv_mac_feedback=False)
+            r["run_id"] = r["run_id"].replace("_baseline_", "_baseline_nofeedback_")
+        return runs
+    if name == "diag_sparse100":  # diagnosis: 100-node baseline in a 1 km square (a quarter of the density)
+        return standard_runs(name, scenarios=["baseline"], nodes=[100], flows=[10], severities=[None],
+                             protocols=["aodv", "olsr"], area=1000.0)
     if name == "kerala100":  # same as kerala, with 100 nodes
         return kerala.kerala_runs(name, PROTOCOLS, SEEDS, nodes=(100,))
     raise SystemExit(f"unknown experiment {name}")
@@ -111,18 +121,20 @@ def severity_label(scenario, meta):
     return " + ".join(parts)
 
 
-def standard_runs(exp, scenarios, nodes, flows, severities):
+def standard_runs(exp, scenarios, nodes, flows, severities, protocols=None, area=None):
+    protocols = protocols or PROTOCOLS
+    area = area or gen.AREA_M
     runs = []
     for n in nodes:
         for seed in SEEDS:
-            xy, g, draws = gen.make_topology(n, seed)
+            xy, g, draws = gen.make_topology(n, seed, area=area)
             idir = os.path.join("results", exp, "inputs", f"n{n}_s{seed}")
             os.makedirs(os.path.join(REPO, idir), exist_ok=True)
             topo = os.path.join(idir, "topology.csv")
             gen.write_topology(os.path.join(REPO, topo), xy)
             gen.write_json(
                 os.path.join(REPO, idir, "topology_info.json"),
-                {"nodes": n, "seed": seed, "area_m": gen.AREA_M, "range_m": gen.RANGE_M,
+                {"nodes": n, "seed": seed, "area_m": area, "range_m": gen.RANGE_M,
                  "links": g.number_of_edges(), "mean_degree": 2 * g.number_of_edges() / n,
                  "placement_draws_until_connected": draws, "diameter_hops": nx_diameter(g)},
             )
@@ -139,7 +151,7 @@ def standard_runs(exp, scenarios, nodes, flows, severities):
                         gen.write_json(os.path.join(REPO, idir, f"scenario_{tag}_f{nf}.json"), meta)
                         flows_meta = [dict(f, alternative_route_exists=st["alternative_route_exists"])
                                       for f, st in zip(fl, meta["per_flow"])]
-                        for p in PROTOCOLS:
+                        for p in protocols:
                             run_id = f"{p}_{tag}_n{n}_f{nf}_s{seed}"
                             runs.append(dict(
                                 experiment=exp, run_id=run_id, protocol=p, scenario=sc, nodes=n, seed=seed,
@@ -188,6 +200,8 @@ def command(cfg, out_dir):
         args.append(f"--energyModel={cfg['energy_model']}")
     if cfg.get("rts_cts"):
         args.append("--rtsCts=true")
+    if cfg.get("aodv_mac_feedback") is False:
+        args.append("--aodvMacFeedback=false")
     if cfg.get("loss_model", "range") == "logdistance":
         args += ["--lossModel=logdistance", f"--logExponent={cfg['log_exponent']}",
                  f"--logRefLoss={cfg['log_ref_loss_db']}"]
