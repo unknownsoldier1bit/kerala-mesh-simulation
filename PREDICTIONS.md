@@ -157,5 +157,17 @@ Saksham's explanation, written before the stored runs were checked for it:
 
 As a testable statement (Claude): if this is right, the flooded runs show fewer frames given up after the retry limit and fewer route discoveries than the no-flood runs, and the more devices are removed, the fewer.
 
-### What actually happened (fill in after the check)
+### What actually happened (checked 16 Nov 2026, from the stored `kerala100` runs; acute phase, mean of 10 seeds)
+
+| Scenario | Devices flooded by the end | AODV frames given up after the retry limit | AODV route discoveries | AODV within 1 s, all packets | OLSR within 1 s, all packets | AODV, packets that had a path | OLSR, packets that had a path |
+|---|---|---|---|---|---|---|---|
+| No flood | 0 | 4,049 | 1,568 | 76.0% | 100.0% | 76.0% | 100.0% |
+| Kerala-anchored 27% | 27 | 2,950 | 1,263 | 65.4% | 81.1% | 80.2% | 99.5% |
+| Random 27% | 27 | 2,661 | 1,260 | 71.0% | 84.6% | 82.6% | 98.3% |
+| Kerala-anchored 50% | 50 | 2,126 | 1,108 | 60.5% | 73.3% | 81.6% | 99.0% |
+| Random 50% | 50 | 1,861 | 919 | 61.7% | 70.2% | 82.9% | 94.5% |
+
+- The explanation holds. Frames given up and route discoveries are lower than without flooding in every seed of every flooded scenario (Wilcoxon p = 0.002), and lower still when 50% of devices are removed. Per 100 packets sent the retry-limit drops also fall (531 without flooding, 340-461 with).
+- It is not the whole reason the gap narrows from 24 points to 8.5-15.7. On packets that had a path, AODV gains 4-7 points (the effect above), but OLSR also loses 0.5-5.5 points. And packets with no path are lost by both protocols, which pulls the two overall figures together.
+- Where OLSR's lost packets died in the flooded acute phase, per run: 79-114 had no route at the source, 12-36 were sent to a next hop that never acknowledged, 2-8 ran out of hops, 3-6 found no route at a relay.
 
