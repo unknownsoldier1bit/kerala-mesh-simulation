@@ -94,6 +94,28 @@ Saksham's full answer, written before the results were opened:
 >
 > I think overall for 2, AODV improved because that same beacon error wont occur right, for OLSR, higher battery drain because its spread out more but it shd remain at the 99.9 because the foundation was good in a crowded setting it shd retain itself in an I would say better setting
 
-### What actually happened (fill in after the runs are opened)
+### What actually happened
+
+Test 1, opened 16 Nov 2026 after the predictions above were committed (10 runs, same networks and flows as the main experiment; mean of 10 seeds):
+
+| Measure | AODV, main | AODV ignoring "no acknowledgement" reports | OLSR, main |
+|---|---|---|---|
+| Delivered (PDR) | 60.0% | 87.3% | 99.95% |
+| Delivered within 1 s | 59.4% | 87.2% (95% CI ± 0.7) | 99.95% |
+| Route discoveries per run | 4,324 | 2,508 | none |
+| Routing packets per node per second | 18.65 | 8.99 | 0.75 |
+| Frames given up after the retry limit | 14,943 | 7,454 | 2.4 |
+| Lost at a relay with no route | 1,429 | 169 | 0 |
+| Lost at the radio after the retry limit | 1,615 | 925 | 2.4 |
+| Lost waiting over 0.5 s for the channel | 600 | 70 | 0 |
+
+Delivery rose in every seed (median +28 points, Wilcoxon p = 0.002), the opposite of the prediction, and stayed below OLSR in every seed (median 12.6 points lower, p = 0.002). AODV still ran 2,508 discoveries per run with the reports ignored: it also drops a neighbour after missed HELLOs, and HELLOs are broadcasts that collisions can destroy.
+
+Test 2: (fill in when its runs finish)
+
+Where were you wrong, and why? (Saksham)
+
+>
+
 
 
