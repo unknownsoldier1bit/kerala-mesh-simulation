@@ -146,3 +146,16 @@ The two answers joined and reworded by Claude, as used in the paper (Section V-A
 
 
 
+
+## Diagnosis 3: why flooding shrinks AODV's gap in the crowded Kerala scenario (16 Nov 2026)
+
+Known before guessing: in the Kerala-anchored scenario with 100 devices in the 500 m square, AODV is 24 points behind OLSR in the acute phase without flooding, and 9-16 points behind when the flood removes 27-50% of the devices.
+
+Saksham's explanation, written before the stored runs were checked for it:
+
+> because the crowd would decrease, causing the data frames that had previously gona un-acknowledged to be acknowledged.
+
+As a testable statement (Claude): if this is right, the flooded runs show fewer frames given up after the retry limit and fewer route discoveries than the no-flood runs, and the more devices are removed, the fewer.
+
+### What actually happened (fill in after the check)
+

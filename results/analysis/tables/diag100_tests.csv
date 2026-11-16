@@ -1,0 +1,11 @@
+comparison,metric,n,median_diff,min_diff,max_diff,wilcoxon_p
+AODV: ignores MAC reports minus main (same topologies),pdr_pct,10,27.9511,19.5978,39.7717,0.002
+AODV ignoring MAC reports minus OLSR main (same topologies),pdr_pct,10,-12.5598,-14.0326,-11.5652,0.002
+"1,000 m square: AODV minus OLSR (same topologies)",pdr_pct,10,0.1087,-1.4783,1.587,0.25
+"AODV: 1,000 m minus 500 m (different topologies, Mann-Whitney)",pdr_pct,10,39.962,,,0.0002
+"OLSR: 1,000 m minus 500 m (different topologies, Mann-Whitney)",pdr_pct,10,-0.1467,,,0.3221
+AODV: ignores MAC reports minus main (same topologies),within_1s_pct,10,28.4511,20.1196,40.3152,0.002
+AODV ignoring MAC reports minus OLSR main (same topologies),within_1s_pct,10,-12.5815,-14.1087,-11.6522,0.002
+"1,000 m square: AODV minus OLSR (same topologies)",within_1s_pct,10,-0.1141,-1.6413,1.1957,0.4766
+"AODV: 1,000 m minus 500 m (different topologies, Mann-Whitney)",within_1s_pct,10,40.6196,,,0.0002
+"OLSR: 1,000 m minus 500 m (different topologies, Mann-Whitney)",within_1s_pct,10,-0.1467,,,0.3221

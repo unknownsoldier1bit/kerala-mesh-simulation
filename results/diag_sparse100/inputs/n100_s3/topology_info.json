@@ -1,0 +1,10 @@
+{
+ "nodes": 100,
+ "seed": 3,
+ "area_m": 1000.0,
+ "range_m": 150.0,
+ "links": 301,
+ "mean_degree": 6.02,
+ "placement_draws_until_connected": 1,
+ "diameter_hops": 19
+}

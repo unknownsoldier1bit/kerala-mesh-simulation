@@ -1,0 +1,1 @@
+ns3.47-manet --protocol=aodv --topo=results/diag_nofeedback100/inputs/n100_s7/topology.csv --flows=results/diag_nofeedback100/inputs/n100_s7/flows_f10.csv --outDir=results/diag_nofeedback100/runs/aodv_baseline_nofeedback_n100_f10_s7 --run=7 --simTime=300.0 --range=150.0 --energyJ=0 --events=results/diag_nofeedback100/inputs/n100_s7/events_baseline_f10.csv --aodvMacFeedback=false
