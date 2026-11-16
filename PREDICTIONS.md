@@ -137,7 +137,12 @@ Asked: if sending on the same route anyway works better than cancelling it, what
 
 > so it was accidentally ruling out the good paths over one wrong run?
 
-Reworded by Claude (first half of the answer): the links were never broken. A frame went unacknowledged because the air was crowded, AODV took that false alarm for a dead link, and it cancelled a route that worked. Second half (why cancelling hurts the neighbours): still to come from Saksham.
+Reworded by Claude (first half of the answer): the links were never broken. A frame went unacknowledged because the air was crowded, AODV took that false alarm for a dead link, and it cancelled a route that worked. 
+Asked next: each cancelled route starts a search that about 44 devices re-broadcast; what does that do to the frames nearby devices are sending, and what happens next?
+
+> I remember you saying something about this, like the stuff doesnt have a way to go or something wrong with the line, so when they send data they dont get a response back.
+
+The two answers joined and reworded by Claude, as used in the paper (Section V-A): the links were never broken. In a crowded network a data frame can go unacknowledged because other transmissions garble it. AODV takes the missing acknowledgement for a dead link and cancels a route that worked. The search for a new route is a broadcast that about 44 nodes repeat, which crowds the air further, so more frames nearby go unacknowledged and more working routes are cancelled. The last step, that this closes into a loop, was added by Claude from the two answers; Saksham to confirm he can explain it.
 
 
 

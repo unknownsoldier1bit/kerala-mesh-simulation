@@ -45,7 +45,7 @@ def main():
     for c in LOST:
         if c in by:
             by[c.replace("lost_", "lostshare_") + "_pct"] = 100 * by[c] / by["packets_lost"].where(by["packets_lost"] > 0)
-    by.round(2).to_csv(os.path.join(OUT, "diag100_by_config.csv"))
+    by.round(4).to_csv(os.path.join(OUT, "diag100_by_config.csv"))
 
     def paired(a, b, metric):
         x = a.set_index("seed")[metric]
