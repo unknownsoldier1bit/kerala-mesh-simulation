@@ -83,8 +83,16 @@ Saksham's predictions:
 
 | Question | Prediction | Why |
 |---|---|---|
-| Test 1: AODV's delivery (60% now) | | |
-| Test 2: AODV's delivery (60% now); OLSR's (99.9% now) | | |
+| Test 1: AODV's delivery (60% now) | Goes down | "its gonna send it regardless of any response from the other side" |
+| Test 2: AODV's delivery (60% now) | Improves | "that same beacon error wont occur" |
+| Test 2: OLSR's delivery (99.9% now) | Stays at 99.9% | "the foundation was good in a crowded setting it shd retain itself in an I would say better setting" |
+| Test 2: OLSR's battery use | Higher drain | "because its spread out more" |
+
+Saksham's full answer, written before the results were opened:
+
+> for 1 I think it will go down cuz its gonna send it regardless of any response from the other side.
+>
+> I think overall for 2, AODV improved because that same beacon error wont occur right, for OLSR, higher battery drain because its spread out more but it shd remain at the 99.9 because the foundation was good in a crowded setting it shd retain itself in an I would say better setting
 
 ### What actually happened (fill in after the runs are opened)
 
