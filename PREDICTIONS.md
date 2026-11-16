@@ -115,7 +115,11 @@ Test 2: (fill in when its runs finish)
 
 Where were you wrong, and why? (Saksham)
 
->
+Asked: if sending on the same route anyway works better than cancelling it, what does that say about the "broken" links, and why would cancelling a route make things worse for everyone nearby?
+
+> so it was accidentally ruling out the good paths over one wrong run?
+
+Reworded by Claude (first half of the answer): the links were never broken. A frame went unacknowledged because the air was crowded, AODV took that false alarm for a dead link, and it cancelled a route that worked. Second half (why cancelling hurts the neighbours): still to come from Saksham.
 
 
 
