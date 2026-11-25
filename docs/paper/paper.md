@@ -4,24 +4,24 @@ Saksham Bhatia and [co-author]
 
 [School, city, country; email]
 
-**Abstract—When floods cut mains power and cellular service, mesh nodes that relay messages for each other over ad hoc Wi-Fi can keep messages moving. We compare three routing protocols, AODV, OLSR and DSDV, in the ns-3.47 simulator under node failures that evolve over time and are anchored to dated events of the August 2018 Kerala floods. The primary metric is the fraction of messages delivered within a deadline T, with T = 1 s as a placeholder. We ran 1,350 simulations of abstract failure scenarios, failure severity, traffic load, battery depletion and a Kerala-anchored scenario on synthetic terrain, 966 simulations of a scenario built on real building positions, ground heights and Sentinel-1 radar water maps of Chalakudy, Thrissur district, and 30 diagnostic simulations. Without flooding or battery depletion, OLSR delivered 99.6–100% of messages within 1 s in every network tested. AODV fell to 59.4% when 100 nodes were crowded into a 500 m square; the diagnostic simulations trace this loss to AODV cancelling working routes after collisions, and it disappears when the same nodes are spread over a 1,000 m square (99.5%). On the Chalakudy building topology AODV delivered 86–91%. With 25% of devices flooded in Chalakudy, delivery within 1 s fell to 66–76% for all three protocols in the acute phase (onset 15 Aug), and failures ordered by real ground height gave the same delivery as failures at random devices. With the assumed batteries, every device ran flat within hours of the power cut under every protocol, so the sustained-phase half of the premise could not be tested. [Your concluding sentence: what these results mean for the premise.]**
+**Abstract—When floods cut mains power and cellular service, mesh nodes that relay messages for each other over ad hoc Wi-Fi can keep messages moving. We compare two routing protocols, AODV and OLSR, in the ns-3.47 simulator under node failures that evolve over time and are anchored to dated events of the August 2018 Kerala floods. The primary metric is the fraction of messages delivered within a deadline T, with T = 1 s as a placeholder. We ran 900 simulations of abstract failure scenarios, failure severity, traffic load, battery depletion and a Kerala-anchored scenario on synthetic terrain, 644 simulations of a scenario built on real building positions, ground heights and Sentinel-1 radar water maps of Chalakudy, Thrissur district, and 30 diagnostic simulations. Without flooding or battery depletion, OLSR delivered 99.6–100% of messages within 1 s in every network tested. AODV fell to 59.4% when 100 nodes were crowded into a 500 m square; the diagnostic simulations trace this loss to AODV cancelling working routes after collisions, and it disappears when the same nodes are spread over a 1,000 m square (99.5%). On the Chalakudy building topology AODV delivered 86–91%. With 25% of devices flooded in Chalakudy, delivery within 1 s fell to 72–76% for both protocols in the acute phase (onset 15 Aug), and failures ordered by real ground height gave the same delivery as failures at random devices. With the assumed batteries, every device ran flat within hours of the power cut under both protocols, so the sustained-phase half of the premise could not be tested. [Your concluding sentence: what these results mean for the premise.]**
 
-**Index Terms—Mobile ad hoc networks, AODV, OLSR, DSDV, ns-3, disaster communication, node failure, floods, Kerala 2018.**
+**Index Terms—Mobile ad hoc networks, AODV, OLSR, ns-3, disaster communication, node failure, floods, Kerala 2018.**
 
 
 ## I. Introduction
 
 In August 2018 heavy rain and dam releases flooded large parts of Kerala, India, and communications failed across the affected districts. The Comptroller and Auditor General of India records a total failure of communications in Chalakudy and Idukki taluks [1], and a press report of the Telecom Secretary's review put about 27% of the state's mobile base stations out of service [2]. When the cellular network and mains power fail, mobile devices can still pass messages to each other if they form a mesh network, in which each device relays messages for the others. How quickly messages then arrive depends in part on the routing protocol.
 
-Routing protocols for such mobile ad hoc networks fall into two families. Reactive protocols such as AODV [3] find a route only when a message needs one. Proactive protocols such as OLSR [4] and DSDV [5] keep a route to every destination at all times by exchanging control messages periodically. Comparisons of AODV and OLSR are common. The contribution of this paper is the failure model: node failures that evolve over time and are anchored to dated events of the 2018 Kerala floods, including a scenario built on real building positions, ground heights and radar water maps of the town of Chalakudy, with every input labelled as measured, derived or assumed.
+Routing protocols for such mobile ad hoc networks fall into two families. Reactive protocols such as AODV [3] find a route only when a message needs one. Proactive protocols such as OLSR [4] keep a route to every destination at all times by exchanging control messages periodically. Comparisons of AODV and OLSR are common. The contribution of this paper is the failure model: node failures that evolve over time and are anchored to dated events of the 2018 Kerala floods, including a scenario built on real building positions, ground heights and radar water maps of the town of Chalakudy, with every input labelled as measured, derived or assumed.
 
 The premise tested, in the first author's words, is:
 
 > During the acute phase of a flood such as Kerala 2018, OLSR delivers a higher fraction of messages within a fixed deadline than AODV. OLSR keeps routes computed in advance, so a message can leave immediately. AODV has to discover a route first, and again after every link break. With frequent breaks and short bursts of traffic, that discovery delay uses up much of the deadline. The advantage has a cost: OLSR's periodic control traffic drains batteries faster. So over the sustained phase, as nodes run out of power, AODV should close the gap or overtake it.
 
-We test this premise in simulation with the ns-3.47 network simulator [6]. Section II describes the three protocols and Section III the mechanism behind the premise. Section IV describes the simulations and the two flood scenarios, Section V reports the results, and Sections VI and VII discuss them and their limitations.
+We test this premise in simulation with the ns-3.47 network simulator [5]. Section II describes the two protocols and Section III the mechanism behind the premise. Section IV describes the simulations and the two flood scenarios, Section V reports the results, and Sections VI and VII discuss them and their limitations.
 
-[Your text: the research question(s), why a deadline matters for disaster messages, and whether DSDV stays in the paper (it was included because the project's deliverables asked for it).]
+[Your text: the research question(s) and why a deadline matters for disaster messages.]
 
 
 ## II. Background
@@ -34,12 +34,7 @@ Ad hoc On-Demand Distance Vector routing (AODV) [3] is reactive. When a node has
 
 ### B. OLSR
 
-Optimized Link State Routing (OLSR) [4] is proactive. Every node sends HELLO messages to discover its neighbours and selects some of them as multipoint relays (MPRs); only MPRs forward the topology control (TC) messages that spread link-state information through the network. Each node computes a shortest-path route to every destination in advance, so a packet can leave as soon as it is generated. The cost is control traffic sent periodically, whether or not there is data to send.
-
-
-### C. DSDV
-
-Destination-Sequenced Distance-Vector routing (DSDV) [5] is a proactive distance-vector protocol: each node periodically advertises its routing table to its neighbours, and sequence numbers issued by destinations keep the routes loop-free. Table I lists the timers of the ns-3.47 implementations of the three protocols.
+Optimized Link State Routing (OLSR) [4] is proactive. Every node sends HELLO messages to discover its neighbours and selects some of them as multipoint relays (MPRs); only MPRs forward the topology control (TC) messages that spread link-state information through the network. Each node computes a shortest-path route to every destination in advance, so a packet can leave as soon as it is generated. The cost is control traffic sent periodically, whether or not there is data to send. Table I lists the timers of the ns-3.47 implementations of both protocols.
 
 **TABLE I: Default protocol timers in ns-3.47, used unchanged in every run**
 
@@ -50,15 +45,13 @@ Destination-Sequenced Distance-Vector routing (DSDV) [5] is a proactive distance
 | AODV | HELLO interval / allowed HELLO loss | 1 s / 2 |
 | AODV | Active route timeout | 3 s |
 | AODV | RREQ retries | 2 |
-| DSDV | Periodic update / settling time | 15 s / 5 s |
-| DSDV | Route dropped after | 45 s without update |
 | AODV | Link-break detection | MAC retry limit; missed HELLOs |
 | OLSR | Link-break detection | no HELLO for 6 s |
 
 
-### D. Related Work
+### C. Related Work
 
-[Your text: related work. No related-work papers were read or verified in this project; cite only papers you have opened yourself.]
+[Your text: related work. No related-work papers were read or verified in this project; cite only papers you have opened yourself. The crowding effect in Section V-A, where AODV takes collisions for broken links and its route searches crowd the air further, is probably already described in the literature (search for 'broadcast storm' and 'false link failure' in 802.11 ad hoc networks); cite it rather than presenting it as new.]
 
 
 ## III. Mechanism
@@ -71,14 +64,14 @@ Destination-Sequenced Distance-Vector routing (DSDV) [5] is a proactive distance
 
 ### A. Simulator and Network
 
-All simulations use ns-3.47 [6] with its implementations of AODV, OLSR and DSDV at their default settings (Table I). Devices are static and use IEEE 802.11b in ad hoc mode. Radio propagation is a unit disk: a frame is received within 150 m and lost beyond it. This range is an assumption; Section IV-H replaces it with a published path-loss model. The main grid keeps a 500 m square for every node count, so a node has 5.2, 10.5 and 22.4 neighbours on average at 25, 50 and 100 nodes: node count and crowding change together. Table II summarises the configuration; the exact settings of every run are stored with its output [7].
+All simulations use ns-3.47 [5] with its implementations of AODV and OLSR at their default settings (Table I). Devices are static and use IEEE 802.11b in ad hoc mode. Radio propagation is a unit disk: a frame is received within 150 m and lost beyond it. This range is an assumption; Section IV-H replaces it with a published path-loss model. The main grid keeps a 500 m square for every node count, so a node has 5.2, 10.5 and 22.4 neighbours on average at 25, 50 and 100 nodes: node count and crowding change together. Table II summarises the configuration; the exact settings of every run are stored with its output [6].
 
 **TABLE II: Simulation configuration**
 
 | Item | Setting |
 |---|---|
 | Simulator | ns-3.47, optimized build |
-| Protocols | AODV, OLSR, DSDV with ns-3 default parameters |
+| Protocols | AODV and OLSR with ns-3 default parameters |
 | Radio and MAC | IEEE 802.11b ad hoc; data 11 Mbps, control frames and broadcasts 1 Mbps; 16.02 dBm transmit power; RTS/CTS off; ARP tables pre-filled |
 | Radio range | 150 m unit disk (assumed; a cited path-loss model is a sensitivity run) |
 | Topologies | Main grid: 25, 50 or 100 nodes at random in a 500 m square, redrawn until connected. Chalakudy: 100 devices at real building positions in a 1 km square |
@@ -95,28 +88,28 @@ The primary metric is the fraction of messages delivered within a deadline T: a 
 
 ### C. Experiments
 
-Table III lists the experiments. Each configuration was run with seeds 1–10. Runs are paired: for a given seed, every protocol sees the same topology, traffic and failures. All 2,316 runs finished without errors. Two diagnostic experiments of 30 runs in total were added after the first analysis (Section V-A, Table XVIII); for these, predictions were written down before the results were opened.
+Table III lists the experiments. Each configuration was run with seeds 1–10. Runs are paired: for a given seed, both protocols see the same topology, traffic and failures. All 1,544 runs of the first thirteen experiments finished without errors. Every experiment also ran a third protocol, DSDV, in 772 further runs; they are in the repository but not reported here. Two diagnostic experiments of 30 runs in total were added after the first analysis (Section V-A, Table VIII); for these, predictions were written down before the results were opened.
 
 **TABLE III: Experiments and number of runs**
 
 | Experiment | What varies | Runs |
 |---|---|---|
-| main | 3 protocols x 6 scenarios x 25/50/100 nodes | 540 |
-| severity | 5–30% of random relay nodes or links fail; 50 nodes | 240 |
-| load | 5/10/20 flows; baseline or node failure; 50 nodes | 180 |
-| energy | 2 radio profiles; batteries run out; 50 nodes | 60 |
-| kerala | Kerala-anchored model, 5 failure models; 50 nodes | 150 |
-| kerala100 | the same with 100 nodes | 150 |
-| rtscts100 | 100-node baseline with RTS/CTS on | 30 |
-| chalakudy | 3 failure models; onset 15 or 17 Aug; batteries unlimited or limited | 360 |
-| chalakudy_prop | cited path-loss model instead of the 150 m disk | 90 |
-| chalakudy_share | 10% and 50% of devices flooded | 120 |
-| chalakudy_battery | 25% and 100% of the battery for the radio | 180 |
-| chalakudy_traffic | mean gap between bursts 7.5 s and 30 s | 180 |
-| chalakudy_check | cross-checks (FlowMonitor, ns-3 energy framework); 50 devices, seeds 1–2 | 36 |
-| Total |  | 2,316 |
+| main | 2 protocols x 6 scenarios x 25/50/100 nodes | 360 |
+| severity | 5–30% of random relay nodes or links fail; 50 nodes | 160 |
+| load | 5/10/20 flows; baseline or node failure; 50 nodes | 120 |
+| energy | 2 radio profiles; batteries run out; 50 nodes | 40 |
+| kerala | Kerala-anchored model, 5 failure models; 50 nodes | 100 |
+| kerala100 | the same with 100 nodes | 100 |
+| rtscts100 | 100-node baseline with RTS/CTS on | 20 |
+| chalakudy | 3 failure models; onset 15 or 17 Aug; batteries unlimited or limited | 240 |
+| chalakudy_prop | cited path-loss model instead of the 150 m disk | 60 |
+| chalakudy_share | 10% and 50% of devices flooded | 80 |
+| chalakudy_battery | 25% and 100% of the battery for the radio | 120 |
+| chalakudy_traffic | mean gap between bursts 7.5 s and 30 s | 120 |
+| chalakudy_check | cross-checks (FlowMonitor, ns-3 energy framework); 50 devices, seeds 1–2 | 24 |
 | diag_nofeedback100 | diagnosis: 100-node baseline, AODV ignores MAC retry-limit reports | 10 |
-| diag_sparse100 | diagnosis: 100-node baseline in a 1,000 m square; AODV and OLSR | 20 |
+| diag_sparse100 | diagnosis: 100-node baseline in a 1,000 m square | 20 |
+| Total |  | 1,574 |
 
 
 ### D. Abstract Failure Scenarios
@@ -137,12 +130,12 @@ In the main grid, 25, 50 or 100 nodes are placed at random in a 500 m square (10
 
 ### E. Kerala-Anchored Failure Model
 
-The Kerala-anchored model places 50 or 100 nodes in the 500 m square on synthetic terrain and times their failures by dated events of 2018 (Appendix C). One day is compressed into 30 simulated seconds (a factor of 2,880): 14 Aug 00:00 falls at 60 s, and the run ends on 27 Aug, when the last Thrissur substation was switched back on [8]. In the acute phase, 14–18 Aug, nodes fail as the water rises, following an assumed curve: 0, 15, 60, 90 and 100% of the eventual flood failures by 14, 15, 16, 17 and 18 Aug. Either 27% of nodes flood, the press-reported statewide base-station outage [2] used as a floor, or 50%, a hypothetical value. The terrain has a river along the west edge and ground rising eastward with random noise, and the lowest nodes fail first. A uniform-random baseline fails the same number of nodes at the same times, and a no-flood control has no flood failures. In the sustained phase, 18–27 Aug, nothing recharges: each battery would last, idling only, until a random date between 19 Aug and 6 Sep. Traffic is 20 flows of bursts (5 packets 0.2 s apart, exponential gaps with a mean of 15 s). Only failures and batteries are time-compressed; routing timers and packets run at real speed. Positions, terrain and the flood curve are synthetic or assumed, so this is a hypothetical scenario anchored to dated events, not measured Kerala data.
+The Kerala-anchored model places 50 or 100 nodes in the 500 m square on synthetic terrain and times their failures by dated events of 2018 (Appendix C). One day is compressed into 30 simulated seconds (a factor of 2,880): 14 Aug 00:00 falls at 60 s, and the run ends on 27 Aug, when the last Thrissur substation was switched back on [7]. In the acute phase, 14–18 Aug, nodes fail as the water rises, following an assumed curve: 0, 15, 60, 90 and 100% of the eventual flood failures by 14, 15, 16, 17 and 18 Aug. Either 27% of nodes flood, the press-reported statewide base-station outage [2] used as a floor, or 50%, a hypothetical value. The terrain has a river along the west edge and ground rising eastward with random noise, and the lowest nodes fail first. A uniform-random baseline fails the same number of nodes at the same times, and a no-flood control has no flood failures. In the sustained phase, 18–27 Aug, nothing recharges: each battery would last, idling only, until a random date between 19 Aug and 6 Sep. Traffic is 20 flows of bursts (5 packets 0.2 s apart, exponential gaps with a mean of 15 s). Only failures and batteries are time-compressed; routing timers and packets run at real speed. Positions, terrain and the flood curve are synthetic or assumed, so this is a hypothetical scenario anchored to dated events, not measured Kerala data.
 
 
 ### F. Chalakudy Scenario: Data
 
-The second flood scenario uses real data for Chalakudy municipality, in the Chalakudy taluk of Thrissur district, where the CAG records a total failure of communications in 2018 [1]. Table V lists the inputs. Building footprints come from Overture Maps [9], which combines OpenStreetMap [10] and Google Open Buildings [11]; the municipality boundary comes from DataMeet [12]; ground height from the Copernicus GLO-30 surface model [13]; and water extent on 24 dates in 2018 from Sentinel-1 radar [14], classified with Otsu's threshold for each scene [15]. The study area is the 1 km square with the most buildings among the town's lowest-lying 25% (1,383 buildings; Fig. 1). Each run places 100 devices at the centroids of randomly chosen buildings; at 150 m they have 7.2 neighbours on average, and 97% of them are in the largest connected group (Fig. 2). Every input is labelled measured, derived or assumed; Appendix A condenses that record.
+The second flood scenario uses real data for Chalakudy municipality, in the Chalakudy taluk of Thrissur district, where the CAG records a total failure of communications in 2018 [1]. Table V lists the inputs. Building footprints come from Overture Maps [8], which combines OpenStreetMap [9] and Google Open Buildings [10]; the municipality boundary comes from DataMeet [11]; ground height from the Copernicus GLO-30 surface model [12]; and water extent on 24 dates in 2018 from Sentinel-1 radar [13], classified with Otsu's threshold for each scene [14]. The study area is the 1 km square with the most buildings among the town's lowest-lying 25% (1,383 buildings; Fig. 1). Each run places 100 devices at the centroids of randomly chosen buildings; at 150 m they have 7.2 neighbours on average, and 97% of them are in the largest connected group (Fig. 2). Every input is labelled measured, derived or assumed; Appendix A condenses that record.
 
 Radar cannot see water among buildings and trees, and there is no image between 9 and 21 Aug, so the maps miss the flood peak. No building in the square lies within 20 m of radar-visible flood water on any date (two lie within 50 m, on 9 Aug only). The radar therefore shows when the fields around this part of town flooded and when the water receded, but not which buildings flooded, and the failure order in the square is set by ground height alone.
 
@@ -170,24 +163,24 @@ Radar cannot see water among buildings and trees, and there is no image between 
 
 ### G. Chalakudy Scenario: Failures, Batteries and Traffic
 
-Each seed compares three failure models on the same devices and flows. In the flood-order model, 25% of devices fail (10% and 50% in a sweep), evenly spaced in time from the onset day to 18 Aug 00:00, lowest ground first; flooded devices do not return. Press reports disagree on the onset, 15 Aug [16] or 17 Aug [17], so both are run. The uniform-random model fails the same number of devices at the same times at random devices, and the no-flood control has no failures. The flood pattern is only moderately clustered: the nearest other failed device is 83 m away on average under the flood order and about 104 m under random failures.
+Each seed compares three failure models on the same devices and flows. In the flood-order model, 25% of devices fail (10% and 50% in a sweep), evenly spaced in time from the onset day to 18 Aug 00:00, lowest ground first; flooded devices do not return. Press reports disagree on the onset, 15 Aug [15] or 17 Aug [16], so both are run. The uniform-random model fails the same number of devices at the same times at random devices, and the no-flood control has no failures. The flood pattern is only moderately clustered: the nearest other failed device is 83 m away on average under the flood order and about 104 m under random failures.
 
 Batteries are either unlimited, which isolates the effect of flooding, or limited. From the power cut, assumed at 00:00 on the onset day, each device has a random charge of 20–100% of an assumed 3,000 mAh, 3.85 V battery, of which 50% is available to the radio (25% and 100% in a sweep), time-compressed like the scenario; radio power uses ns-3's default currents. Traffic is 20 flows between devices of the same connected group at least two hops apart, sending bursts of 5 packets 0.2 s apart with exponential gaps (mean 15 s; 7.5 s and 30 s in a sweep). One day lasts 30 s, as in the Kerala-anchored model. Results are reported for three windows: before the onset, the acute phase (onset to 18 Aug) and the sustained phase (18–27 Aug).
 
 
 ### H. Propagation Sensitivity
 
-To test the 150 m assumption, the chalakudy_prop experiment replaces the unit disk with the 3GPP TR 37.885 urban non-line-of-sight path-loss formula, PL = 36.85 + 30 log10(d) + 18.9 log10(f) [18], with f = 2.412 GHz, as implemented in ns-3.47 and without adjustment. With ns-3's default transmit power (16.02 dBm) and preamble-detection threshold (−82 dBm), frames get through up to 62.8 m (checked with two devices: all frames at 62.5 m, none at 63 m). The model assumes no line of sight on every link, and it was made for vehicles, not for devices inside houses.
+To test the 150 m assumption, the chalakudy_prop experiment replaces the unit disk with the 3GPP TR 37.885 urban non-line-of-sight path-loss formula, PL = 36.85 + 30 log10(d) + 18.9 log10(f) [17], with f = 2.412 GHz, as implemented in ns-3.47 and without adjustment. With ns-3's default transmit power (16.02 dBm) and preamble-detection threshold (−82 dBm), frames get through up to 62.8 m (checked with two devices: all frames at 62.5 m, none at 63 m). The model assumes no line of sight on every link, and it was made for vehicles, not for devices inside houses.
 
 
 ### I. Statistics
 
-Results are means over the 10 seeds with 95% confidence intervals (t-distribution). Because runs are paired, protocols are compared with a Friedman test over the three protocols [19], followed by two-sided Wilcoxon signed-rank tests for each pair [20] with Holm's correction over the three pairs [21]. Flood-order and uniform-random failures are compared with Wilcoxon tests for each protocol, Holm-corrected over the protocols. With 10 paired seeds the smallest possible Holm-corrected p value is 0.0059. The correction covers only the comparisons within one configuration and metric; across the hundreds of tests in this paper some p values below 0.05 are expected by chance, so a difference carries weight only when it holds across configurations.
+Results are means over the 10 seeds with 95% confidence intervals (t-distribution). Because runs are paired, AODV and OLSR are compared with two-sided Wilcoxon signed-rank tests over the seeds [18]; with 10 paired seeds the smallest possible p value is 0.002. Flood-order and uniform-random failures are compared with Wilcoxon tests for each protocol, with Holm's correction over the two protocols [19]. No correction is applied across configurations: across the hundreds of tests in this paper some p values below 0.05 are expected by chance, so a difference carries weight only when it holds across configurations.
 
 
 ### J. Validation
 
-A four-node diamond topology was simulated first as a sanity check. Our packet tracker agrees exactly with ns-3's FlowMonitor in the Chalakudy cross-check runs, and our state-based energy count agrees with ns-3's energy framework when batteries are effectively unlimited. ns-3's energy framework did not drain finite batteries correctly (its radio model stopped counting at about 72% of the initial energy), so all battery-limited runs use the state-based model. At 100 or more nodes some OLSR packets exceeded the Wi-Fi MTU and were fragmented, which crashed or slightly miscounted the control-traffic counter; the counter was fixed and the 29 affected runs were redone. Every run's metrics recompute identically from its raw files, and the analysis reproduces byte for byte. On a second machine 467 of 482 replayed runs matched exactly; the other 15, all dense 100-node AODV runs, differ run by run but agree on average.
+A four-node diamond topology was simulated first as a sanity check. Our packet tracker agrees exactly with ns-3's FlowMonitor in the Chalakudy cross-check runs, and our state-based energy count agrees with ns-3's energy framework when batteries are effectively unlimited. ns-3's energy framework did not drain finite batteries correctly (its radio model stopped counting at about 72% of the initial energy), so all battery-limited runs use the state-based model. At 100 or more nodes some OLSR packets exceeded the Wi-Fi MTU and were fragmented, which crashed or slightly miscounted the control-traffic counter; the counter was fixed and the 29 affected runs were redone. Every run's metrics recompute identically from its raw files, and with the same library versions the analysis reproduces byte for byte (with newer pandas and NumPy only the row order and the last digits of some values change). On a second machine 467 of 482 replayed runs matched exactly; the other 15, all dense 100-node AODV runs, differ run by run but agree on average.
 
 
 ## V. Results
@@ -195,211 +188,226 @@ A four-node diamond topology was simulated first as a sanity check. Our packet t
 
 ### A. Main Grid
 
-Table VI and Fig. 3 give delivery within 1 s in the main grid. At 100 nodes AODV delivers 24–41 points less than OLSR in every scenario (59.4% against 99.9% in the baseline; Holm p = 0.0059 in all six scenarios), while DSDV stays within 3 points of OLSR. At 25 nodes AODV is slightly ahead of OLSR in the five failure scenarios (median paired difference 0.5–1.7 points, Holm p ≤ 0.016), and at 50 nodes AODV and OLSR differ by at most 1.1 points. The partition caps every protocol at 73–76% at 25 and 50 nodes, since packets between the two halves cannot be delivered while it lasts.
+Table VI and Fig. 3 give delivery within 1 s in the main grid. At 100 nodes AODV delivers 24–41 points less than OLSR in every scenario (59.4% against 99.9% in the baseline; p = 0.002 in all six scenarios). At 25 nodes AODV is slightly ahead of OLSR in the five failure scenarios (median paired difference 0.5–1.7 points, p ≤ 0.008). At 50 nodes AODV and OLSR differ by at most 1.1 points; the difference is significant only in the baseline, where OLSR is ahead by a median of 0.7 points (p = 0.004), and under node failure, where AODV is ahead by 0.7 points (p = 0.049). The partition caps both protocols at 73–76% at 25 and 50 nodes, since packets between the two halves cannot be delivered while it lasts.
 
 **TABLE VI: Delivered within T = 1 s (%) in the main grid, mean ± 95% CI over 10 seeds**
 
-| Scenario | Nodes | AODV | OLSR | DSDV |
-|---|---|---|---|---|
-| Baseline | 25 | 100.0 ± 0.1 | 99.7 ± 0.4 | 99.1 ± 1.4 |
-| Baseline | 50 | 98.9 ± 0.8 | 100.0 ± 0.0 | 99.4 ± 0.2 |
-| Baseline | 100 | 59.4 ± 4.4 | 99.9 ± 0.1 | 97.3 ± 0.3 |
-| Link failure | 25 | 83.6 ± 16.3 | 82.3 ± 15.9 | 82.1 ± 16.9 |
-| Link failure | 50 | 98.5 ± 1.1 | 99.1 ± 0.3 | 99.2 ± 0.4 |
-| Link failure | 100 | 58.9 ± 5.5 | 99.5 ± 0.2 | 97.3 ± 0.3 |
-| Node failure | 25 | 91.0 ± 14.3 | 89.3 ± 13.7 | 87.5 ± 15.6 |
-| Node failure | 50 | 97.0 ± 4.9 | 96.4 ± 4.8 | 95.0 ± 5.0 |
-| Node failure | 100 | 74.7 ± 3.1 | 98.8 ± 0.2 | 97.5 ± 0.3 |
-| Multiple failures | 25 | 91.1 ± 9.8 | 90.1 ± 9.4 | 89.6 ± 10.8 |
-| Multiple failures | 50 | 98.5 ± 1.5 | 98.4 ± 0.6 | 98.4 ± 0.9 |
-| Multiple failures | 100 | 65.6 ± 4.8 | 98.6 ± 0.3 | 97.9 ± 0.3 |
-| Partition | 25 | 73.8 ± 4.2 | 73.3 ± 4.2 | 73.5 ± 4.5 |
-| Partition | 50 | 75.1 ± 4.0 | 75.4 ± 3.9 | 76.1 ± 3.9 |
-| Partition | 100 | 49.0 ± 5.7 | 74.0 ± 5.9 | 72.6 ± 5.2 |
-| Recovery | 25 | 95.0 ± 7.8 | 92.9 ± 7.9 | 91.6 ± 9.4 |
-| Recovery | 50 | 97.8 ± 2.7 | 97.2 ± 2.8 | 96.4 ± 3.1 |
-| Recovery | 100 | 67.8 ± 3.5 | 98.8 ± 0.2 | 97.2 ± 0.4 |
+| Scenario | Nodes | AODV | OLSR |
+|---|---|---|---|
+| Baseline | 25 | 100.0 ± 0.1 | 99.7 ± 0.4 |
+| Baseline | 50 | 98.9 ± 0.8 | 100.0 ± 0.0 |
+| Baseline | 100 | 59.4 ± 4.4 | 99.9 ± 0.1 |
+| Link failure | 25 | 83.6 ± 16.3 | 82.3 ± 15.9 |
+| Link failure | 50 | 98.5 ± 1.1 | 99.1 ± 0.3 |
+| Link failure | 100 | 58.9 ± 5.5 | 99.5 ± 0.2 |
+| Node failure | 25 | 91.0 ± 14.3 | 89.3 ± 13.7 |
+| Node failure | 50 | 97.0 ± 4.9 | 96.4 ± 4.8 |
+| Node failure | 100 | 74.7 ± 3.1 | 98.8 ± 0.2 |
+| Multiple failures | 25 | 91.1 ± 9.8 | 90.1 ± 9.4 |
+| Multiple failures | 50 | 98.5 ± 1.5 | 98.4 ± 0.6 |
+| Multiple failures | 100 | 65.6 ± 4.8 | 98.6 ± 0.3 |
+| Partition | 25 | 73.8 ± 4.2 | 73.3 ± 4.2 |
+| Partition | 50 | 75.1 ± 4.0 | 75.4 ± 3.9 |
+| Partition | 100 | 49.0 ± 5.7 | 74.0 ± 5.9 |
+| Recovery | 25 | 95.0 ± 7.8 | 92.9 ± 7.9 |
+| Recovery | 50 | 97.8 ± 2.7 | 97.2 ± 2.8 |
+| Recovery | 100 | 67.8 ± 3.5 | 98.8 ± 0.2 |
 
-Table VII shows what changes at 100 nodes in the baseline. AODV's PDR falls to 60.0%, its median delay rises to 17.5 ms against 2.1 ms for OLSR, and it sends 18.65 control packets per node per second against 0.75 for OLSR. The MAC reports 14,943 link breaks (unicast frames dropped after the retry limit) per AODV run, against 2.4 for OLSR and 138.5 for DSDV, and AODV's median route discovery takes 77.6 ms. With RTS/CTS switched on, AODV delivers 46.7% within 1 s, OLSR 99.9% and DSDV 97.1%.
+Table VII shows what changes at 100 nodes in the baseline. AODV's PDR falls to 60.0%, its median delay rises to 17.5 ms against 2.1 ms for OLSR, and it sends 18.65 control packets per node per second against 0.75 for OLSR. The MAC reports 14,943 link breaks (unicast frames dropped after the retry limit) per AODV run, against 2.4 for OLSR, and AODV's median route discovery takes 77.6 ms. With RTS/CTS switched on, AODV delivers 46.7% within 1 s and OLSR 99.9%.
 
 The 3,677 messages that AODV loses per run at 100 nodes are lost, not late. Of these, 44% are dropped at the MAC after the retry limit, 39% at a relay that no longer has a route, 16% after waiting more than 0.5 s in a MAC queue, and under 1% while waiting for a route. AODV starts 4,324 route discoveries per run, 94% of which complete, in a network where nothing fails and about ten would be enough; each discovery is re-broadcast by about 44 nodes.
 
-Two further experiments, with predictions recorded before the results were opened, test the cause (Table XVIII). When AODV ignores the MAC's retry-limit reports and keeps its routes, it delivers 87.2% within 1 s on the same networks (median gain 28 points, Wilcoxon p = 0.002), still 12.6 points below OLSR; it then still starts 2,508 discoveries per run, because it also drops a neighbour whose HELLO broadcasts it misses. When the same 100 nodes are placed in a 1,000 m square, with 6.3 neighbours each instead of 22.4, AODV delivers 99.5% and OLSR 99.6% within 1 s (no significant difference, p = 0.48), although paths are twice as long. The gap at 100 nodes is therefore an effect of crowding, not of the number of nodes.
+Two further experiments, with predictions recorded before the results were opened, test the cause (Table VIII). When AODV ignores the MAC's retry-limit reports and keeps its routes, it delivers 87.2% within 1 s on the same networks (median gain 28 points, Wilcoxon p = 0.002), still 12.6 points below OLSR; it then still starts 2,508 discoveries per run, because it also drops a neighbour whose HELLO broadcasts it misses. When the same 100 nodes are placed in a 1,000 m square, with 6.3 neighbours each instead of 22.4, AODV delivers 99.5% and OLSR 99.6% within 1 s (no significant difference, p = 0.48), although paths are twice as long. The gap at 100 nodes is therefore an effect of crowding, not of the number of nodes.
 
 Our explanation, consistent with these results, is that the links were never broken. In a crowded network a data frame can go unacknowledged because other transmissions garble it. AODV takes the missing acknowledgement for a dead link and cancels a route that worked. The search for a new route is a broadcast that about 44 nodes repeat, which crowds the air further, so more frames nearby go unacknowledged and more working routes are cancelled. We did not trace collisions at the radio directly.
 
 **TABLE VII: Baseline scenario of the main grid: delivery, delay and control traffic (mean ± 95% CI)**
 
-| Metric | Nodes | AODV | OLSR | DSDV |
-|---|---|---|---|---|
-| PDR (%) | 25 | 100.0 ± 0.0 | 99.7 ± 0.4 | 99.1 ± 1.4 |
-| PDR (%) | 50 | 98.9 ± 0.8 | 100.0 ± 0.0 | 99.4 ± 0.2 |
-| PDR (%) | 100 | 60.0 ± 4.4 | 99.9 ± 0.1 | 97.3 ± 0.3 |
-| Median delay (ms) | 25 | 3.0 ± 0.8 | 2.8 ± 0.7 | 3.0 ± 0.8 |
-| Median delay (ms) | 50 | 2.8 ± 0.3 | 2.7 ± 0.3 | 2.8 ± 0.3 |
-| Median delay (ms) | 100 | 17.5 ± 7.0 | 2.1 ± 0.3 | 2.6 ± 0.2 |
-| Control pkts/node/s | 25 | 1.13 ± 0.07 | 0.72 ± 0.03 | 1.39 ± 0.08 |
-| Control pkts/node/s | 50 | 2.52 ± 0.71 | 0.74 ± 0.01 | 3.17 ± 0.08 |
-| Control pkts/node/s | 100 | 18.65 ± 1.46 | 0.75 ± 0.02 | 6.84 ± 0.03 |
-| MAC link breaks/run | 100 | 14,943 | 2.4 | 138.5 |
+| Metric | Nodes | AODV | OLSR |
+|---|---|---|---|
+| PDR (%) | 25 | 100.0 ± 0.0 | 99.7 ± 0.4 |
+| PDR (%) | 50 | 98.9 ± 0.8 | 100.0 ± 0.0 |
+| PDR (%) | 100 | 60.0 ± 4.4 | 99.9 ± 0.1 |
+| Median delay (ms) | 25 | 3.0 ± 0.8 | 2.8 ± 0.7 |
+| Median delay (ms) | 50 | 2.8 ± 0.3 | 2.7 ± 0.3 |
+| Median delay (ms) | 100 | 17.5 ± 7.0 | 2.1 ± 0.3 |
+| Control pkts/node/s | 25 | 1.13 ± 0.07 | 0.72 ± 0.03 |
+| Control pkts/node/s | 50 | 2.52 ± 0.71 | 0.74 ± 0.01 |
+| Control pkts/node/s | 100 | 18.65 ± 1.46 | 0.75 ± 0.02 |
+| MAC link breaks/run | 100 | 14,943 | 2.4 |
 
-![](../../results/analysis/figures/main_within_1s.png)
+![](../../results/analysis_paper/figures/main_within_1s.png)
 
 *Fig. 3: Delivered within T = 1 s in the main grid, by failure scenario and network size. Bars: mean over seeds 1–10; error bars: 95% confidence interval.*
+
+**TABLE VIII: Diagnosis of the 100-node baseline: AODV's losses with MAC feedback ignored and at a quarter of the density (mean of 10 seeds; ± 95% CI)**
+
+| Measure | AODV, 500 m | AODV ignoring MAC reports, 500 m | AODV, 1,000 m | OLSR, 500 m | OLSR, 1,000 m |
+|---|---|---|---|---|---|
+| Neighbours per node | 22.4 | 22.4 | 6.3 | 22.4 | 6.3 |
+| Delivered within 1 s (%) | 59.4 ± 4.4 | 87.2 ± 0.7 | 99.5 ± 0.3 | 99.9 ± 0.1 | 99.6 ± 0.5 |
+| PDR (%) | 60.0 | 87.3 | 99.8 | 99.9 | 99.6 |
+| Mean hops of delivered packets | 3.5 | 3.1 | 7.2 | 2.7 | 6.8 |
+| Route discoveries per run | 4,324 | 2,508 | 77 | - | - |
+| MAC retry-limit drops per run | 14,943 | 7,454 | 3.4 | 2.4 | 1.1 |
+| Control pkts/node/s | 18.65 | 8.99 | 1.19 | 0.75 | 0.97 |
+| Messages lost per run (of 9,200) | 3,677 | 1,173 | 22 | 5 | 38 |
 
 
 ### B. Severity and Load
 
-Random failures of 5–30% of relay nodes or links at 50 nodes leave every protocol at 98.2–99.9% delivery within 1 s (Table VIII). With more flows, AODV's delivery within 1 s in the baseline falls from 99.7% with 5 flows to 96.2% with 20, while OLSR stays at 100.0% and DSDV at 99.4–99.5% (Table IX).
+Random failures of 5–30% of relay nodes or links at 50 nodes leave both protocols at 98.7–99.9% delivery within 1 s (Table IX). With more flows, AODV's delivery within 1 s in the baseline falls from 99.7% with 5 flows to 96.2% with 20, while OLSR stays at 100.0% (Table X).
 
-**TABLE VIII: Delivered within 1 s (%) under random failures, 50 nodes**
+**TABLE IX: Delivered within 1 s (%) under random failures, 50 nodes**
 
-| Failures | Share failed | AODV | OLSR | DSDV |
-|---|---|---|---|---|
-| Random links | 5% | 99.0 ± 0.8 | 99.6 ± 0.2 | 99.4 ± 0.2 |
-| Random links | 10% | 99.2 ± 0.5 | 99.6 ± 0.1 | 99.3 ± 0.2 |
-| Random links | 20% | 99.3 ± 0.6 | 99.1 ± 0.3 | 99.6 ± 0.2 |
-| Random links | 30% | 98.7 ± 1.7 | 98.7 ± 0.2 | 99.3 ± 0.3 |
-| Random relay nodes | 5% | 99.2 ± 0.6 | 99.9 ± 0.1 | 99.3 ± 0.3 |
-| Random relay nodes | 10% | 99.4 ± 0.6 | 99.6 ± 0.2 | 99.2 ± 0.2 |
-| Random relay nodes | 20% | 99.5 ± 0.4 | 99.1 ± 0.4 | 99.0 ± 0.5 |
-| Random relay nodes | 30% | 99.6 ± 0.3 | 98.8 ± 0.4 | 98.2 ± 1.6 |
+| Failures | Share failed | AODV | OLSR |
+|---|---|---|---|
+| Random links | 5% | 99.0 ± 0.8 | 99.6 ± 0.2 |
+| Random links | 10% | 99.2 ± 0.5 | 99.6 ± 0.1 |
+| Random links | 20% | 99.3 ± 0.6 | 99.1 ± 0.3 |
+| Random links | 30% | 98.7 ± 1.7 | 98.7 ± 0.2 |
+| Random relay nodes | 5% | 99.2 ± 0.6 | 99.9 ± 0.1 |
+| Random relay nodes | 10% | 99.4 ± 0.6 | 99.6 ± 0.2 |
+| Random relay nodes | 20% | 99.5 ± 0.4 | 99.1 ± 0.4 |
+| Random relay nodes | 30% | 99.6 ± 0.3 | 98.8 ± 0.4 |
 
-**TABLE IX: Delivered within 1 s (%) by number of flows, 50 nodes**
+**TABLE X: Delivered within 1 s (%) by number of flows, 50 nodes**
 
-| Scenario | Flows | AODV | OLSR | DSDV |
-|---|---|---|---|---|
-| Baseline | 5 | 99.7 ± 0.2 | 100.0 ± 0.0 | 99.5 ± 0.3 |
-| Baseline | 10 | 98.9 ± 0.8 | 100.0 ± 0.0 | 99.4 ± 0.2 |
-| Baseline | 20 | 96.2 ± 3.1 | 100.0 ± 0.0 | 99.4 ± 0.1 |
-| Node failure | 5 | 99.7 ± 0.2 | 98.1 ± 0.5 | 97.5 ± 1.7 |
-| Node failure | 10 | 97.0 ± 4.9 | 96.4 ± 4.8 | 95.0 ± 5.0 |
-| Node failure | 20 | 97.4 ± 2.1 | 97.9 ± 1.7 | 97.7 ± 2.2 |
+| Scenario | Flows | AODV | OLSR |
+|---|---|---|---|
+| Baseline | 5 | 99.7 ± 0.2 | 100.0 ± 0.0 |
+| Baseline | 10 | 98.9 ± 0.8 | 100.0 ± 0.0 |
+| Baseline | 20 | 96.2 ± 3.1 | 100.0 ± 0.0 |
+| Node failure | 5 | 99.7 ± 0.2 | 98.1 ± 0.5 |
+| Node failure | 10 | 97.0 ± 4.9 | 96.4 ± 4.8 |
+| Node failure | 20 | 97.4 ± 2.1 | 97.9 ± 1.7 |
 
 
 ### C. Energy
 
-With ns-3's default radio the first node runs flat at about 205 s and half of the nodes at about 400 s under every protocol (Table X, Fig. 4), with no significant difference between protocols in the time of the first depletion. OLSR sends the fewest control packets (0.49 per node per second, against 1.75 for AODV and 1.86 for DSDV). With the low-idle radio the first node runs flat at 165.2 s under AODV, 157.8 s under OLSR and 154.4 s under DSDV (paired medians: AODV later than OLSR by 6 s, Holm p = 0.012; OLSR later than DSDV by 4 s, p = 0.043).
+With ns-3's default radio the first node runs flat at about 205 s and half of the nodes at about 400 s under both protocols (Table XI, Fig. 4), with no difference between them in the time of the first depletion. OLSR sends fewer control packets than AODV (0.49 against 1.75 per node per second). With the low-idle radio the first node runs flat at 165.2 s under AODV and 157.8 s under OLSR (paired median: AODV later by 6 s, p = 0.004).
 
-**TABLE X: Energy experiment, 50 nodes: time until nodes run flat and control traffic**
+**TABLE XI: Energy experiment, 50 nodes: time until nodes run flat and control traffic**
 
 | Radio | Protocol | First node flat (s) | Half of nodes flat (s) | Control pkts/node/s |
 |---|---|---|---|---|
 | Default | AODV | 205.3 ± 3.1 | 400.1 ± 13.1 | 1.75 ± 0.41 |
-| Default | DSDV | 205.0 ± 3.3 | 399.0 ± 13.1 | 1.86 ± 0.08 |
 | Default | OLSR | 205.2 ± 3.2 | 400.1 ± 13.2 | 0.49 ± 0.01 |
 | Low-idle radio | AODV | 165.2 ± 7.6 | 335.3 ± 10.0 | 1.36 ± 0.28 |
-| Low-idle radio | DSDV | 154.4 ± 5.9 | 312.0 ± 8.6 | 1.46 ± 0.05 |
 | Low-idle radio | OLSR | 157.8 ± 7.3 | 330.1 ± 10.3 | 0.41 ± 0.01 |
 
-![](../../results/analysis/figures/energy_lifetime.png)
+![](../../results/analysis_paper/figures/energy_lifetime.png)
 
 *Fig. 4: Energy experiment (50 nodes): simulation time until the first node, 10% of nodes and 50% of nodes run flat, with ns-3's default radio and a low-idle radio. Error bars: 95% confidence interval.*
 
 
 ### D. Kerala-Anchored Scenario
 
-Tables XI and XII and Figs. 5 and 6 give delivery within 1 s in the two phases. Without flooding OLSR already delivers more than AODV in the acute phase: 99.9% against 96.4% at 50 nodes and 100.0% against 76.0% at 100 nodes. At 100 nodes OLSR stays ahead of AODV in every flood scenario of the acute phase, by 8.5–15.7 points (Holm p = 0.0059 in each), a smaller gap than in the no-flood control (24.0 points). At 50 nodes the flood scenarios bring all three protocols to 69–88%, and AODV and OLSR differ by at most 1.8 points: OLSR is ahead under Kerala-anchored 27% failures (median 1.3 points, p = 0.029) and AODV under random 50% failures (1.2 points, p = 0.037). Counting only packets sent while a path existed, OLSR delivers 94.5–99.5% in the acute phase at 100 nodes and AODV 80.2–82.9%.
+Tables XII and XIII and Figs. 5 and 6 give delivery within 1 s in the two phases. Without flooding OLSR already delivers more than AODV in the acute phase: 99.9% against 96.4% at 50 nodes and 100.0% against 76.0% at 100 nodes. At 100 nodes OLSR stays ahead of AODV in every flood scenario of the acute phase, by 8.5–15.6 points (p = 0.002 in each), a smaller gap than in the no-flood control (24.0 points). At 50 nodes the flood scenarios bring both protocols to 72–88%, and AODV and OLSR differ by at most 1.9 points: OLSR is ahead under Kerala-anchored 27% failures (median 1.3 points, p = 0.010) and AODV under random 50% failures (1.2 points, p = 0.037). Counting only packets sent while a path existed, OLSR delivers 94.5–99.5% in the acute phase at 100 nodes and AODV 80.2–82.9%.
 
-**TABLE XI: Kerala-anchored scenario, acute phase, 14–18 Aug: delivered within 1 s (%)**
+Three things narrow the gap at 100 nodes when devices flood. First, the air becomes less crowded: in the acute phase AODV's retry-limit drops fall from 4,049 per run without flooding to 2,661–2,950 when 27% of devices flood and 1,861–2,126 when 50% flood, and its route discoveries from 1,568 to 919–1,263 (lower in every seed of every flood scenario, p = 0.002). On packets sent while a path existed, AODV rises from 76.0% to 80.2–82.9%. Second, packets with no path are lost under both protocols, which pulls the two overall figures together. Third, OLSR loses ground on packets that still had a path, from 100.0% to 94.5–99.5%: in the flooded runs it sends 12–36 data packets per run to a next hop that never acknowledges, against none without flooding.
 
-| Nodes | Scenario | AODV | OLSR | DSDV |
-|---|---|---|---|---|
-| 50 | No flooding | 96.4 ± 1.2 | 99.9 ± 0.1 | 99.6 ± 0.2 |
-| 50 | Kerala-anchored 27% | 80.9 ± 5.8 | 82.7 ± 5.6 | 81.8 ± 6.1 |
-| 50 | Random 27% | 87.2 ± 2.6 | 87.7 ± 3.0 | 82.6 ± 4.6 |
-| 50 | Kerala-anchored 50% | 71.8 ± 6.9 | 72.2 ± 6.8 | 69.3 ± 7.2 |
-| 50 | Random 50% | 74.2 ± 7.2 | 73.0 ± 6.8 | 69.1 ± 5.7 |
-| 100 | No flooding | 76.0 ± 3.7 | 100.0 ± 0.0 | 97.5 ± 0.6 |
-| 100 | Kerala-anchored 27% | 65.4 ± 4.5 | 81.1 ± 4.3 | 78.4 ± 4.6 |
-| 100 | Random 27% | 71.0 ± 5.0 | 84.6 ± 5.0 | 81.8 ± 4.6 |
-| 100 | Kerala-anchored 50% | 60.5 ± 4.2 | 73.3 ± 3.3 | 70.3 ± 3.5 |
-| 100 | Random 50% | 61.7 ± 6.9 | 70.2 ± 5.5 | 68.0 ± 5.7 |
+[Your text: why OLSR loses packets that still had a path when devices die (AODV learns that a neighbour is gone as soon as a frame goes unacknowledged; OLSR only after 6 s without the neighbour's HELLO messages), and what this says about the 'frequent breaks' part of the premise.]
 
-In the sustained phase, with the flooded nodes gone and batteries running out, delivery within 1 s in the flood scenarios is 26–58% at 50 nodes and 33–60% at 100 nodes. At 50 nodes AODV and OLSR do not differ significantly in any scenario. At 100 nodes OLSR stays ahead in four of the five scenarios (median 1.6–10.6 points, Holm p ≤ 0.012); under random 50% failures the 1.2-point difference is not significant.
+**TABLE XII: Kerala-anchored scenario, acute phase, 14–18 Aug: delivered within 1 s (%)**
 
-**TABLE XII: Kerala-anchored scenario, sustained phase, 18–27 Aug: delivered within 1 s (%)**
+| Nodes | Scenario | AODV | OLSR |
+|---|---|---|---|
+| 50 | No flooding | 96.4 ± 1.2 | 99.9 ± 0.1 |
+| 50 | Kerala-anchored 27% | 80.9 ± 5.8 | 82.7 ± 5.6 |
+| 50 | Random 27% | 87.2 ± 2.6 | 87.7 ± 3.0 |
+| 50 | Kerala-anchored 50% | 71.8 ± 6.9 | 72.2 ± 6.8 |
+| 50 | Random 50% | 74.2 ± 7.2 | 73.0 ± 6.8 |
+| 100 | No flooding | 76.0 ± 3.7 | 100.0 ± 0.0 |
+| 100 | Kerala-anchored 27% | 65.4 ± 4.5 | 81.1 ± 4.3 |
+| 100 | Random 27% | 71.0 ± 5.0 | 84.6 ± 5.0 |
+| 100 | Kerala-anchored 50% | 60.5 ± 4.2 | 73.3 ± 3.3 |
+| 100 | Random 50% | 61.7 ± 6.9 | 70.2 ± 5.5 |
 
-| Nodes | Scenario | AODV | OLSR | DSDV |
-|---|---|---|---|---|
-| 50 | No flooding | 79.1 ± 4.6 | 80.2 ± 4.8 | 78.7 ± 5.1 |
-| 50 | Kerala-anchored 27% | 50.6 ± 6.4 | 50.9 ± 6.5 | 49.0 ± 5.3 |
-| 50 | Random 27% | 58.1 ± 9.3 | 58.3 ± 9.3 | 57.3 ± 9.9 |
-| 50 | Kerala-anchored 50% | 31.5 ± 10.8 | 31.4 ± 10.9 | 30.7 ± 10.5 |
-| 50 | Random 50% | 26.0 ± 8.7 | 26.3 ± 8.7 | 25.5 ± 8.2 |
-| 100 | No flooding | 71.3 ± 3.7 | 81.2 ± 4.3 | 78.7 ± 3.9 |
-| 100 | Kerala-anchored 27% | 50.6 ± 6.7 | 54.3 ± 7.3 | 52.0 ± 6.5 |
-| 100 | Random 27% | 57.1 ± 7.1 | 60.2 ± 7.7 | 57.5 ± 7.5 |
-| 100 | Kerala-anchored 50% | 33.3 ± 7.8 | 35.2 ± 8.1 | 34.3 ± 8.0 |
-| 100 | Random 50% | 36.6 ± 11.4 | 37.7 ± 11.1 | 36.8 ± 10.9 |
+In the sustained phase, with the flooded nodes gone and batteries running out, delivery within 1 s in the flood scenarios is 26–58% at 50 nodes and 33–60% at 100 nodes. At 50 nodes AODV and OLSR do not differ significantly in any flood scenario (without flooding OLSR is ahead by a median of 1.0 point, p = 0.027). At 100 nodes OLSR stays ahead in four of the five scenarios (median 1.6–10.6 points, p ≤ 0.004); under random 50% failures the 1.2-point difference is not significant (p = 0.19).
 
-![](../../results/analysis/figures/kerala_within_T_by_phase_n50.png)
+**TABLE XIII: Kerala-anchored scenario, sustained phase, 18–27 Aug: delivered within 1 s (%)**
+
+| Nodes | Scenario | AODV | OLSR |
+|---|---|---|---|
+| 50 | No flooding | 79.1 ± 4.6 | 80.2 ± 4.8 |
+| 50 | Kerala-anchored 27% | 50.6 ± 6.4 | 50.9 ± 6.5 |
+| 50 | Random 27% | 58.1 ± 9.3 | 58.3 ± 9.3 |
+| 50 | Kerala-anchored 50% | 31.5 ± 10.8 | 31.4 ± 10.9 |
+| 50 | Random 50% | 26.0 ± 8.7 | 26.3 ± 8.7 |
+| 100 | No flooding | 71.3 ± 3.7 | 81.2 ± 4.3 |
+| 100 | Kerala-anchored 27% | 50.6 ± 6.7 | 54.3 ± 7.3 |
+| 100 | Random 27% | 57.1 ± 7.1 | 60.2 ± 7.7 |
+| 100 | Kerala-anchored 50% | 33.3 ± 7.8 | 35.2 ± 8.1 |
+| 100 | Random 50% | 36.6 ± 11.4 | 37.7 ± 11.1 |
+
+![](../../results/analysis_paper/figures/kerala_within_T_by_phase_n50.png)
 
 *Fig. 5: Kerala-anchored scenario, 50 nodes: delivered within 1 s in the acute (14–18 Aug) and sustained (18–27 Aug) phases, for all sent packets (top) and for packets sent while a path existed (bottom). A hypothetical, time-compressed scenario anchored to dated 2018 events, not measured Kerala data.*
 
-![](../../results/analysis/figures/kerala_within_T_by_phase_n100.png)
+![](../../results/analysis_paper/figures/kerala_within_T_by_phase_n100.png)
 
 *Fig. 6: Kerala-anchored scenario, 100 nodes, as in Fig. 5.*
 
 
 ### E. Chalakudy Scenario
 
-Table XIII and Fig. 7 give delivery within 1 s on the Chalakudy building topology with unlimited batteries. Without flooding OLSR delivers 100% in every window, DSDV 95.4–97.7% and AODV 86.2–91.2% (AODV below OLSR by a median of 9.0–9.7 points in the acute and sustained phases, Holm p = 0.0059). This gap grows with the time between bursts, to about 4, 9 and 12–15 points at mean gaps of 7.5, 15 and 30 s, and so do AODV's route discoveries per burst (1.6, 2.3 and 3.0), while AODV's PDR stays at 97–98%.
+Table XIV and Fig. 7 give delivery within 1 s on the Chalakudy building topology with unlimited batteries. Without flooding OLSR delivers 100% in every window and AODV 86.2–91.2% (AODV below OLSR by a median of 9.0–9.7 points in the acute and sustained phases, p = 0.002). This gap grows with the time between bursts, to about 4, 9 and 12–15 points at mean gaps of 7.5, 15 and 30 s, and so do AODV's route discoveries per burst (1.6, 2.3 and 3.0), while AODV's PDR stays at 97–98%.
 
-**TABLE XIII: Chalakudy scenario, onset 15 Aug, 25% flooded, no battery limit: delivered within 1 s (%)**
+**TABLE XIV: Chalakudy scenario, onset 15 Aug, 25% flooded, no battery limit: delivered within 1 s (%)**
 
-| Window | Scenario | AODV | OLSR | DSDV |
-|---|---|---|---|---|
-| Before onset | all | 86.2 ± 3.4 | 100.0 ± 0.0 | 95.4 ± 3.2 |
-| Acute | No flooding | 91.2 ± 1.1 | 100.0 ± 0.0 | 97.3 ± 2.0 |
-| Acute | Flood order | 72.3 ± 6.4 | 75.8 ± 6.5 | 70.2 ± 5.5 |
-| Acute | Uniform random | 75.9 ± 6.3 | 75.9 ± 8.1 | 65.8 ± 7.1 |
-| Acute, path existed | No flooding | 91.2 ± 1.1 | 100.0 ± 0.0 | 97.3 ± 2.0 |
-| Acute, path existed | Flood order | 89.8 ± 3.9 | 94.1 ± 2.5 | 87.4 ± 4.1 |
-| Acute, path existed | Uniform random | 89.3 ± 2.2 | 89.0 ± 3.0 | 77.4 ± 4.7 |
-| Sustained | No flooding | 90.4 ± 1.7 | 100.0 ± 0.0 | 97.7 ± 0.9 |
-| Sustained | Flood order | 50.9 ± 12.1 | 56.8 ± 13.5 | 53.9 ± 13.5 |
-| Sustained | Uniform random | 52.2 ± 15.9 | 59.5 ± 18.0 | 56.6 ± 17.2 |
-| Sustained, path existed | No flooding | 90.4 ± 1.7 | 100.0 ± 0.0 | 97.7 ± 0.9 |
-| Sustained, path existed | Flood order | 89.7 ± 3.0 | 100.0 ± 0.0 | 93.5 ± 4.5 |
-| Sustained, path existed | Uniform random | 85.6 ± 6.9 | 99.9 ± 0.1 | 95.1 ± 2.0 |
+| Window | Scenario | AODV | OLSR |
+|---|---|---|---|
+| Before onset | all | 86.2 ± 3.4 | 100.0 ± 0.0 |
+| Acute | No flooding | 91.2 ± 1.1 | 100.0 ± 0.0 |
+| Acute | Flood order | 72.3 ± 6.4 | 75.8 ± 6.5 |
+| Acute | Uniform random | 75.9 ± 6.3 | 75.9 ± 8.1 |
+| Acute, path existed | No flooding | 91.2 ± 1.1 | 100.0 ± 0.0 |
+| Acute, path existed | Flood order | 89.8 ± 3.9 | 94.1 ± 2.5 |
+| Acute, path existed | Uniform random | 89.3 ± 2.2 | 89.0 ± 3.0 |
+| Sustained | No flooding | 90.4 ± 1.7 | 100.0 ± 0.0 |
+| Sustained | Flood order | 50.9 ± 12.1 | 56.8 ± 13.5 |
+| Sustained | Uniform random | 52.2 ± 15.9 | 59.5 ± 18.0 |
+| Sustained, path existed | No flooding | 90.4 ± 1.7 | 100.0 ± 0.0 |
+| Sustained, path existed | Flood order | 89.7 ± 3.0 | 100.0 ± 0.0 |
+| Sustained, path existed | Uniform random | 85.6 ± 6.9 | 99.9 ± 0.1 |
 
-With 25% of devices flooded, delivery within 1 s in the acute phase falls to 75.8% for OLSR, 72.3% for AODV and 70.2% for DSDV under the flood order, and to 75.9%, 75.9% and 65.8% under random failures; OLSR and AODV do not differ significantly here. Across the 12 flooded configurations without battery limits (both failure models, the share sweep and the traffic sweep), OLSR is significantly ahead of AODV in 4, at 10% flooded and with 30 s between bursts, and never behind (Table XIV, Fig. 10). At 50% flooded AODV and OLSR are level at about 57%. Counting only packets sent while a path existed, the protocols deliver 77–94% in the acute phase and 86–100% in the sustained phase (Fig. 8), so most of the loss after the onset falls on devices that were flooded or cut off. In the sustained phase all protocols deliver 51–60% within 1 s, with OLSR above AODV by a median of 5.5–6.9 points (Holm p = 0.0059), about the same gap as without flooding (Fig. 9).
+With 25% of devices flooded, delivery within 1 s in the acute phase falls to 75.8% for OLSR and 72.3% for AODV under the flood order (OLSR ahead by a median of 4.3 points, p = 0.037), and to 75.9% for both under random failures (p = 0.91). Across the 12 flooded configurations without battery limits (both failure models, both onsets, the share sweep and the traffic sweep), OLSR is significantly ahead of AODV in 5, at 10% flooded, with 30 s between bursts and under the flood order in the main setting, and never behind (Table XV, Fig. 10). At 50% flooded AODV and OLSR are level at about 57%. Counting only packets sent while a path existed, the protocols deliver 81–94% in the acute phase and 86–100% in the sustained phase (Fig. 8), so most of the loss after the onset falls on devices that were flooded or cut off. In the sustained phase both protocols deliver 51–60% within 1 s, with OLSR above AODV by a median of 5.5–6.9 points (p = 0.002), about the same gap as without flooding (Fig. 9).
 
-**TABLE XIV: Chalakudy, acute phase, onset 15 Aug, no battery limit: delivered within 1 s (%) as one setting changes (main: 25% flooded, 15 s gap)**
+**TABLE XV: Chalakudy, acute phase, onset 15 Aug, no battery limit: delivered within 1 s (%) as one setting changes (main: 25% flooded, 15 s gap)**
 
-| Setting | Failures | AODV | OLSR | DSDV |
-|---|---|---|---|---|
-| 10% flooded | Flood order | 86.6 ± 3.2 | 93.6 ± 2.3 | 87.6 ± 5.8 |
-| 25% flooded (main) | Flood order | 72.3 ± 6.4 | 75.8 ± 6.5 | 70.2 ± 5.5 |
-| 50% flooded | Flood order | 57.5 ± 7.5 | 57.0 ± 8.2 | 49.2 ± 6.5 |
-| gap 7.5 s | Flood order | 75.5 ± 5.3 | 76.8 ± 5.3 | 68.6 ± 6.2 |
-| gap 30 s | Flood order | 67.0 ± 8.2 | 74.6 ± 7.3 | 70.4 ± 10.9 |
-| 10% flooded | Uniform | 82.8 ± 5.0 | 89.3 ± 5.0 | 83.6 ± 5.2 |
-| 25% flooded (main) | Uniform | 75.9 ± 6.3 | 75.9 ± 8.1 | 65.8 ± 7.1 |
-| 50% flooded | Uniform | 58.8 ± 7.9 | 56.1 ± 8.6 | 47.0 ± 7.8 |
-| gap 7.5 s | Uniform | 75.9 ± 6.5 | 74.9 ± 6.6 | 64.0 ± 8.8 |
-| gap 30 s | Uniform | 66.7 ± 6.8 | 75.1 ± 7.2 | 64.4 ± 10.0 |
+| Setting | Failures | AODV | OLSR |
+|---|---|---|---|
+| 10% flooded | Flood order | 86.6 ± 3.2 | 93.6 ± 2.3 |
+| 25% flooded (main) | Flood order | 72.3 ± 6.4 | 75.8 ± 6.5 |
+| 50% flooded | Flood order | 57.5 ± 7.5 | 57.0 ± 8.2 |
+| gap 7.5 s | Flood order | 75.5 ± 5.3 | 76.8 ± 5.3 |
+| gap 30 s | Flood order | 67.0 ± 8.2 | 74.6 ± 7.3 |
+| 10% flooded | Uniform | 82.8 ± 5.0 | 89.3 ± 5.0 |
+| 25% flooded (main) | Uniform | 75.9 ± 6.3 | 75.9 ± 8.1 |
+| 50% flooded | Uniform | 58.8 ± 7.9 | 56.1 ± 8.6 |
+| gap 7.5 s | Uniform | 75.9 ± 6.5 | 74.9 ± 6.6 |
+| gap 30 s | Uniform | 66.7 ± 6.8 | 75.1 ± 7.2 |
 
-Flood order against random failures. Failures ordered by real ground height and failures at random devices show no significant difference in delivery within 1 s in any of 87 comparisons (every protocol, window, onset, share, battery and traffic setting; smallest Holm p = 0.15). Counting only packets sent while a path existed, 2 of 78 comparisons reach p < 0.05, both in favour of the flood order in the acute phase (DSDV at 25% and OLSR at 50% flooded).
+Flood order against random failures. Failures ordered by real ground height and failures at random devices show no significant difference in delivery within 1 s in any of 32 comparisons (both protocols, the acute and sustained phases, both onsets, every share, battery and traffic setting; smallest Holm p = 0.13). Counting only packets sent while a path existed, 2 of 32 comparisons reach p < 0.05, both in favour of the flood order: OLSR in the acute phase at 50% flooded (3.4 points, p = 0.027) and AODV in the sustained phase with 30 s between bursts (7.2 points, p = 0.039).
 
-Batteries. With the assumed batteries and ns-3's radio currents, the last device runs flat 4, 7 and 14 hours of scenario time after the power cut when 25%, 50% and 100% of the battery is available to the radio, at the same time under every protocol, so nothing is sent in the sustained phase. Counted against every scheduled message, battery-limited runs deliver only 6–26%.
+Batteries. With the assumed batteries and ns-3's radio currents, the last device runs flat 4, 7 and 14 hours of scenario time after the power cut when 25%, 50% and 100% of the battery is available to the radio, at the same time under both protocols, so nothing is sent in the sustained phase. Counted against every scheduled message, battery-limited runs deliver only 8–24%.
 
-Propagation. Under the 3GPP path-loss model no packet was delivered in any of the 90 runs (184,731 sent): at a range of 62.8 m, 100 devices in the square do not form a network. All other results assume the 150 m unit disk.
+Propagation. Under the 3GPP path-loss model no packet was delivered in any of the 60 runs (123,154 sent): at a range of 62.8 m, 100 devices in the square do not form a network. All other results assume the 150 m unit disk.
 
-![](../../results/analysis_chalakudy/figures/chalakudy_within_T_by_window.png)
+![](../../results/analysis_chalakudy_paper/figures/chalakudy_within_T_by_window.png)
 
 *Fig. 7: Chalakudy scenario: delivered within 1 s by window, onset 15 Aug (top) or 17 Aug (bottom), 25% flooded, no battery limit. Real data: building positions, ground height, Sentinel-1 water, event dates. Assumed: devices per building, flooded share, power cut, batteries, traffic, 150 m range, 1 day = 30 s.*
 
-![](../../results/analysis_chalakudy/figures/chalakudy_connected_within_T_by_window.png)
+![](../../results/analysis_chalakudy_paper/figures/chalakudy_connected_within_T_by_window.png)
 
 *Fig. 8: Chalakudy scenario as in Fig. 7, counting only packets sent while a path existed between source and destination.*
 
-![](../../results/analysis_chalakudy/figures/chalakudy_over_time_on15_nobatt.png)
+![](../../results/analysis_chalakudy_paper/figures/chalakudy_over_time_on15_nobatt.png)
 
 *Fig. 9: Chalakudy scenario over time, onset 15 Aug, no battery limit: devices still running (top) and delivered within 1 s in 10 s bins pooled over seeds 1–10 (bottom). Dashed line: 15 Aug; solid line: 18 Aug.*
 
-![](../../results/analysis_chalakudy/figures/chalakudy_sensitivity_acute.png)
+![](../../results/analysis_chalakudy_paper/figures/chalakudy_sensitivity_acute.png)
 
 *Fig. 10: Chalakudy, acute phase, onset 15 Aug: delivered within 1 s as one setting changes from the main setting (25% flooded, 15 s gap, 50% battery share). Flooded share and traffic: no battery limit; battery share: batteries limited. All swept values are assumptions.*
 
@@ -440,7 +448,7 @@ Building data © OpenStreetMap contributors and Overture Maps Foundation (ODbL).
 
 ## Data Availability
 
-Code, inputs, raw simulation outputs and analysis are in the public repository [7]. Raw downloads (about 170 MB) are re-fetched by experiments/chalakudy_fetch.py, which records the URL, access time and SHA-256 of each file. The tables of this paper are in docs/paper/tables of the repository and in Google Sheets: main grid, severity and load, energy, Kerala-anchored scenario, Chalakudy windows and Chalakudy sweeps (folder); docs/paper/tests.csv lists every paired test. [Before submission: add an ODbL notice for the derived data and a licence for the code; the repository has none.]
+Code, inputs, raw simulation outputs and analysis are in the public repository [6]. Raw downloads (about 170 MB) are re-fetched by experiments/chalakudy_fetch.py, which records the URL, access time and SHA-256 of each file. The tables of this paper are in docs/paper/tables of the repository and in Google Sheets: main grid, severity and load, energy, Kerala-anchored scenario, Chalakudy windows and Chalakudy sweeps (folder); docs/paper/tests.csv lists every paired test. The Sheets and the repository also hold the DSDV runs, which are not reported here. [Before submission: add an ODbL notice for the derived data and a licence for the code; the repository has none.]
 
 
 ## References
@@ -453,48 +461,44 @@ Code, inputs, raw simulation outputs and analysis are in the public repository [
 
 [4] T. Clausen and P. Jacquet, "Optimized Link State Routing Protocol (OLSR)," RFC 3626, 2003. [VERIFY]
 
-[5] C. E. Perkins and P. Bhagwat, "Highly dynamic destination-sequenced distance-vector routing (DSDV) for mobile computers," in Proc. ACM SIGCOMM, 1994. [VERIFY]
+[5] ns-3 network simulator, version 3.47. [Online]. Available: https://www.nsnam.org
 
-[6] ns-3 network simulator, version 3.47. [Online]. Available: https://www.nsnam.org
+[6] Kerala mesh simulation: code, inputs, raw outputs and analysis. [Online]. Available: https://github.com/unknownsoldier1bit/kerala-mesh-simulation (branch chalakudy-buildings).
 
-[7] Kerala mesh simulation: code, inputs, raw outputs and analysis. [Online]. Available: https://github.com/unknownsoldier1bit/kerala-mesh-simulation (branch chalakudy-buildings).
+[7] Kerala State Electricity Board, How KSEBL survived flood 2018. [NEEDS URL; check which area the 27 Aug date covers]
 
-[8] Kerala State Electricity Board, How KSEBL survived flood 2018. [NEEDS URL; check which area the 27 Aug date covers]
+[8] Overture Maps Foundation, release 2026-10-21.0. [Online]. Available: https://overturemaps.org (accessed 29 Oct. 2026).
 
-[9] Overture Maps Foundation, release 2026-10-21.0. [Online]. Available: https://overturemaps.org (accessed 29 Oct. 2026).
+[9] OpenStreetMap contributors. [Online]. Available: https://www.openstreetmap.org (via Overture Maps).
 
-[10] OpenStreetMap contributors. [Online]. Available: https://www.openstreetmap.org (via Overture Maps).
+[10] W. Sirko et al., "Continental-scale building detection from high resolution satellite imagery," arXiv:2107.12283, 2021. [VERIFY]
 
-[11] W. Sirko et al., "Continental-scale building detection from high resolution satellite imagery," arXiv:2107.12283, 2021. [VERIFY]
+[11] DataMeet, Indian Village Boundaries: Kerala. [Online]. Available: https://github.com/datameet/indian_village_boundaries (accessed 29 Oct. 2026).
 
-[12] DataMeet, Indian Village Boundaries: Kerala. [Online]. Available: https://github.com/datameet/indian_village_boundaries (accessed 29 Oct. 2026).
+[12] European Space Agency, Copernicus DEM GLO-30, doi: 10.5270/ESA-c5d3d65. [VERIFY]
 
-[13] European Space Agency, Copernicus DEM GLO-30, doi: 10.5270/ESA-c5d3d65. [VERIFY]
+[13] European Space Agency, Copernicus Sentinel-1 GRD data, 2018 (AWS Open Data, sentinel-s1-l1c; accessed 29 Oct. 2026).
 
-[14] European Space Agency, Copernicus Sentinel-1 GRD data, 2018 (AWS Open Data, sentinel-s1-l1c; accessed 29 Oct. 2026).
+[14] N. Otsu, "A threshold selection method from gray-level histograms," IEEE Trans. Syst., Man, Cybern., vol. 9, no. 1, pp. 62–66, 1979. [VERIFY]
 
-[15] N. Otsu, "A threshold selection method from gray-level histograms," IEEE Trans. Syst., Man, Cybern., vol. 9, no. 1, pp. 62–66, 1979. [VERIFY]
+[15] Deccan Herald, article reporting that Chalakudy flooded early on 15 Aug. 2018. [NEEDS URL]
 
-[16] Deccan Herald, article reporting that Chalakudy flooded early on 15 Aug. 2018. [NEEDS URL]
+[16] Scroll, article quoting a Member of Parliament that Chalakudy flooded on 17 Aug. 2018. [NEEDS URL]
 
-[17] Scroll, article quoting a Member of Parliament that Chalakudy flooded on 17 Aug. 2018. [NEEDS URL]
+[17] 3GPP, "Study on evaluation methodology of new Vehicle-to-Everything (V2X) use cases for LTE and NR," TR 37.885 V15.3.0, Jun. 2019, Table 6.2.1-1. [VERIFY]
 
-[18] 3GPP, "Study on evaluation methodology of new Vehicle-to-Everything (V2X) use cases for LTE and NR," TR 37.885 V15.3.0, Jun. 2019, Table 6.2.1-1. [VERIFY]
+[18] F. Wilcoxon, "Individual comparisons by ranking methods," Biometrics Bull., vol. 1, no. 6, pp. 80–83, 1945. [VERIFY]
 
-[19] M. Friedman, "The use of ranks to avoid the assumption of normality implicit in the analysis of variance," J. Amer. Statist. Assoc., vol. 32, no. 200, pp. 675–701, 1937. [VERIFY]
+[19] S. Holm, "A simple sequentially rejective multiple test procedure," Scand. J. Statist., vol. 6, no. 2, pp. 65–70, 1979. [VERIFY]
 
-[20] F. Wilcoxon, "Individual comparisons by ranking methods," Biometrics Bull., vol. 1, no. 6, pp. 80–83, 1945. [VERIFY]
-
-[21] S. Holm, "A simple sequentially rejective multiple test procedure," Scand. J. Statist., vol. 6, no. 2, pp. 65–70, 1979. [VERIFY]
-
-[22] Government of Kerala, Additional Memorandum, 13 Sep. 2018, Table 3, pp. 11–12. [Online]. Available: https://recovery.preventionweb.net/media/101476/download
+[20] Government of Kerala, Additional Memorandum, 13 Sep. 2018, Table 3, pp. 11–12. [Online]. Available: https://recovery.preventionweb.net/media/101476/download
 
 
 ## Appendix A: Chalakudy Parameters
 
-Table XV condenses data/chalakudy/PROVENANCE.md, which gives all 43 parameters with their sources and reasoning.
+Table XVI condenses data/chalakudy/PROVENANCE.md, which gives all 43 parameters with their sources and reasoning.
 
-**TABLE XV: Chalakudy parameters: measured, derived or assumed (condensed from data/chalakudy/PROVENANCE.md)**
+**TABLE XVI: Chalakudy parameters: measured, derived or assumed (condensed from data/chalakudy/PROVENANCE.md)**
 
 | Parameter | Value | Kind | Swept |
 |---|---|---|---|
@@ -523,7 +527,7 @@ Table XV condenses data/chalakudy/PROVENANCE.md, which gives all 43 parameters w
 
 Reference water detected is the share of cells inside mapped rivers and ponds that are classified as water; far land as water is the share of land at least 150 m from mapped water that is classified as water, which bounds false detections in dry scenes (on 16 Jul, 9 Aug and 21 Aug part of it may be real flooding). Fig. 11 checks where the radar maps are placed.
 
-**TABLE XVI: Sentinel-1 scenes over Chalakudy (dates as month/day)**
+**TABLE XVII: Sentinel-1 scenes over Chalakudy (dates as month/day)**
 
 | Date (2018) | Time (UTC) | Satellite | Pass, orbit | Threshold (dB) | Water (%) | Reference water detected (%) | Far land as water (%) |
 |---|---|---|---|---|---|---|---|
@@ -559,29 +563,13 @@ Reference water detected is the share of cells inside mapped rivers and ponds th
 
 ## Appendix C: Timeline
 
-**TABLE XVII: Dated 2018 events used by the flood scenarios**
+**TABLE XVIII: Dated 2018 events used by the flood scenarios**
 
 | Date (2018) | Event | Used as | Source |
 |---|---|---|---|
 | 14–18 Aug | Dam releases (Idukki shutters opened 10 Aug) | Water rises until 18 Aug 00:00 | CAG Report No. 6 of 2021, ch. III [1] |
-| 15–17 Aug | IMD red alert for heavy rain, Thrissur | Same | Kerala Additional Memorandum, Table 3 [22] |
-| 15 or 17 Aug | Chalakudy floods | Onset (both are run) | Deccan Herald [16]; Scroll [17] |
+| 15–17 Aug | IMD red alert for heavy rain, Thrissur | Same | Kerala Additional Memorandum, Table 3 [20] |
+| 15 or 17 Aug | Chalakudy floods | Onset (both are run) | Deccan Herald [15]; Scroll [16] |
 | 16 Aug | Communications fail in Chalakudy and Idukki taluks | Context | CAG sec. 3.5.2 [1] |
-| 27 Aug | Last Thrissur substation back on | End of run | KSEB [8] |
-
-
-## Appendix D: Diagnosis of the 100-Node Baseline
-
-**TABLE XVIII: Diagnosis of the 100-node baseline: AODV's losses with MAC feedback ignored and at a quarter of the density (mean of 10 seeds; ± 95% CI)**
-
-| Measure | AODV, 500 m | AODV ignoring MAC reports, 500 m | AODV, 1,000 m | OLSR, 500 m | OLSR, 1,000 m |
-|---|---|---|---|---|---|
-| Neighbours per node | 22.4 | 22.4 | 6.3 | 22.4 | 6.3 |
-| Delivered within 1 s (%) | 59.4 ± 4.4 | 87.2 ± 0.7 | 99.5 ± 0.3 | 99.9 ± 0.1 | 99.6 ± 0.5 |
-| PDR (%) | 60.0 | 87.3 | 99.8 | 99.9 | 99.6 |
-| Mean hops of delivered packets | 3.5 | 3.1 | 7.2 | 2.7 | 6.8 |
-| Route discoveries per run | 4,324 | 2,508 | 77 | - | - |
-| MAC retry-limit drops per run | 14,943 | 7,454 | 3.4 | 2.4 | 1.1 |
-| Control pkts/node/s | 18.65 | 8.99 | 1.19 | 0.75 | 0.97 |
-| Messages lost per run (of 9,200) | 3,677 | 1,173 | 22 | 5 | 38 |
+| 27 Aug | Last Thrissur substation back on | End of run | KSEB [7] |
 
