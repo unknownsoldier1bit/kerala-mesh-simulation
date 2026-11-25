@@ -242,3 +242,9 @@ Audited on the owner's Mac (ns-3.47, default-profile build of this branch's `sim
 - Owner moved the paper to a new doc, "FINAL draft: AODV vs OLSR under the Kerala 2018 floods", owned by sakshambhatia2027 (anyone with the link can edit): https://docs.google.com/document/d/1jULbOBAzoe8FVNwMYo824ni0_Z7ThJIEu91CbIyw42k/edit. All work happens there from now on; the previous doc (1SNSzLx...) is superseded.
 - Checked on creation: text, 17 tables and 11 figures identical to the build from `docs/paper/build_doc.py`; no comments or suggestions. A no-op test edit succeeds.
 - Known formatting bug from the original build, not yet fixed: the abstract, the premise quote, figure captions and references are left-aligned instead of justified (setting `namedStyleType` in part 2 reset their alignment), and some table captions are left-aligned instead of centred.
+
+### 2026-11-25: paper doc updated in place (DSDV dropped, problem 3, fixes)
+
+- See `docs/paper/fix-list.md` (log, 25 Nov) for what changed and why. In short: DSDV removed and every statistic recomputed for AODV vs OLSR only; the Kerala 100-node acute-phase check (Saksham's "less crowding" explanation) added to Section V-D with a placeholder for his next answer; diagnosis table moved into Results; alignment fixed; Fig. 9 axis labels fixed.
+- The doc was patched in place with `docs/paper/patch_doc.py` (content, then styles), not rebuilt; verified against the generator and by PDF export.
+- Default analyses (`results/analysis`, `results/analysis_chalakudy`) left as committed: rerunning them with today's pandas 3.0.5 / NumPy 2.5.3 changes only row order and ~1e-13 noise, so the committed files were kept. Their Fig. 9 still has the old overlapping labels; the paper uses `results/analysis_chalakudy_paper/figures/`.
