@@ -1,0 +1,13 @@
+main: 360 runs
+severity: 160 runs
+load: 120 runs
+energy: 40 runs
+kerala: 200 runs
+RTS/CTS sensitivity: 20 runs
+energy check: 38 runs, max relative difference 7.56e-01
+FlowMonitor check: 54 runs, max |received difference| 10, after excluding packets slower than 10 s: 0; max |sent difference| after excluding source refusals: 0
+convergence check: 0 of 440 OLSR/DSDV runs not converged when traffic started ()
+scenario properties: 646 scenario files
+failed runs: 0
+combined summary table: 900 runs
+findings digest written

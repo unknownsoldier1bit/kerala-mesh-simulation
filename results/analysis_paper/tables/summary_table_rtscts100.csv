@@ -1,0 +1,21 @@
+Protocol,Scenario,Node count,Seed / run ID,Failure time (s),Failure severity,Packets sent,Packets received,PDR (%),Mean delay (ms),95th-percentile delay (ms),Throughput (kbps),Control packets,Control bytes,Packet loss (count),Packet loss (%),Recovery time (s),Energy consumed (J)
+AODV,baseline,100,1 / aodv_baseline_rtscts_n100_f10_s1,,none,9200,4474,48.63,252.154,895.747,79.676,503321,25083836,4726,51.37,unavailable,25367.06
+OLSR,baseline,100,1 / olsr_baseline_rtscts_n100_f10_s1,,none,9200,9192,99.913,4.593,8.019,163.698,22852,5877400,8,0.087,unavailable,24797.74
+AODV,baseline,100,2 / aodv_baseline_rtscts_n100_f10_s2,,none,9200,5398,58.674,141.173,633.193,96.131,459472,22898898,3802,41.326,unavailable,25313.81
+OLSR,baseline,100,2 / olsr_baseline_rtscts_n100_f10_s2,,none,9200,9199,99.989,4.375,8.002,163.822,21356,5571240,1,0.011,unavailable,24787.2
+AODV,baseline,100,3 / aodv_baseline_rtscts_n100_f10_s3,,none,9200,3108,33.783,357.973,1157.319,55.349,591717,29447970,6092,66.217,unavailable,25448.21
+OLSR,baseline,100,3 / olsr_baseline_rtscts_n100_f10_s3,,none,9200,9162,99.587,4.633,8.359,163.163,22014,5804244,38,0.413,unavailable,24786.84
+AODV,baseline,100,4 / aodv_baseline_rtscts_n100_f10_s4,,none,9200,4372,47.522,291.365,1029.882,77.86,486494,24195142,4828,52.478,unavailable,25354.74
+OLSR,baseline,100,4 / olsr_baseline_rtscts_n100_f10_s4,,none,9200,9176,99.739,4.584,9.504,163.413,22599,5921696,24,0.261,unavailable,24793.95
+AODV,baseline,100,5 / aodv_baseline_rtscts_n100_f10_s5,,none,9200,4839,52.598,268.48,1008.811,86.176,477499,23820270,4361,47.402,unavailable,25333.15
+OLSR,baseline,100,5 / olsr_baseline_rtscts_n100_f10_s5,,none,9200,9197,99.967,4.556,7.776,163.787,21264,5537268,3,0.033,unavailable,24791.05
+AODV,baseline,100,6 / aodv_baseline_rtscts_n100_f10_s6,,none,9200,5079,55.207,224.171,815.596,90.45,482350,24053238,4121,44.793,unavailable,25346.51
+OLSR,baseline,100,6 / olsr_baseline_rtscts_n100_f10_s6,,none,9200,9199,99.989,4.653,8.101,163.822,23511,6388076,1,0.011,unavailable,24810.97
+AODV,baseline,100,7 / aodv_baseline_rtscts_n100_f10_s7,,none,9200,4685,50.924,212.874,795.215,83.434,464689,23091512,4515,49.076,unavailable,25310.42
+OLSR,baseline,100,7 / olsr_baseline_rtscts_n100_f10_s7,,none,9200,9198,99.978,4.81,8.81,163.804,22040,6010116,2,0.022,unavailable,24792.05
+AODV,baseline,100,8 / aodv_baseline_rtscts_n100_f10_s8,,none,9200,4064,44.174,300.992,988.31,72.375,555980,27870192,5136,55.826,unavailable,25462.53
+OLSR,baseline,100,8 / olsr_baseline_rtscts_n100_f10_s8,,none,9200,9199,99.989,6.226,14.784,163.822,24117,7183184,1,0.011,unavailable,24857.9
+AODV,baseline,100,9 / aodv_baseline_rtscts_n100_f10_s9,,none,9200,4905,53.315,220.303,828.278,87.352,444477,22107776,4295,46.685,unavailable,25349.05
+OLSR,baseline,100,9 / olsr_baseline_rtscts_n100_f10_s9,,none,9200,9192,99.913,4.964,9.177,163.698,21897,5930988,8,0.087,unavailable,24820.17
+AODV,baseline,100,10 / aodv_baseline_rtscts_n100_f10_s10,,none,9200,3691,40.12,279.35,898.067,65.732,549004,27336522,5509,59.88,unavailable,25422.94
+OLSR,baseline,100,10 / olsr_baseline_rtscts_n100_f10_s10,,none,9200,9194,99.935,6.638,13.667,163.733,23345,6071496,6,0.065,unavailable,24816.56

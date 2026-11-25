@@ -1,0 +1,11 @@
+protocol,model,sent,within_1s_pct,mac_retry_drops,route_discoveries,lost_no_route_at_source,lost_mac_retry_limit,lost_ip_no_route,lost_ip_ttl_expired
+aodv,control,764.6,76.0,4048.8,1567.9,0.0,92.9,69.3,0.1
+aodv,kerala_27,641.6,65.4,2949.5,1262.5,0.0,51.9,38.9,0.7
+aodv,kerala_50,542.1,60.5,2126.4,1107.5,0.0,38.1,30.9,1.1
+aodv,uniform_27,644.5,71.0,2660.8,1260.3,0.0,50.4,40.0,0.7
+aodv,uniform_50,548.5,61.7,1861.0,919.1,0.0,34.5,29.1,1.5
+olsr,control,764.6,100.0,0.0,0.0,0.0,0.0,0.0,0.0
+olsr,kerala_27,641.6,81.1,11.8,0.0,98.1,11.8,6.4,3.5
+olsr,kerala_50,542.1,73.3,21.8,0.0,113.4,21.8,3.7,4.8
+olsr,uniform_27,644.5,84.6,14.9,0.0,79.0,14.9,2.7,2.1
+olsr,uniform_50,548.5,70.2,36.3,0.0,114.1,36.3,6.3,7.7

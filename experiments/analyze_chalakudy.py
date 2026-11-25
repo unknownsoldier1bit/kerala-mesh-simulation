@@ -29,7 +29,7 @@ import pandas as pd  # noqa: E402
 from scipy import stats  # noqa: E402
 
 plt = A.plt
-OUT = os.path.join(A.RES, "analysis_chalakudy")
+OUT = os.environ.get("ANALYSIS_CHALAKUDY_OUT") or os.path.join(A.RES, "analysis_chalakudy")
 TAB = os.path.join(OUT, "tables")
 FIG = os.path.join(OUT, "figures")
 A.FIG = FIG  # analyze.savefig writes here
@@ -76,6 +76,7 @@ def load_all():
         if not os.path.exists(p):
             continue
         df = pd.read_csv(p)
+        df = df[df.run_id.str.split("_").str[0].isin(PROTOCOLS)].reset_index(drop=True)
         parts = df.run_id.str.extract(RUN_RE)
         assert parts.notna().all().all(), f"unparsed run ids in {exp}"
         df = df.drop(columns=[c for c in ("protocol", "nodes", "seed") if c in df]).join(parts).copy()
@@ -445,10 +446,10 @@ def fig_over_time(df):
             for ax in axes[:, j]:
                 ax.axvline(C.day(15), color=MUTED, lw=1, ls="--")
                 ax.axvline(C.day(18), color=A.INK2, lw=1)
-            axes[1, j].set_xlabel("Simulated time (s); dashed = 15 Aug, solid = 18 Aug")
             axes[1, j].set_ylim(0, 100)
         axes[0, 0].set_ylabel("Devices still running")
         axes[1, 0].set_ylabel("Delivered within 1 s (%), all seeds")
+        fig.supxlabel("Simulated time (s); dashed line = 15 Aug, solid line = 18 Aug", fontsize=9, color=A.INK2)
         A.legend_protocols(fig, PROTOCOLS)
         savefig(fig, f"chalakudy_over_time_on15_{battery}",
                   "Onset 15 Aug; 10 s bins pooled over seeds 1-10. " + REAL_VS_ASSUMED)
@@ -482,7 +483,7 @@ def fig_sensitivity(df):
                 q = d[(d.model == model) & (d.protocol == p)]
                 mean = [q[q[col] == x][metric].mean() for x in xs]
                 err = [A.ci95(q[q[col] == x][metric]) for x in xs]
-                pos = np.arange(len(xs)) + (k - 1) * 0.12
+                pos = np.arange(len(xs)) + (k - (len(PROTOCOLS) - 1) / 2) * 0.12
                 ax.errorbar(pos, mean, yerr=A.clip_err(mean, err, 100), color=A.COLOR[p], marker=A.MARKER[p],
                             ms=5, capsize=2)
             ax.set_xticks(np.arange(len(xs)))
@@ -551,6 +552,8 @@ def findings_md(agg, ptests, mtests, check_lines, scen):
         sig = []
         for _, r in pt.iterrows():
             for a_, b_ in (("aodv", "olsr"), ("aodv", "dsdv"), ("olsr", "dsdv")):
+                if a_ not in PROTOCOLS or b_ not in PROTOCOLS:
+                    continue
                 hp = r.get(f"holm_p_{a_}_{b_}", np.nan)
                 if not pd.isna(hp) and hp < 0.05:
                     sig.append(dict(model=r.model, share=r.share, onset=r.onset, battery=r.battery, gap=r.gap,

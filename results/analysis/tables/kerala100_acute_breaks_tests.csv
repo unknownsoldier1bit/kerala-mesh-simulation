@@ -1,0 +1,13 @@
+protocol,model,metric,median_diff_minus_control,lower_in_seeds,wilcoxon_p
+aodv,kerala_27,mac_retry_drops,-1050.5,10,0.002
+aodv,kerala_27,route_discoveries,-337.0,10,0.002
+aodv,kerala_50,mac_retry_drops,-1816.5,10,0.002
+aodv,kerala_50,route_discoveries,-440.5,10,0.002
+aodv,uniform_27,mac_retry_drops,-1402.0,10,0.002
+aodv,uniform_27,route_discoveries,-317.5,10,0.002
+aodv,uniform_50,mac_retry_drops,-2073.5,10,0.002
+aodv,uniform_50,route_discoveries,-639.0,10,0.002
+olsr,kerala_27,mac_retry_drops,8.5,0,0.0039
+olsr,kerala_50,mac_retry_drops,21.5,0,0.002
+olsr,uniform_27,mac_retry_drops,15.5,0,0.002
+olsr,uniform_50,mac_retry_drops,34.5,0,0.002

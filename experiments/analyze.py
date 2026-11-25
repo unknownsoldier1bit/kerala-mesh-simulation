@@ -8,6 +8,12 @@ Statistics: for a given configuration, every protocol ran on the same topology,
 traffic and failure schedule for each seed, so protocols are compared with paired
 tests across seeds: a Friedman test over the three protocols, then two-sided
 Wilcoxon signed-rank tests for each pair, with Holm correction over the three pairs.
+
+Environment variables (both optional; the defaults give the full three-protocol analysis):
+    ANALYSIS_PROTOCOLS   comma-separated protocols to analyse, e.g. "aodv,olsr" for the paper
+    ANALYSIS_OUT         output folder (default results/analysis)
+With two protocols there is one pair per configuration, so the Holm-corrected p equals the
+Wilcoxon p, and no Friedman test is run.
 """
 
 import glob
@@ -32,11 +38,11 @@ from kerala import day  # noqa: E402
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RES = os.path.join(REPO, "results")
-OUT = os.path.join(RES, "analysis")
+OUT = os.environ.get("ANALYSIS_OUT") or os.path.join(RES, "analysis")
 TAB = os.path.join(OUT, "tables")
 FIG = os.path.join(OUT, "figures")
 
-PROTOCOLS = ["aodv", "olsr", "dsdv"]
+PROTOCOLS = os.environ.get("ANALYSIS_PROTOCOLS", "aodv,olsr,dsdv").split(",")
 LABEL = {"aodv": "AODV", "olsr": "OLSR", "dsdv": "DSDV"}
 # Categorical slots 1-3 of the reference palette (validated all-pairs, light mode).
 COLOR = {"aodv": "#2a78d6", "olsr": "#eb6834", "dsdv": "#1baf7a"}
@@ -88,6 +94,7 @@ def load(exp):
     if not os.path.exists(p):
         return None
     df = pd.read_csv(p)
+    df = df[df.protocol.isin(PROTOCOLS)]
     keys = [k for k in ("scenario", "nodes", "severity", "n_flows", "protocol") if k in df]
     n = df.groupby(keys, dropna=False).seed.transform("count")
     return df[n >= MIN_SEEDS].reset_index(drop=True)
@@ -808,6 +815,8 @@ def findings_md():
         sig = []
         for _, r in tests.iterrows():
             for a, b in [("aodv", "olsr"), ("aodv", "dsdv"), ("olsr", "dsdv")]:
+                if a not in PROTOCOLS or b not in PROTOCOLS:
+                    continue
                 hp = r.get(f"holm_p_{a}_{b}")
                 if hp is not None and not pd.isna(hp) and hp < 0.05:
                     sig.append({**{k: r[k] for k in keys}, "metric": cols.get(r["metric"], r["metric"]),

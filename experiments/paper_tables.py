@@ -2,7 +2,13 @@
 
 Writes docs/paper/tables/*.csv: one row per configuration, one column per protocol, each cell
 "mean ± 95% CI" over seeds 1-10 (and a numeric twin, *_numeric.csv, for spreadsheets). Also writes
-docs/paper/tests.csv with the paired protocol tests behind every table (Holm-corrected p values).
+docs/paper/tests.csv with the paired protocol tests behind every table.
+
+The paper reports AODV and OLSR only (DSDV was dropped on 16 Nov 2026), so this reads the two-protocol
+analysis, made with
+    ANALYSIS_PROTOCOLS=aodv,olsr ANALYSIS_OUT=results/analysis_paper python3 experiments/analyze.py
+    ANALYSIS_PROTOCOLS=aodv,olsr ANALYSIS_CHALAKUDY_OUT=results/analysis_chalakudy_paper python3 experiments/analyze_chalakudy.py
+With one protocol pair per configuration, the Holm-corrected p in tests.csv equals the Wilcoxon p.
 
     python3 experiments/paper_tables.py
 """
@@ -14,10 +20,10 @@ import numpy as np
 import pandas as pd
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TAB = os.path.join(REPO, "results", "analysis", "tables")
-CTAB = os.path.join(REPO, "results", "analysis_chalakudy", "tables")
+TAB = os.path.join(REPO, "results", "analysis_paper", "tables")
+CTAB = os.path.join(REPO, "results", "analysis_chalakudy_paper", "tables")
 OUT = os.path.join(REPO, "docs", "paper", "tables")
-PROTOS = ["aodv", "olsr", "dsdv"]
+PROTOS = ["aodv", "olsr"]
 LABEL = {"aodv": "AODV", "olsr": "OLSR", "dsdv": "DSDV"}
 
 
@@ -141,6 +147,9 @@ def main():
         tests.append(d)
     d = pd.read_csv(os.path.join(CTAB, "chalakudy_protocol_tests.csv"))
     d.insert(0, "table", "chalakudy_protocol_tests")
+    tests.append(d)
+    d = pd.read_csv(os.path.join(CTAB, "chalakudy_flood_vs_uniform_tests.csv"))
+    d.insert(0, "table", "chalakudy_flood_vs_uniform_tests")
     tests.append(d)
     pd.concat(tests, ignore_index=True).to_csv(os.path.join(REPO, "docs", "paper", "tests.csv"), index=False)
     print("wrote", sorted(os.listdir(OUT)))

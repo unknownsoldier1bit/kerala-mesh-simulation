@@ -7,8 +7,16 @@ Compares the main experiment's 100-node baseline with two diagnostic grids:
     python3 experiments/analyze_diag.py
 
 Writes results/analysis/tables/diag100_by_config.csv, diag100_per_seed.csv and diag100_tests.csv.
+
+Also checks why flooding narrows the AODV-OLSR gap in the Kerala-anchored scenario at 100 nodes
+(PREDICTIONS.md, Diagnosis 3): MAC retry-limit drops, route discoveries and where lost packets died in
+the acute phase (14-18 Aug, 60-180 s), from the raw kerala100 runs. Writes kerala100_acute_breaks*.csv
+to results/analysis/tables and a summary to docs/paper/tables.
 """
+import glob
+import json
 import os
+import sys
 
 import pandas as pd
 from scipy import stats
@@ -75,5 +83,60 @@ def main():
     print(pd.DataFrame(rows).round(4).to_string())
 
 
+ACUTE = (60.0, 180.0)
+
+
+def kerala100_acute():
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from metrics import DROP_NAMES
+    rows = []
+    for run in sorted(glob.glob(os.path.join(REPO, "results", "kerala100", "runs", "*"))):
+        cfg = json.load(open(os.path.join(run, "run_config.json")))
+        if cfg["protocol"] not in ("aodv", "olsr"):
+            continue
+        a, b = ACUTE
+        p = pd.read_csv(os.path.join(run, "packets.csv.gz"))
+        c = pd.read_csv(os.path.join(run, "control.csv.gz"))
+        w = p[(p.tx_s >= a) & (p.tx_s < b)]
+        cw = c[(c.t_s >= a) & (c.t_s < b)]
+        disc = os.path.join(run, "discoveries.csv.gz")
+        nd = 0
+        if os.path.exists(disc):
+            dd = pd.read_csv(disc)
+            nd = int(((dd.start_s >= a) & (dd.start_s < b)).sum())
+        model = "control" if cfg["severity"] is None else f"{cfg['scenario']}_{round(100 * cfg['severity'])}"
+        row = dict(protocol=cfg["protocol"], model=model, seed=cfg["seed"], sent=len(w),
+                   within_1s_pct=100 * ((w.rx_s - w.tx_s) <= 1.0).sum() / max(len(w), 1),
+                   mac_retry_drops=int(cw.mac_retry_drops.sum()), route_discoveries=nd)
+        lost = w[w.rx_s.isna()].drop_code.map(lambda x: DROP_NAMES.get(int(x), f"code_{int(x)}")).value_counts()
+        for name in DROP_NAMES.values():
+            row[f"lost_{name}"] = int(lost.get(name, 0))
+        rows.append(row)
+    d = pd.DataFrame(rows)
+    d.to_csv(os.path.join(OUT, "kerala100_acute_breaks_per_seed.csv"), index=False)
+    cols = [c for c in d.columns if c not in ("protocol", "model", "seed")]
+    g = d.groupby(["protocol", "model"])[cols].mean()
+    g.round(2).to_csv(os.path.join(OUT, "kerala100_acute_breaks.csv"))
+    tests = []
+    for pr in ("aodv", "olsr"):
+        ctl = d[(d.protocol == pr) & (d.model == "control")].set_index("seed")
+        for m in sorted(set(d.model) - {"control"}):
+            x = d[(d.protocol == pr) & (d.model == m)].set_index("seed")
+            for met in ("mac_retry_drops", "route_discoveries"):
+                diff = x[met] - ctl[met]
+                if (diff == 0).all():
+                    continue
+                tests.append(dict(protocol=pr, model=m, metric=met, median_diff_minus_control=diff.median(),
+                                  lower_in_seeds=int((diff < 0).sum()), wilcoxon_p=stats.wilcoxon(diff).pvalue))
+    t = pd.DataFrame(tests)
+    t.round(4).to_csv(os.path.join(OUT, "kerala100_acute_breaks_tests.csv"), index=False)
+    keep = ["sent", "within_1s_pct", "mac_retry_drops", "route_discoveries", "lost_no_route_at_source",
+            "lost_mac_retry_limit", "lost_ip_no_route", "lost_ip_ttl_expired"]
+    g[keep].round(1).to_csv(os.path.join(REPO, "docs", "paper", "tables", "kerala100_acute_breaks.csv"))
+    print(g[keep].round(1))
+    print(t.round(4).to_string())
+
+
 if __name__ == "__main__":
     main()
+    kerala100_acute()
